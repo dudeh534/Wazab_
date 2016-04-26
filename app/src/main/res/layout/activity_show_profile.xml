@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.ourincheon.wazap.MypageActivity">
+
+    <com.ourincheon.wazap.NotoTextView
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:hint="이름"
+        android:id="@+id/pName"
+        android:layout_marginTop="55dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/pIntro"
+        android:layout_alignStart="@+id/pIntro" />
+
+    <com.ourincheon.wazap.NotoTextView
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:hint="전공 및 희망역할"
+        android:id="@+id/pMajor"
+        android:layout_below="@+id/pName"
+        android:layout_marginTop="10dp"
+        android:layout_alignLeft="@+id/pName"
+        android:layout_alignStart="@+id/pName" />
+
+    <com.ourincheon.wazap.NotoTextView
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:hint="학교"
+        android:id="@+id/pUniv"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/pMajor"
+        android:layout_alignLeft="@+id/pMajor"
+        android:layout_alignStart="@+id/pMajor" />
+
+    <com.ourincheon.wazap.NotoTextView
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:hint="지역"
+        android:layout_marginTop="10dp"
+        android:id="@+id/pLoc"
+        android:layout_below="@+id/pUniv"
+        android:layout_alignLeft="@+id/pUniv"
+        android:layout_alignStart="@+id/pUniv" />
+
+    <com.ourincheon.wazap.NotoTextView
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:hint="카카오 아이디"
+        android:id="@+id/pKakao"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/pLoc"
+        android:layout_alignLeft="@+id/pLoc"
+        android:layout_alignStart="@+id/pLoc" />
+
+    <ImageView
+        android:id="@+id/pPro"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/icon_user"
+        android:layout_above="@+id/pKakao"
+        android:layout_toRightOf="@+id/textView9"
+        android:layout_toEndOf="@+id/textView9" />
+
+    <com.ourincheon.wazap.NotoTextView
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="200자 소개"
+        android:id="@+id/textView8"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/pIntro"
+        android:layout_alignStart="@+id/pIntro" />
+
+    <com.ourincheon.wazap.NotoTextView
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:singleLine="false"
+        android:lines="3"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/pIntro"
+        android:layout_below="@+id/textView8"
+        android:layout_centerHorizontal="true" />
+
+    <com.ourincheon.wazap.NotoTextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="기타경험/수상내역"
+        android:id="@+id/textView9"
+        android:layout_below="@+id/pIntro"
+        android:layout_alignLeft="@+id/pIntro"
+        android:layout_alignStart="@+id/pIntro" />
+
+    <com.ourincheon.wazap.NotoTextView
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:singleLine="false"
+        android:lines="3"
+        android:textSize="18dp"
+        android:id="@+id/pExp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/textView9"
+        android:layout_alignLeft="@+id/pIntro"
+        android:layout_alignStart="@+id/pIntro" />
+
+    <com.ourincheon.wazap.NotoTextView
+        android:textColor="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="41.33dp"
+        android:background="#0056ff"
+        android:text="수락하기"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/pButton" />
+</RelativeLayout>

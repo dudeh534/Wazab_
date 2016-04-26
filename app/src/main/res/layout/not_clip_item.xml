@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="93.33dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="93.33dp"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="202dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.ourincheon.wazap.NotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ncDday"
+                    android:textSize="11dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="12.33dp"
+                    android:textColor="#0057ff"
+                    android:background="@drawable/scrap_info_finish"/>
+
+                <com.ourincheon.wazap.NotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="[서울] 한화생명"
+                    android:id="@+id/ncTitle"
+                    android:textSize="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:textColor="#b7b7b7"
+                    android:layout_marginTop="7dp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="11dp"
+                        android:layout_height="11dp"
+                        android:id="@+id/img1"
+                        android:background="#575757"
+                        android:layout_marginRight="8.33dp"
+                        android:layout_marginTop="2dp" />
+                    <com.ourincheon.wazap.NotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="카테고리"
+                        android:id="@+id/ncCate1"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="10dp"
+                        android:textSize="13dp" />
+
+                    <ImageView
+                        android:layout_width="11dp"
+                        android:layout_height="11dp"
+                        android:id="@+id/img2"
+                        android:layout_marginRight="8.33dp"
+                        android:layout_marginTop="2dp" />
+                    <com.ourincheon.wazap.NotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ncCate2"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="6dp"
+                        android:textSize="13dp" />
+
+                    <com.ourincheon.wazap.NotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="|"
+                        android:id="@+id/textView27"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="17.33dp"
+                        android:textSize="11dp"
+                        android:textColor="#b7b7b7"/>
+
+                    <com.ourincheon.wazap.NotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="모집인원 2명"
+                        android:id="@+id/ncMember"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="16dp"
+                        android:textSize="13dp"
+                        android:layout_marginLeft="6dp"
+                        android:textColor="#b7b7b7"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/require"
+                android:layout_width="26.67dp"
+                android:layout_height="24.67dp"
+                android:layout_marginRight="15.67dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/heart3" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,18 @@
+*.iml
+.gradle
+local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.idea/
+.DS_Store
+/build
+.idea/.name
+.idea/misc.xml
+.idea/vcs.xml
+/captures
+# Windows thumbnail db
+Thumbs.db
+# generated files
+bin/
+gen/
+out/

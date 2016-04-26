@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:androidhu="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:padding="13dp"
+    android:background="#ffffff">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="315dp"
+        android:orientation="vertical"
+        android:padding="13dp"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:id="@+id/linearLayout8">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView17"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/person2"
+            android:layout_marginTop="10dp" />
+
+        <ImageView
+            android:layout_marginTop="25dp"
+            android:id="@+id/imageView"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:src="@drawable/icon_user" />
+
+        <com.ourincheon.wazap.NotoTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/nickname"
+            android:gravity="center"
+            android:textColor="#2D70EB"
+            android:textSize="18dp"
+            android:layout_marginTop="20dp" />
+
+        <ImageView
+            android:layout_width="83.33dp"
+            android:layout_height="21.67dp"
+            android:id="@+id/showProBtn"
+            android:layout_marginTop="18dp"
+            android:src="@drawable/profile"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="109.67dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="53dp"
+            android:background="#2D70EB"></LinearLayout>
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

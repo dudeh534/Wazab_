@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories">
+        <item>전체 모집글</item>
+        <item>광고/아이디어/마케팅</item>
+        <item>디자인</item>
+        <item>사진/영상/UCC</item>
+        <item>게임/소프트웨어</item>
+        <item>해외</item>
+        <item>기타</item>
+    </string-array>
+</resources>

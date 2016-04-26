@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:title="나의 활동" />
+
+        <item
+            android:id="@+id/alarm"
+            android:title="알림"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/cart"
+            android:title="스크랩" />
+        <item
+            android:id="@+id/require"
+            android:title="신청목록" />
+        <item
+            android:id="@+id/gonggu"
+            android:title="내가 쓴 글 목록" />
+        <item
+            android:id="@+id/setting"
+            android:icon="@drawable/setting"
+            android:title="설정" />
+    </group>
+</menu>

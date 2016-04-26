@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.ourincheon.wazap.RecruitActivity">
+
+
+    <ImageView
+        android:id="@+id/Pro"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/icon_user"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp" />
+    <com.ourincheon.wazap.NotoTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/leaderTxt"
+        android:textSize="18dp"
+        android:hint="이름"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/Pro"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:hint="제목을 입력하세요"
+        android:id="@+id/reTitle"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/leaderTxt"
+        android:layout_centerHorizontal="true" />
+
+    <com.ourincheon.wazap.NotoTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="명칭 및 주관"
+        android:textSize="18dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/reTitle"
+        android:layout_alignLeft="@+id/reTitle"
+        android:layout_alignStart="@+id/reTitle"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/textView10" />
+
+    <EditText
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:hint="입력하세요"
+        android:textSize="18dp"
+        android:layout_below="@+id/reTitle"
+        android:layout_alignRight="@+id/reTitle"
+        android:layout_alignEnd="@+id/reTitle"
+        android:id="@+id/reHost" />
+
+    <com.ourincheon.wazap.NotoTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="카테고리"
+        android:textSize="18dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/reHost"
+        android:layout_alignLeft="@+id/textView10"
+        android:layout_alignStart="@+id/textView10"
+        android:id="@+id/textView11" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IT"
+        android:id="@+id/cIT"
+        android:layout_alignTop="@+id/textView11"
+        android:layout_toRightOf="@+id/textView10"
+        android:layout_toEndOf="@+id/textView10" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="마케팅/광고"
+        android:id="@+id/cAd"
+        android:layout_above="@+id/cDoc"
+        android:layout_alignRight="@+id/reHost"
+        android:layout_alignEnd="@+id/reHost" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="디자인/UCC"
+        android:id="@+id/cDesign"
+        android:layout_below="@+id/cIT"
+        android:layout_alignLeft="@+id/cIT"
+        android:layout_alignStart="@+id/cIT" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="논문/문학"
+        android:id="@+id/cDoc"
+        android:layout_below="@+id/cIT"
+        android:layout_alignLeft="@+id/cAd"
+        android:layout_alignStart="@+id/cAd" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="게임"
+        android:id="@+id/cGame"
+        android:layout_above="@+id/cDesign"
+        android:layout_alignLeft="@+id/leaderTxt"
+        android:layout_alignStart="@+id/leaderTxt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="모집인원"
+        android:textSize="18dp"
+        android:id="@+id/textView13"
+        android:layout_below="@+id/cDesign"
+        android:layout_alignLeft="@+id/textView11"
+        android:layout_alignStart="@+id/textView11" />
+
+    <EditText
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:hint="입력하세요"
+        android:textSize="18dp"
+        android:id="@+id/eNum"
+        android:layout_below="@+id/cDesign"
+        android:layout_alignRight="@+id/reTitle"
+        android:layout_alignEnd="@+id/reTitle" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="소개"
+        android:textSize="18dp"
+        android:id="@+id/textView14"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/eNum"
+        android:layout_alignLeft="@+id/textView13"
+        android:layout_alignStart="@+id/textView13" />
+
+    <EditText
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:hint="입력하세요"
+        android:lines="2"
+        android:textSize="18dp"
+        android:id="@+id/erIntro"
+        android:layout_below="@+id/textView14"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#dddddd"
+        android:text="완료하기"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView12" />
+
+</RelativeLayout>
