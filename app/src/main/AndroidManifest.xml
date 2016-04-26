@@ -56,16 +56,17 @@
         <activity
             android:name=".RecruitActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".MypageActivity"
+        <activity
+            android:name=".MypageActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".showMypageActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".showApplier"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".WebSiteActivity" />
         <activity
             android:name=".JoinActivity"
@@ -89,9 +90,12 @@
             android:name=".ApplierList"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".showProfile" />
-        <activity android:name=".showWeeklyActivity"
+        <activity
+            android:name=".showWeeklyActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".newAlarmList"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".SearchActivity"></activity>
     </application>
 
 </manifest>

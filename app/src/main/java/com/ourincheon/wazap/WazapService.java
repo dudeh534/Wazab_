@@ -104,7 +104,7 @@ public interface WazapService {
     @GET("alrams")
     Call<Alarms> getAlarmlist(
             @Header("access-token") String access_token,
-            @Query("start_id") int start_id,
+      //      @Query("start_id") int start_id,
             @Query("amount") int amount
     );
 
