@@ -99,7 +99,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="420dp"
+        android:layout_height="360dp"
         android:layout_below="@+id/lineardivider"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -147,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:text="모집인원"
                 android:id="@+id/textView20"
-                android:layout_marginTop="130dp"
+                android:layout_marginTop="70dp"
                 android:layout_marginLeft="12dp" />
 
             <com.ourincheon.wazap.NotoTextView
@@ -171,7 +171,7 @@
                 android:layout_height="wrap_content"
                 android:text="모집포지션"
                 android:id="@+id/textView27"
-                android:layout_marginTop="21dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginLeft="12dp" />
         </LinearLayout>
 
@@ -205,8 +205,13 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="70dp"
                 android:layout_marginTop="7dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:orientation="horizontal">
 
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -221,10 +226,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="디자인"
-                    android:layout_marginTop="5dp"
                     android:id="@+id/checkDe"
                     android:textSize="13dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:button="@drawable/detail_disable_design"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:orientation="horizontal">
 
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -235,6 +247,23 @@
                     android:textSize="13dp"
                     android:button="@drawable/detail_disable_video"/>
 
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="해외"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/checkFo"
+                        android:layout_marginLeft="80dp"
+                        android:textSize="13dp"
+                        android:button="@drawable/detail_disable_idea"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:orientation="horizontal">
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -247,28 +276,20 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="해외"
-                    android:layout_marginTop="5dp"
-                    android:id="@+id/checkFo"
-                    android:textSize="13dp"
-                    android:button="@drawable/detail_disable_idea"/>
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="기타"
                     android:layout_marginTop="5dp"
                     android:id="@+id/checkEtc"
                     android:textSize="13dp"
+                    android:layout_marginLeft="50dp"
                     android:button="@drawable/detail_disable_scenario"/>
-
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="0dp">
 
                 <EditText
                     android:layout_width="wrap_content"
@@ -335,7 +356,7 @@
             android:layout_height="wrap_content"
             android:text="상세소개"
             android:id="@+id/textView7"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="15dp"
             android:textSize="17dp"
             android:layout_alignParentTop="false"
             android:layout_centerHorizontal="true"
