@@ -19,6 +19,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -253,6 +254,7 @@ public class ContestList extends AppCompatActivity {
         public LinearLayout open_layout;
         public ListView mListView1;
         Button Detail;
+        LinearLayout DetailArea;
     }
 
     //--------------------------------------------------------------------------------어댑터
@@ -327,6 +329,102 @@ public class ContestList extends AppCompatActivity {
                 holder.Member = (TextView) convertView.findViewById(R.id.rmember);
                 holder.open_layout = (LinearLayout) convertView.findViewById(R.id.open_layout);
                 holder.mListView1 = (ListView) convertView.findViewById(R.id.applierlistView);
+                holder.DetailArea = (LinearLayout) convertView.findViewById(R.id.btnArea);
+                holder.DetailArea.setSelected(selectItem.get(position, false));
+                holder.DetailArea.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                 /*       ContestData mData = mAdapter.mListData.get(position);
+                        Intent intent = new Intent(ContestList.this, MasterJoinActivity.class);
+                        intent.putExtra("id",String.valueOf(mData.getContests_id()));
+                        startActivity(intent);
+                   */
+
+                        //여기 신청자 목록 눌렀을 때
+                        if (selectItem.get(position, false)) {
+                            selectItem.delete(position);
+                            holder.DetailArea.setSelected(false);//? 이거는 왜 안돼
+                            holder.open_layout.setVisibility(View.GONE);
+                            setListViewHeightBasedOnChildren_delete(mListView,position);
+                        } else {
+                            selectItem.put(position, true);
+                            holder.DetailArea.setSelected(true);
+                            holder.open_layout.setVisibility(View.VISIBLE);
+                            ContestData mData = mAdapter.mListData.get(position);
+                            num = String.valueOf(mData.getContests_id());
+                            SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+                            access_token = pref.getString("access_token", "");
+                            applier_list = new ArrayList<ApplierData>();
+                            mAdapter1 = new ListViewAdapter1(ContestList.this);
+                            //-----------------------------------
+                            Retrofit retrofit = new Retrofit.Builder()
+                                    .baseUrl("http://come.n.get.us.to/")
+                                    .addConverterFactory(GsonConverterFactory.create())
+                                    .build();
+
+                            WazapService service = retrofit.create(WazapService.class);
+
+                            Call<Appliers> call = service.getApplierlist(num, access_token);
+                            call.enqueue(new Callback<Appliers>() {
+                                @Override
+                                public void onResponse(Response<Appliers> response) {
+                                    if (response.isSuccess() && response.body() != null) {
+
+                                        Log.d("SUCCESS", response.message());
+                                        appliers = response.body();
+
+                                        String result = new Gson().toJson(appliers);
+                                        Log.d("SUCESS-----", result);
+
+                                        JSONObject jsonRes;
+                                        try {
+                                            jsonRes = new JSONObject(result);
+                                            JSONArray jsonArr = jsonRes.getJSONArray("data");
+                                            count = jsonArr.length();
+                                            System.out.println(count);
+                                            if(count==0)
+                                                Toast.makeText(ContestList.this, "신청자가 없습니다.", Toast.LENGTH_LONG).show();
+                                            mAdapter1 = new ListViewAdapter1(mContext);
+                                            for (int i = 0; i < count; i++) {
+                                                mAdapter1.addItem(jsonArr.getJSONObject(i).getString("profile_img"),
+                                                        jsonArr.getJSONObject(i).getString("username"),
+                                                        jsonArr.getJSONObject(i).getString("app_users_id"),
+                                                        Integer.parseInt(jsonArr.getJSONObject(i).getString("applies_id")),
+                                                        Integer.parseInt(jsonArr.getJSONObject(i).getString("is_check")));
+                                            }
+                                            holder.mListView1.setAdapter(mAdapter1);
+                                            holder.mListView1.setDivider(null);
+                                            holder.mListView1.setDividerHeight(0);
+                                            setListViewHeightBasedOnChildren(holder.mListView1);
+                                            setListViewHeightBasedOnChildren_add(mListView, position);
+                                        } catch (JSONException e) {
+                                        }
+
+                                    } else if (response.isSuccess()) {
+                                        Log.d("Response Body isNull", response.message());
+                                    } else {
+                                        Log.d("Response Error Body", response.errorBody().toString());
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+                                    t.printStackTrace();
+                                    Log.e("Error", t.getMessage());
+                                }
+                            });
+
+
+                        }
+
+
+//                        Intent intent = new Intent(ContestList.this, ApplierList.class);
+//                        intent.putExtra("id",String.valueOf(mData.getContests_id()));
+//                        startActivity(intent);
+                    }
+                });
+
+                // 코드 수정할것-너무지저분
                 holder.Detail = (Button) convertView.findViewById(R.id.rdetail);
                 holder.Detail.setSelected(selectItem.get(position, false));
                 holder.Detail.setOnClickListener(new View.OnClickListener() {
@@ -380,6 +478,8 @@ public class ContestList extends AppCompatActivity {
                                             JSONArray jsonArr = jsonRes.getJSONArray("data");
                                             count = jsonArr.length();
                                             System.out.println(count);
+                                            if(count==0)
+                                                Toast.makeText(ContestList.this, "신청자가 없습니다.", Toast.LENGTH_LONG).show();
                                             mAdapter1 = new ListViewAdapter1(mContext);
                                             for (int i = 0; i < count; i++) {
                                                 mAdapter1.addItem(jsonArr.getJSONObject(i).getString("profile_img"),
@@ -419,10 +519,15 @@ public class ContestList extends AppCompatActivity {
 //                        startActivity(intent);
                     }
                 });
+
+
+
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
+
+
 
             ContestData mData = mListData.get(position);
 

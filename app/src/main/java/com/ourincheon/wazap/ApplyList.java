@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -288,6 +289,7 @@ public class ApplyList extends AppCompatActivity {
         public TextView Man;
         public TextView Member;
         Button Detail;
+        LinearLayout DetailArea;
     }
 
     private class ListViewAdapter extends BaseAdapter {
@@ -359,6 +361,16 @@ public class ApplyList extends AppCompatActivity {
 
                 holder.Detail = (Button) convertView.findViewById(R.id.detail);
                 holder.Detail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ContestData mData = mAdapter.mListData.get(position);
+                        contest_id = String.valueOf(mData.getContests_id());
+                        deleteApply(contest_id, apply_id[position]);
+                    }
+                });
+
+                holder.DetailArea = (LinearLayout) convertView.findViewById(R.id.btnArea);
+                holder.DetailArea.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         ContestData mData = mAdapter.mListData.get(position);

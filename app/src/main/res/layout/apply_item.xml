@@ -97,7 +97,10 @@
                         android:layout_marginLeft="6dp" />
                 </LinearLayout>
             </LinearLayout>
-
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+                android:id="@+id/btnArea">
             <Button
                 android:focusable="false"
                 android:layout_width="58dp"
@@ -108,6 +111,7 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="15.67dp"
                 android:layout_marginTop="5dp" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

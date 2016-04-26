@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -13,6 +15,7 @@ public class showWeeklyActivity extends AppCompatActivity {
     NotoTextView Title,Total,Period,Host,Category,Target,Benefit,Prize,Homepage,Dday;
     ImageView img;
     Recycler_contestItem contestItem;
+    Button jBefore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,14 @@ public class showWeeklyActivity extends AppCompatActivity {
         Prize = (NotoTextView)findViewById(R.id.sPrize);
         Homepage = (NotoTextView)findViewById(R.id.sHomepage);
 
+
+        jBefore = (Button) findViewById(R.id.jBefore);
+        jBefore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         img = (ImageView)findViewById(R.id.sImg);
 

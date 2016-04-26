@@ -137,7 +137,7 @@ public class JoinActivity extends AppCompatActivity {
 
         WazapService service = retrofit.create(WazapService.class);
 
-        System.out.println("-------------------"+access_token);
+        System.out.println("-------------------"+access_token+"---------"+contest);
 
         Call<LinkedTreeMap> call = service.delApply(contest, access_token);
         call.enqueue(new Callback<LinkedTreeMap>() {
@@ -151,11 +151,11 @@ public class JoinActivity extends AppCompatActivity {
                     String msg = temp.get("msg").toString();
 
                     if (result) {
-                        Log.d("저장 결과: ", msg);
+                        Log.d("신청 결과: ", msg);
                         Toast.makeText(getApplicationContext(), "신청 취소되었습니다.", Toast.LENGTH_LONG).show();
                         onResume();
                     } else {
-                        Log.d("저장 실패: ", msg);
+                        Log.d("신청 실패: ", msg);
                         Toast.makeText(getApplicationContext(), "신청취소 안됬습니다.다시 시도해주세요.", Toast.LENGTH_LONG).show();
                     }
 

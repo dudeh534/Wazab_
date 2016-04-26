@@ -98,15 +98,20 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/btnArea">
             <Button
                 android:focusable="false"
                 android:layout_width="54dp"
                 android:layout_height="20dp"
-                android:background="@drawable/require_info_selector"
+                android:background="@drawable/applicant_btn"
                 android:id="@+id/rdetail"
                 android:layout_gravity="center"
                 android:layout_marginRight="15.67dp"
                 android:layout_marginTop="5dp" />
+                </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

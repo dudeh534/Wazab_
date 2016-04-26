@@ -68,12 +68,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.member.setText(String.valueOf(item.getMember()));
 
         if(item.getFinish()==1) {
-            holder.member.setTextColor(Color.GRAY);
-            holder.recruit.setTextColor(Color.GRAY);
-            holder.loc.setTextColor(Color.GRAY);
-            holder.title.setTextColor(Color.GRAY);
-            holder.name.setTextColor(Color.GRAY);
-            holder.text.setTextColor(Color.GRAY);
+            holder.member.setTextColor(Color.parseColor("#b3b3b3"));
+            holder.recruit.setTextColor(Color.parseColor("#b3b3b3"));
+            holder.loc.setTextColor(Color.parseColor("#b3b3b3"));
+            holder.title.setTextColor(Color.parseColor("#b3b3b3"));
+            holder.name.setTextColor(Color.parseColor("#b3b3b3"));
+            holder.text.setTextColor(Color.parseColor("#b3b3b3"));
 
 
             holder.day.setBackgroundResource(R.drawable.scrap_info_finish);
@@ -94,8 +94,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             //// 카테고리 명에 맞는 이미지 출력 ////
             String[] temp = item.getCategory().split(" ");
-            holder.category1.setTextColor(Color.GRAY);
-            holder.category2.setTextColor(Color.GRAY);
+            holder.category1.setTextColor(Color.parseColor("#b3b3b3"));
+            holder.category2.setTextColor(Color.parseColor("#b3b3b3"));
             if(temp.length == 2 ) {
                 holder.category1.setText(temp[1]);
 

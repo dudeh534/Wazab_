@@ -49,20 +49,21 @@
 
 
                     <ImageView
+                        android:layout_marginLeft="20dp"
                         android:layout_width="11dp"
                         android:layout_height="11dp"
                         android:id="@+id/image1"
                         android:background="#0057ff"
-                        android:layout_marginRight="8.33dp"
-                        android:layout_marginTop="2dp" />
+                        android:layout_marginRight="1dp"
+                        android:layout_marginTop="5dp" />
                     <com.ourincheon.wazap.NotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="카테고리"
                         android:id="@+id/cCate1"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginLeft="1dp"
                         android:layout_marginBottom="16dp"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="3dp"
                         android:layout_marginRight="10dp"
                         android:textSize="13dp" />
 
@@ -70,16 +71,16 @@
                         android:layout_width="11dp"
                         android:layout_height="11dp"
                         android:id="@+id/image2"
-                        android:layout_marginRight="8.33dp"
-                        android:layout_marginTop="2dp" />
+                        android:layout_marginRight="1dp"
+                        android:layout_marginTop="5dp" />
                     <com.ourincheon.wazap.NotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
                         android:id="@+id/cCate2"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginLeft="1dp"
                         android:layout_marginBottom="16dp"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="3dp"
                         android:layout_marginRight="6dp"
                         android:textSize="13dp" />
 
@@ -90,7 +91,7 @@
                         android:layout_height="wrap_content"
                         android:text="|"
                         android:id="@+id/textView28"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="3dp"
                         android:layout_marginBottom="17.33dp"
                         android:textSize="11dp" />
 

@@ -1,17 +1,24 @@
 package com.ourincheon.wazap;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.gson.Gson;
 import com.ourincheon.wazap.Retrofit.UserInfo;
 import com.ourincheon.wazap.Retrofit.regMsg;
@@ -20,6 +27,9 @@ import com.ourincheon.wazap.Retrofit.regUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +43,7 @@ import retrofit2.Retrofit;
 
 public class MypageActivity extends AppCompatActivity {
 
+    Context mcontext;
     ImageView profileImg;
     String thumbnail;
     regUser reguser;
@@ -51,6 +62,14 @@ public class MypageActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.detail_btn_back_white);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        mcontext = this;
         eName = (TextView) findViewById(R.id.eName);
         eMajor = (EditText) findViewById(R.id.eMajor);
         eUniv = (EditText) findViewById(R.id.eUniv);
@@ -63,9 +82,6 @@ public class MypageActivity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         access_token = pref.getString("access_token", "");
         profileImg = (ImageView)findViewById(R.id.ePro);
-        thumbnail = pref.getString("profile_img","");
-        ThumbnailImage thumb = new ThumbnailImage(thumbnail, profileImg);
-        thumb.execute();
 
         getInfo();
     }
@@ -112,6 +128,22 @@ public class MypageActivity extends AppCompatActivity {
                         eExp.setText(jsonArr.getJSONObject(0).getString("exp"));
                         eSkill.setText(jsonArr.getJSONObject(0).getString("skill"));
 
+                        try {
+                            thumbnail = URLDecoder.decode(jsonArr.getJSONObject(0).getString("profile_img"), "EUC_KR");
+                            Glide.with(mcontext).load(thumbnail).asBitmap().centerCrop().error(R.drawable.icon_user).into(new BitmapImageViewTarget(profileImg) {
+                                @Override
+                                protected void setResource(Bitmap resource) {
+                                    RoundedBitmapDrawable circularBitmapDrawable =
+                                            RoundedBitmapDrawableFactory.create(mcontext.getResources(), resource);
+                                    circularBitmapDrawable.setCircular(true);
+                                    profileImg.setImageDrawable(circularBitmapDrawable);
+                                }
+                            });
+                            //   ThumbnailImage thumb = new ThumbnailImage(thumbnail, profileImg);
+                            //   thumb.execute();
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
                     } catch (JSONException e) {
                     }
                     ;
