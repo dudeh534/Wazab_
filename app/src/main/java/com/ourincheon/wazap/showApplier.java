@@ -258,7 +258,7 @@ public class showApplier extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ((ApplierList)(ApplierList.mContext)).onResume();
+        //((ContestList)(ContestList.mContext)).onResume();
     }
 
     @Override

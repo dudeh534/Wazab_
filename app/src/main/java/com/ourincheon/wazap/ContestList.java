@@ -3,7 +3,10 @@ package com.ourincheon.wazap;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -22,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.gson.Gson;
 import com.ourincheon.wazap.Retrofit.ApplierData;
 import com.ourincheon.wazap.Retrofit.Appliers;
@@ -54,7 +58,7 @@ public class ContestList extends AppCompatActivity {
     ArrayList<ContestData> contest_list;
     int count;
     Button jBefore;
-    String num;
+    String num,access_token, user_id;
     private ListView mListView = null;
     private ListView mListView2 = null;
     private ListViewAdapter mAdapter = null;
@@ -132,8 +136,8 @@ public class ContestList extends AppCompatActivity {
         mListView2 = (ListView) findViewById(R.id.listView1);
 
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-        String access_token = pref.getString("access_token", "");
-        String user_id = pref.getString("user_id", "");
+        access_token = pref.getString("access_token", "");
+        user_id = pref.getString("user_id", "");
 
         contest_list = new ArrayList<ContestData>();
 
@@ -192,6 +196,7 @@ public class ContestList extends AppCompatActivity {
                         JSONArray jsonArr = jsonRes.getJSONArray("data");
                         count = jsonArr.length();
                         System.out.println(count);
+
                         for (int i = 0; i < count; i++) {
 
                             if (Integer.parseInt(jsonArr.getJSONObject(i).getString("is_finish")) == 0) {
@@ -231,6 +236,11 @@ public class ContestList extends AppCompatActivity {
                 Log.e("Error", t.getMessage());
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     void loadApplier(String num, String access_token) {
@@ -698,7 +708,7 @@ public class ContestList extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder1 holder;
+            final ViewHolder1 holder;
             final Context context = parent.getContext();
 
             if (convertView == null) {
@@ -723,10 +733,26 @@ public class ContestList extends AppCompatActivity {
             holder.aName.setText(mData.getUsername());
 
 
-            if (mData.getProfile_img() != null) {
+           /* if (mData.getProfile_img() != null) {
                 Glide.with(mContext).load(mData.getProfile_img()).error(R.drawable.icon_user).override(150, 150).crossFade().into(holder.aImage);
             } else {
                 holder.aImage.setImageDrawable(getResources().getDrawable(R.drawable.icon_user));
+            }
+*/
+            try {
+                String thumb = URLDecoder.decode(mData.getProfile_img(), "EUC_KR");
+                //Glide.with(mContext).load(thumb).error(R.drawable.icon_user).override(50,50).crossFade().into(jImg);
+                Glide.with(mContext).load(thumb).asBitmap().centerCrop().error(R.drawable.icon_user).into(new BitmapImageViewTarget(holder.aImage) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        holder.aImage.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
 
 
@@ -740,12 +766,12 @@ public class ContestList extends AppCompatActivity {
             holder.aPBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(ContestList.this, showProfile.class);
+                    Intent intent = new Intent(ContestList.this, showApplier.class);
                     intent.putExtra("thumbnail", mData.getProfile_img());
                     intent.putExtra("user_id", mData.getApp_users_id());
                     intent.putExtra("applies_id", String.valueOf(mData.getApplies_id()));
                     intent.putExtra("contest_id", num);
-                    intent.putExtra("flag", mData.getIs_check());
+                    intent.putExtra("is_ok", mData.getIs_check());
                     startActivity(intent);
                 }
             });

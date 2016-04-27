@@ -3,6 +3,9 @@ package com.ourincheon.wazap;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.gson.Gson;
 import com.ourincheon.wazap.Retrofit.ApplierData;
 import com.ourincheon.wazap.Retrofit.Appliers;
@@ -201,7 +205,7 @@ public class ApplierList extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
+            final ViewHolder holder;
             final Context context = parent.getContext();
 
             if (convertView == null) {
@@ -226,11 +230,27 @@ public class ApplierList extends AppCompatActivity {
             holder.aName.setText(mData.getUsername());
 
 
-          if (mData.getProfile_img() != null) {
+        /*  if (mData.getProfile_img() != null) {
               Glide.with(mContext).load(mData.getProfile_img()).error(R.drawable.icon_user).override(150,150).crossFade().into(holder.aImage);
           }else{
               holder.aImage.setImageDrawable(getResources().getDrawable(R.drawable.icon_user));
-          }
+          }*/
+
+            try {
+                String thumb = URLDecoder.decode(mData.getProfile_img(), "EUC_KR");
+                //Glide.with(mContext).load(thumb).error(R.drawable.icon_user).override(50,50).crossFade().into(jImg);
+                Glide.with(mContext).load(thumb).asBitmap().centerCrop().error(R.drawable.icon_user).into(new BitmapImageViewTarget(holder.aImage) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        holder.aImage.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
 
 
             // 지원자의 수락여부에 맞게 표시
