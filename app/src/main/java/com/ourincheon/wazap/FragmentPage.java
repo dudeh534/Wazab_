@@ -185,13 +185,20 @@ public class FragmentPage extends Fragment {
     public void onResume() {
         super.onResume();
 
-        /*Bundle bundle = getArguments();
-        int ref = bundle.getInt("refresh");
-        System.out.println("========================= "+ref);
-        if(ref == 1) {
+        //!@#$!$%!!#@!%@!$@!$$
+        ChangeStatus status = ChangeStatus.getInstance();
+        System.out.println("=========================Refresh " + status.getNewed());
+        if(status.getNewed()==1) {
             items = new ArrayList<>();
             loadPage(access_token);
-*/
+            status.removeNewed();
+        }
+        else if(status.getDeleted()==1) {
+            items = new ArrayList<>();
+            loadPage(access_token);
+            status.removeDeleted();
+        }
+        //!@#$!$%!!#@!%@!$@!$$
     }
 
     @Override

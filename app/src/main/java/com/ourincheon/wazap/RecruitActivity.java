@@ -265,6 +265,10 @@ public class RecruitActivity extends AppCompatActivity {
                     else
                         editCon(contest2);
 
+                //!@#$!$%!!#@!%@!$@!$$
+                    ChangeStatus status = ChangeStatus.getInstance();
+                    status.setNewed();
+                //!@#$!$%!!#@!%@!$@!$$
                     finish();
                 }
             }
@@ -472,6 +476,7 @@ public class RecruitActivity extends AppCompatActivity {
 
                     if (result) {
                         Log.d("저장 결과: ", msg);
+
                         Toast.makeText(getApplicationContext(), "저장되었습니다.", Toast.LENGTH_SHORT).show();
 
                     } else {

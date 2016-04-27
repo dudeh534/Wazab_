@@ -22,6 +22,6 @@ public class Dday {
         cal.set(year, month - 1, day);
         int dday = (int) (cal.getTimeInMillis() / (1000 * 60 * 60 * 24) - currentTime);
 
-        return dday;
+        return dday+1;
     }
 }

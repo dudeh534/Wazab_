@@ -134,8 +134,13 @@ public class MasterJoinActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0)
                     editCont();
-                if (which == 1)
+                if (which == 1) {
+                    //!@#$!$%!!#@!%@!$@!$$
+                    ChangeStatus status = ChangeStatus.getInstance();
+                    status.setDeleted();
+                    //!@#$!$%!!#@!%@!$@!$$
                     delCont();
+                }
                 if (which == 2)
                     dialog.cancel();
             }
