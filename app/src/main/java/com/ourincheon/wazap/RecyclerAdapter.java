@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.internal.LinkedTreeMap;
@@ -259,8 +258,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
 
 
-
-
     }
 
 
@@ -359,7 +356,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return this.items.size();
+        if(items == null){
+            return 0;
+        }else {
+            return this.items.size();
+        }
+
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -387,4 +390,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             c2 =(ImageView) itemView.findViewById(R.id.imageView2);
         }
     }
+
 }

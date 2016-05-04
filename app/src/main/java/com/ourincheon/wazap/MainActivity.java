@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
     String thumbnail;
     Context context;
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

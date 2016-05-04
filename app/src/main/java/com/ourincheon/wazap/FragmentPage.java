@@ -1,5 +1,6 @@
 package com.ourincheon.wazap;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 
 import com.google.gson.Gson;
 import com.ourincheon.wazap.Retrofit.Contests;
@@ -49,6 +49,9 @@ public class FragmentPage extends Fragment {
     Recycler_contestItem[] contestItem;
     String access_token;
     SwipeRefreshLayout swipeRefreshLayout;
+    private static int ival = 0;
+    private static int loadLimit = 5;
+    ProgressDialog dialog;
 
     public static FragmentPage newInstance(int position) {
         FragmentPage f = new FragmentPage();
@@ -88,6 +91,7 @@ public class FragmentPage extends Fragment {
         cont_it = new ArrayList<>();
         cont_foreign = new ArrayList<>();
         cont_etc = new ArrayList<>();
+        loadPage(access_token);
     }
 
 
@@ -96,7 +100,7 @@ public class FragmentPage extends Fragment {
         switch (position) {
             //* 모집글 리스트 프래그먼트 *//
             case 0:
-                linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_page, container, false);
+                linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_page,null,true);
                 swipeRefreshLayout = (SwipeRefreshLayout) linearLayout.findViewById(R.id.swipeRefresh);
                 swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
@@ -107,37 +111,32 @@ public class FragmentPage extends Fragment {
                     }
                 });
                 LinearLayout linearLayout_spinner = (LinearLayout) linearLayout.findViewById(R.id.linearLayout_mother);
-                Spinner spinner = (Spinner) linearLayout_spinner.findViewById(R.id.spinner);//스피너
                 content = (RecyclerView) swipeRefreshLayout.findViewById(R.id.recyclerView);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                 content.setHasFixedSize(true);
                 content.setLayoutManager(layoutManager);
 
+                content.addOnScrollListener(new EndlessRecyclerViewScrollListener(layoutManager) {
+                    @Override
+                    public void onLoadMore(int page, int totalItemsCount) {
+                        //loadPageMore(access_token);
+                    }
+                });
        /*         Bundle bundle = getArguments();
                 int category = bundle.getInt("position");
                 Toast.makeText(getContext(), "ccccccccccccccccc" + category, Toast.LENGTH_SHORT).show();
 */
                 // 모집글 페이지 로드
-                loadPage(access_token);//, category);
+               //, category);
 
 
                 // 전체 카드뷰 누를 경우 - 기능 없음
-                content.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), content, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                    }
-
-                    @Override
-                    public void onItemLongClick(View view, int position) {
-                    }
-                }));
 
                 //rec = new RecyclerAdapter(getActivity(), items, R.layout.fragment_page);
-                linearLayout_spinner.removeAllViews();
-                linearLayout_spinner.addView(spinner);
-                linearLayout.removeAllViews();
-                linearLayout.addView(swipeRefreshLayout);
-                linearLayout.addView(linearLayout_spinner);
+//                linearLayout.removeAllViews();
+//
+//                linearLayout.addView(swipeRefreshLayout);
+
                 return linearLayout;
 
 
@@ -186,18 +185,18 @@ public class FragmentPage extends Fragment {
         super.onResume();
 
         //!@#$!$%!!#@!%@!$@!$$
-        ChangeStatus status = ChangeStatus.getInstance();
-        System.out.println("=========================Refresh " + status.getNewed());
-        if(status.getNewed()==1) {
-            items = new ArrayList<>();
-            loadPage(access_token);
-            status.removeNewed();
-        }
-        else if(status.getDeleted()==1) {
-            items = new ArrayList<>();
-            loadPage(access_token);
-            status.removeDeleted();
-        }
+//        ChangeStatus status = ChangeStatus.getInstance();
+//        System.out.println("=========================Refresh " + status.getNewed());
+//        if(status.getNewed()==1) {
+//            items = new ArrayList<>();
+//            loadPage(access_token);
+//            status.removeNewed();
+//        }
+//        else if(status.getDeleted()==1) {
+//            items = new ArrayList<>();
+//            loadPage(access_token);
+//            status.removeDeleted();
+//        }
         //!@#$!$%!!#@!%@!$@!$$
     }
 
@@ -232,7 +231,8 @@ public class FragmentPage extends Fragment {
 
                     contestItem = new Recycler_contestItem[weekly.getDatasize()];
                     Dday day = new Dday();
-
+                    //
+                    contestItems.clear();
                     for (int i = 0; i < weekly.getDatasize(); i++) {
                         contestItem[i] = new Recycler_contestItem(weekly.getData(i).getTITLE(),
                                 weekly.getData(i).getHOSTING(),
@@ -308,8 +308,8 @@ public class FragmentPage extends Fragment {
                     Log.d("SUCESS-----", result);
 
                     item = new Recycler_item[contest.getDatasize()];
-
-                    for (int i = 0; i < contest.getDatasize(); i++) {
+                    items.clear();
+                    for (int i = 0; i < 5; i++) {
                         String[] parts = contest.getData(i).getPeriod().split("T");
                         Dday day = new Dday();
 
@@ -349,7 +349,6 @@ public class FragmentPage extends Fragment {
 */
                         rec = new RecyclerAdapter(getActivity(), items, R.layout.fragment_page);
                         content.setAdapter(rec);
-
                     }
 
                 } else if (response.isSuccess()) {
@@ -366,5 +365,92 @@ public class FragmentPage extends Fragment {
             }
         });
 
+    }
+    void loadPageMore(String access_token)//, final int category)
+    {
+        dialog = ProgressDialog.show(getActivity(), "",
+                "로딩 중입니다. 잠시 기다려주세요", true);
+        loadLimit = ival + 5;
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://come.n.get.us.to/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        WazapService service = retrofit.create(WazapService.class);
+
+
+        System.out.println("------------------------" + access_token);
+        Call<Contests> call = service.getContests(access_token, 300);
+        call.enqueue(new Callback<Contests>() {
+            @Override
+            public void onResponse(Response<Contests> response) {
+                if (response.isSuccess() && response.body() != null) {
+                    Log.d("SUCCESS", response.message());
+                    contest = response.body();
+
+                    String result = new Gson().toJson(contest);
+                    Log.d("SUCESS-----", result);
+
+                    item = new Recycler_item[contest.getDatasize()];
+                    items.clear();
+                    for (int i = 0; i < contest.getDatasize(); i++) {
+                        String[] parts = contest.getData(i).getPeriod().split("T");
+                        Dday day = new Dday();
+
+                        item[i] = new Recycler_item(contest.getData(i).getTitle(),
+                                contest.getData(i).getCont_title(), contest.getData(i).getUsername(),
+                                contest.getData(i).getRecruitment(),
+                                contest.getData(i).getMembers(),
+                                contest.getData(i).getIs_clip(),
+                                contest.getData(i).getCategories(), contest.getData(i).getCont_locate(),
+                                "D - " + day.dday(parts[0]),
+                                contest.getData(i).getContests_id(),
+                                contest.getData(i).getCont_writer(),
+                                contest.getData(i).getIs_finish()
+                        );
+                        items.add(item[i]);
+                       /* *//*try {
+                            String cates = contest.getData(i).getCates().substring(1, contest.getData(i).getCates().length() - 1);
+                            String str = "";
+                            String[] temp = cates.split("\"");
+                            for (int j = 0; j < temp.length; j++)
+                                str += temp[j] + " ";
+                            String[] temp2 = str.split(" , ");
+                            for (int j = 0; j < temp2.length; j++) {
+                                if (temp2[j].trim().equals("광고/아이디어/마케팅"))
+                                    marketing.add(item[i]);
+                                else if (temp2[j].trim().equals("디자인"))
+                                    design.add(item[i]);
+                                else if (temp2[j].trim().equals("사진/영상/UCC"))
+                                    photo.add(item[i]);
+                                else if (temp2[j].trim().equals("게임/소프트웨어"))
+                                    it.add(item[i]);
+                                else if (temp2[j].trim().equals("해외"))
+                                    foreign.add(item[i]);
+                                else
+                                    etc.add(item[i]);
+                            }
+*/
+                        rec = new RecyclerAdapter(getActivity(), items, R.layout.fragment_page);
+                        int cursize = rec.getItemCount();
+                        rec.notifyItemRangeInserted(cursize,items.size()-1);
+                        content.setAdapter(rec);
+
+                    }
+
+                } else if (response.isSuccess()) {
+                    Log.d("Response Body isNull", response.message());
+                } else {
+                    Log.d("Response Error Body", response.errorBody().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+                Log.e("Error", t.getMessage());
+            }
+        });
+        dialog.dismiss();
     }
 }
