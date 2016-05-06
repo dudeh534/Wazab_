@@ -203,6 +203,14 @@ public interface WazapService {
             @Header("access-token") String access_token,
             @Path("state_name") String state_name
     );
+
+    // 카테고리 받아오기
+    @GET("contests/{category_name}")
+    Call<Contests> getContestsByCategory(
+            @Header("access-token") String access_token,
+            @Path("category_name") String name,
+            @Query("amount") int amount
+    );
 }
 
 

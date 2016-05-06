@@ -12,7 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import com.google.gson.Gson;
 import com.ourincheon.wazap.Retrofit.Contests;
@@ -33,6 +35,7 @@ import retrofit2.Retrofit;
 public class FragmentPage extends Fragment {
 
     private static final String ARG_POSITION = "position";
+    private static final String[] Category={" ","광고/아이디어/마케팅","디자인","사진/UCC","해외","게임/소프트웨어","기타"};
     public static Context mContext;
     RecyclerView content;
     LinearLayout linearLayout;
@@ -49,6 +52,7 @@ public class FragmentPage extends Fragment {
     Recycler_contestItem[] contestItem;
     String access_token;
     SwipeRefreshLayout swipeRefreshLayout;
+    private int category_value =0;
     private static int ival = 0;
     private static int loadLimit = 5;
     ProgressDialog dialog;
@@ -111,6 +115,21 @@ public class FragmentPage extends Fragment {
                     }
                 });
                 LinearLayout linearLayout_spinner = (LinearLayout) linearLayout.findViewById(R.id.linearLayout_mother);
+                Spinner spinner = (Spinner) linearLayout_spinner.findViewById(R.id.spinner);
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqq " + position);
+                        category_value= position;
+                        loadPage(access_token);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
                 content = (RecyclerView) swipeRefreshLayout.findViewById(R.id.recyclerView);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                 content.setHasFixedSize(true);
@@ -184,20 +203,20 @@ public class FragmentPage extends Fragment {
     public void onResume() {
         super.onResume();
 
-        //!@#$!$%!!#@!%@!$@!$$
-//        ChangeStatus status = ChangeStatus.getInstance();
-//        System.out.println("=========================Refresh " + status.getNewed());
-//        if(status.getNewed()==1) {
-//            items = new ArrayList<>();
-//            loadPage(access_token);
-//            status.removeNewed();
-//        }
-//        else if(status.getDeleted()==1) {
-//            items = new ArrayList<>();
-//            loadPage(access_token);
-//            status.removeDeleted();
-//        }
-        //!@#$!$%!!#@!%@!$@!$$
+        //추가,삭제시 업데이트
+        ChangeStatus status = ChangeStatus.getInstance();
+        System.out.println("=========================Refresh " + status.getNewed());
+        if(status.getNewed()==1) {
+            items = new ArrayList<>();
+            loadPage(access_token);
+            status.removeNewed();
+        }
+        else if(status.getDeleted()==1) {
+            items = new ArrayList<>();
+            loadPage(access_token);
+            status.removeDeleted();
+        }
+
     }
 
     @Override
@@ -295,8 +314,10 @@ public class FragmentPage extends Fragment {
         WazapService service = retrofit.create(WazapService.class);
 
 
-        System.out.println("------------------------" + access_token);
+        System.out.println("------------------------" +category_value+ access_token);
         Call<Contests> call = service.getContests(access_token, 300);
+        if(category_value!=0)
+            call = service.getContestsByCategory(access_token,Category[category_value], 300);
         call.enqueue(new Callback<Contests>() {
             @Override
             public void onResponse(Response<Contests> response) {
@@ -309,7 +330,8 @@ public class FragmentPage extends Fragment {
 
                     item = new Recycler_item[contest.getDatasize()];
                     items.clear();
-                    for (int i = 0; i < 5; i++) {
+
+                    for (int i = 0; i < contest.getDatasize(); i++) {
                         String[] parts = contest.getData(i).getPeriod().split("T");
                         Dday day = new Dday();
 
@@ -325,31 +347,12 @@ public class FragmentPage extends Fragment {
                                 contest.getData(i).getIs_finish()
                         );
                         items.add(item[i]);
-                       /* *//*try {
-                            String cates = contest.getData(i).getCates().substring(1, contest.getData(i).getCates().length() - 1);
-                            String str = "";
-                            String[] temp = cates.split("\"");
-                            for (int j = 0; j < temp.length; j++)
-                                str += temp[j] + " ";
-                            String[] temp2 = str.split(" , ");
-                            for (int j = 0; j < temp2.length; j++) {
-                                if (temp2[j].trim().equals("광고/아이디어/마케팅"))
-                                    marketing.add(item[i]);
-                                else if (temp2[j].trim().equals("디자인"))
-                                    design.add(item[i]);
-                                else if (temp2[j].trim().equals("사진/영상/UCC"))
-                                    photo.add(item[i]);
-                                else if (temp2[j].trim().equals("게임/소프트웨어"))
-                                    it.add(item[i]);
-                                else if (temp2[j].trim().equals("해외"))
-                                    foreign.add(item[i]);
-                                else
-                                    etc.add(item[i]);
-                            }
-*/
+
                         rec = new RecyclerAdapter(getActivity(), items, R.layout.fragment_page);
                         content.setAdapter(rec);
+
                     }
+
 
                 } else if (response.isSuccess()) {
                     Log.d("Response Body isNull", response.message());
