@@ -35,7 +35,7 @@ import retrofit2.Retrofit;
 public class FragmentPage extends Fragment {
 
     private static final String ARG_POSITION = "position";
-    private static final String[] Category={" ","광고/아이디어/마케팅","디자인","사진/UCC","해외","게임/소프트웨어","기타"};
+    private static final String[] Category={" ","광고/아이디어/마케팅","디자인","사진/UCC","게임/소프트웨어","해외","기타"};
     public static Context mContext;
     RecyclerView content;
     LinearLayout linearLayout;

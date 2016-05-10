@@ -205,10 +205,10 @@ public interface WazapService {
     );
 
     // 카테고리 받아오기
-    @GET("contests/{category_name}")
+    @GET("contests/categories")
     Call<Contests> getContestsByCategory(
             @Header("access-token") String access_token,
-            @Path("category_name") String name,
+            @Query("category_name") String name,
             @Query("amount") int amount
     );
 }
