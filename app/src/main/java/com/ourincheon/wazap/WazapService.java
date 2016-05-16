@@ -70,6 +70,14 @@ public interface WazapService {
             @Query("amount") int amount
     );
 
+    // 메인목록 받아오기
+    @GET("contests")
+    Call<Contests> getContests(
+            @Header("access-token") String access_token,
+            @Query("start_id") int start_id,
+            @Query("amount") int amount
+    );
+
     // 상세 정보 받아오기
     @GET("contests/{contest_id}")
     Call<reqContest> getConInfo(
