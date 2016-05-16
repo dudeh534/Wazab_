@@ -188,8 +188,6 @@ public class ContestList extends AppCompatActivity {
                     contests = response.body();
 
                     String result = new Gson().toJson(contests);
-                    Log.d("SUCESS-----", result);
-
                     JSONObject jsonRes;
                     try {
                         jsonRes = new JSONObject(result);
@@ -423,14 +421,7 @@ public class ContestList extends AppCompatActivity {
                                     Log.e("Error", t.getMessage());
                                 }
                             });
-
-
                         }
-
-
-//                        Intent intent = new Intent(ContestList.this, ApplierList.class);
-//                        intent.putExtra("id",String.valueOf(mData.getContests_id()));
-//                        startActivity(intent);
                     }
                 });
 
@@ -519,14 +510,7 @@ public class ContestList extends AppCompatActivity {
                                     Log.e("Error", t.getMessage());
                                 }
                             });
-
-
                         }
-
-
-//                        Intent intent = new Intent(ContestList.this, ApplierList.class);
-//                        intent.putExtra("id",String.valueOf(mData.getContests_id()));
-//                        startActivity(intent);
                     }
                 });
 
@@ -543,20 +527,13 @@ public class ContestList extends AppCompatActivity {
 
             Dday day = new Dday();
             holder.Dday.setText("D - " + day.dday(mData.getPeriod()));
-
             holder.Title.setText(mData.getTitle());
-
             holder.Cate.setText("모집인원 " + String.valueOf(mData.getRecruitment()) + "명");
-
             holder.Man.setText("신청인원 " + mData.getAppliers() + "명");
-
             holder.Member.setText("확정인원 " + mData.getMembers() + "명");
-
 
             return convertView;
         }
-
-
     }
 
     private class Not_ListViewAdapter extends BaseAdapter {
@@ -629,17 +606,9 @@ public class ContestList extends AppCompatActivity {
 
             ContestData mData = mListData.get(position);
 
-            // System.out.println(mData.getAppliers());
-
-            Dday day = new Dday();
-            // holder.Dday.setText("D "+day.dday(mData.getPeriod()));
-
             holder.Title.setText(mData.getTitle());
-
             holder.Cate.setText("모집인원 " + String.valueOf(mData.getRecruitment()) + "명");
-
             holder.Man.setText("신청인원 " + mData.getAppliers() + "명");
-
             holder.Member.setText("확정인원 " + mData.getMembers() + "명");
 
             return convertView;

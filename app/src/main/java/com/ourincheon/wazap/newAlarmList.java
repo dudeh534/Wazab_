@@ -106,7 +106,7 @@ public class newAlarmList extends AppCompatActivity {
         mListView.setAdapter(mAdapter);
     }
 
-    //*** 레이아웃 그려줄때 사용 ***//
+    //*** 레이아웃 그려줄때 사용 -높이계산용 ***//
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {

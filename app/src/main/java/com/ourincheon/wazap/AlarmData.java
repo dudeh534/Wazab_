@@ -8,13 +8,11 @@ import java.util.Comparator;
 
 import android.graphics.drawable.Drawable;
 
+// alarm 관련 데이터 저장
 public class AlarmData {
-
 
     public Drawable mIcon;
     String profile_img;
-
-
     String username;
     int alram_id;
     String msg;
@@ -86,19 +84,5 @@ public class AlarmData {
     public void setIs_check(int is_check) {
         this.is_check = is_check;
     }
-//public String mTitle;
 
-    //public String mDate;
-
-
-    /*
-    public static final Comparator<AlarmData> ALPHA_COMPARATOR = new Comparator<AlarmData>() {
-        private final Collator sCollator = Collator.getInstance();
-
-        @Override
-        public int compare(ListData mListDate_1, AlarmData mListDate_2) {
-            return sCollator.compare(mListDate_1.mTitle, mListDate_2.mTitle);
-        }
-    };
-    */
 }

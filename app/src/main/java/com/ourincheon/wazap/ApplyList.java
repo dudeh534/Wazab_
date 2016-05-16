@@ -76,17 +76,16 @@ public class ApplyList extends AppCompatActivity {
 
         loadApply(access_token);
 
+        // 롱 터치시, 삭제
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("신청 목록 지우기").setMessage("해당 신청공모전을 지우시겠습니까?")
                 .setCancelable(true).setPositiveButton("지우기", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //finish();
                 System.out.println("----------------------"+posi);
                 ContestData mData = mAdapter.mListData.get(posi);
                 contest_id = String.valueOf(mData.getContests_id());
                 deleteApply(contest_id,apply_id[posi]);
-               // loadApply(access_token);
             }
         }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
             @Override
@@ -105,18 +104,19 @@ public class ApplyList extends AppCompatActivity {
             }
         });
 
+        // 터치 시, 상세페이지보기로 이동
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 ContestData mData = mAdapter.mListData.get(position);
-               // Toast.makeText(AlarmList.this, mData.msg_url, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ApplyList.this, JoinActivity.class);
                 intent.putExtra("id",String.valueOf(mData.getContests_id()));
                 startActivity(intent);
             }
         });
 
+        // 이전버튼 누를시, 창닫힘
         jBefore = (Button) findViewById(R.id.aBefore);
         jBefore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +132,8 @@ public class ApplyList extends AppCompatActivity {
         mListView2.setAdapter(not_listAdapter);
     }
 
+
+    //*** 서버에 신청취소 요청 ***//
     void deleteApply(String contest, String apply)
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -141,7 +143,6 @@ public class ApplyList extends AppCompatActivity {
 
         WazapService service = retrofit.create(WazapService.class);
 
-        System.out.println("-------------------"+access_token);
 
         Call<LinkedTreeMap> call = service.delApply(contest, access_token);
         call.enqueue(new Callback<LinkedTreeMap>() {
@@ -184,6 +185,7 @@ public class ApplyList extends AppCompatActivity {
         loadApply(access_token);
     }
 
+    //*** 레이아웃 그려줄때 사용 -높이계산용 ***//
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
@@ -203,6 +205,7 @@ public class ApplyList extends AppCompatActivity {
         listView.requestLayout();
     }
 
+    //*** 서버에서 신청목록 불러오기 ***//
     void loadApply(String access_token)
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -222,8 +225,6 @@ public class ApplyList extends AppCompatActivity {
                     applies = response.body();
 
                     String result = new Gson().toJson(applies);
-                    Log.d("SUCESS-----", result);
-
                     JSONObject jsonRes;
                     try {
                         jsonRes = new JSONObject(result);
@@ -238,7 +239,7 @@ public class ApplyList extends AppCompatActivity {
                             if(Integer.parseInt(jsonArr.getJSONObject(i).getString("is_finish")) == 0) {
                                 cont_id[i] = jsonArr.getJSONObject(i).getString("contests_id");
                                 apply_id[i] = jsonArr.getJSONObject(i).getString("applies_id");
-
+                                // 마감안된 리스트 정보 받아오기
                                 mAdapter.addItem(jsonArr.getJSONObject(i).getString("title"),
                                         jsonArr.getJSONObject(i).getString("period"),
                                         Integer.parseInt(jsonArr.getJSONObject(i).getString("applies_id")),
@@ -247,6 +248,7 @@ public class ApplyList extends AppCompatActivity {
                                         Integer.parseInt(jsonArr.getJSONObject(i).getString("contests_id")),
                                         Integer.parseInt(jsonArr.getJSONObject(i).getString("members")));
                             }else{
+                                // 마감된 리스트 정보 받아오기
                                 not_listAdapter.addItem(jsonArr.getJSONObject(i).getString("title"),
                                         jsonArr.getJSONObject(i).getString("period"),
                                         Integer.parseInt(jsonArr.getJSONObject(i).getString("applies_id")),
@@ -282,7 +284,6 @@ public class ApplyList extends AppCompatActivity {
 
 
     private class ViewHolder {
-        // public ImageView mIcon;
         public TextView Dday;
         public TextView Title;
         public TextView Cate;
@@ -316,6 +317,7 @@ public class ApplyList extends AppCompatActivity {
             return position;
         }
 
+        //* 마감안된 리스트에 내용추가하기 *//
         public void addItem(String title, String period, int apply_id, int apply, int recruit, int id, int member){
             ContestData addInfo = null;
             addInfo = new ContestData();
@@ -328,11 +330,7 @@ public class ApplyList extends AppCompatActivity {
             addInfo.setMembers(member);
             addInfo.setTitle(title);
 
-
-            System.out.println("----------------33333333   " + member);
-            System.out.println("-------------------------"+addInfo.getMembers());
             mListData.add(addInfo);
-
         }
 
         public void remove(int position){
@@ -359,6 +357,7 @@ public class ApplyList extends AppCompatActivity {
                 holder.Man = (TextView) convertView.findViewById(R.id.man);
                 holder.Member = (TextView) convertView.findViewById(R.id.member);
 
+                // 신청취소 버튼 누를경우, 서버로 취소요청
                 holder.Detail = (Button) convertView.findViewById(R.id.detail);
                 holder.Detail.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -369,6 +368,7 @@ public class ApplyList extends AppCompatActivity {
                     }
                 });
 
+                // 신청취소 버튼영역 누를경우, 서버로 취소요청
                 holder.DetailArea = (LinearLayout) convertView.findViewById(R.id.btnArea);
                 holder.DetailArea.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -385,22 +385,17 @@ public class ApplyList extends AppCompatActivity {
 
             ContestData mData = mListData.get(position);
 
-            // System.out.println(mData.getAppliers());
-
             Dday day = new Dday();
             holder.Dday.setText("D - "+day.dday(mData.getPeriod()));
-
             holder.Title.setText(mData.getTitle());
-
             holder.Cate.setText("모집인원 " + String.valueOf(mData.getRecruitment()) + "명");
-
             holder.Man.setText("신청인원 "+mData.getAppliers() + "명");
-
             holder.Member.setText("확정인원 " + mData.getMembers() + "명");
 
             return convertView;
         }
     }
+
 
     private class Not_ListViewAdapter extends BaseAdapter {
         private Context mContext = null;
@@ -426,6 +421,7 @@ public class ApplyList extends AppCompatActivity {
             return position;
         }
 
+        //* 마감된 리스트에 내용추가하기 *//
         public void addItem(String title, String period, int apply_id, int apply, int recruit, int id, int member){
             ContestData addInfo = null;
             addInfo = new ContestData();
@@ -438,10 +434,7 @@ public class ApplyList extends AppCompatActivity {
             addInfo.setMembers(member);
             addInfo.setTitle(title);
 
-            System.out.println("----------------33333333   " + member);
-            System.out.println("-------------------------"+addInfo.getMembers());
             mListData.add(addInfo);
-
         }
 
         public void remove(int position){
@@ -475,17 +468,9 @@ public class ApplyList extends AppCompatActivity {
 
             ContestData mData = mListData.get(position);
 
-            // System.out.println(mData.getAppliers());
-
-            Dday day = new Dday();
-            // holder.Dday.setText("D "+day.dday(mData.getPeriod()));
-
             holder.Title.setText(mData.getTitle());
-
             holder.Cate.setText("모집인원 " + String.valueOf(mData.getRecruitment()) + "명");
-
             holder.Man.setText("신청인원 "+mData.getAppliers() + "명");
-
             holder.Member.setText("확정인원 " + mData.getMembers() + "명");
 
             return convertView;

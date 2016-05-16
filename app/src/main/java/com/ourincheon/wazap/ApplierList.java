@@ -105,8 +105,6 @@ public class ApplierList extends AppCompatActivity {
                     appliers = response.body();
 
                     String result = new Gson().toJson(appliers);
-                    Log.d("SUCESS-----", result);
-
                     JSONObject jsonRes;
                     try {
                         jsonRes = new JSONObject(result);
@@ -115,12 +113,11 @@ public class ApplierList extends AppCompatActivity {
                         System.out.println(count);
                         mAdapter = new ListViewAdapter(mContext);
                         for (int i = 0; i < count; i++) {
-                            System.out.println("===="+Integer.parseInt(jsonArr.getJSONObject(i).getString("is_check")));
                             mAdapter.addItem(jsonArr.getJSONObject(i).getString("profile_img"),
                                     jsonArr.getJSONObject(i).getString("username"),
                                     jsonArr.getJSONObject(i).getString("app_users_id"),
                                     Integer.parseInt(jsonArr.getJSONObject(i).getString("applies_id")),
-                                            Integer.parseInt(jsonArr.getJSONObject(i).getString("is_check")));
+                                    Integer.parseInt(jsonArr.getJSONObject(i).getString("is_check")));
                         }
                         mListView.setAdapter(mAdapter);
 
@@ -229,13 +226,6 @@ public class ApplierList extends AppCompatActivity {
 
             holder.aName.setText(mData.getUsername());
 
-
-        /*  if (mData.getProfile_img() != null) {
-              Glide.with(mContext).load(mData.getProfile_img()).error(R.drawable.icon_user).override(150,150).crossFade().into(holder.aImage);
-          }else{
-              holder.aImage.setImageDrawable(getResources().getDrawable(R.drawable.icon_user));
-          }*/
-
             try {
                 String thumb = URLDecoder.decode(mData.getProfile_img(), "EUC_KR");
                 //Glide.with(mContext).load(thumb).error(R.drawable.icon_user).override(50,50).crossFade().into(jImg);
@@ -273,16 +263,6 @@ public class ApplierList extends AppCompatActivity {
                 }
             });
 
-          /*  holder.aPBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(ApplierList.this, showMypageActivity.class);
-                    intent.putExtra("user_id", mData.getApp_users_id());
-                    intent.putExtra("flag",3);
-                    startActivity(intent);
-                }
-            });
-*/
             return convertView;
         }
     }

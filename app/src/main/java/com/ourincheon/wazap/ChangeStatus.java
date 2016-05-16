@@ -3,6 +3,8 @@ package com.ourincheon.wazap;
 /**
  * Created by hsue on 16. 4. 27.
  */
+
+//*** 모집글 추가,삭제 등 동작시 flag저장 ***//
 public class ChangeStatus {
     int deleted;
     int newed;

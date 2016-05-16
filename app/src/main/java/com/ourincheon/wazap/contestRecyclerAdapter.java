@@ -44,26 +44,22 @@ public class contestRecyclerAdapter extends RecyclerView.Adapter<contestRecycler
         public void onBindViewHolder(ViewHolder holder, final int position) {
             final Recycler_contestItem item = items.get(position);
 
-            Log.d("SUCESS-----", item.getTitle());
             holder.title.setText(item.getTitle());
             holder.text_con.setText(item.getHost());
             holder.dday.setText(item.getDday());
             holder.date.setText(item.getDate());
 
-            //holder.imageView.setBackgroundResource(R.drawable.testcontest);
             Glide.with(context).load(item.getImg()).error(R.drawable.testcontest).override(400,100).centerCrop().crossFade().into(holder.imageView);
 
+            // 각각 카드뷰 누를 경우, 상세 공모전 보기로 이동
             holder.cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Intent intent = new Intent(, showWeeklyActivity.class);
-                    //activity.startActivity(new Intent(activity,showWeeklyActivity.class));
                     Intent intent = new Intent(context, showWeeklyActivity.class);
                     intent.putExtra("Item", item);
                     context.startActivity(intent);
                 }
             });
-
 
             // 카테고리별 분류
             String[] temp=item.getCategory().split(",");
@@ -81,20 +77,6 @@ public class contestRecyclerAdapter extends RecyclerView.Adapter<contestRecycler
                 else
                     holder.category.setBackgroundResource(R.drawable.detail_icon_scenario);
             }
-        /*
-            if(item.getCategory().equals("사진/영상/UCC"))
-                holder.category.setBackgroundResource(R.drawable.detail_icon_video);시
-            else if(item.getCategory().equals("디자인/플래"))
-                holder.category.setBackgroundResource(R.drawable.detail_icon_design);
-            else if(item.getCategory().equals("게임/소프트웨어"))
-                holder.category.setBackgroundResource(R.drawable.detail_icon_it);
-            else if(item.getCategory().equals("해외"))
-                holder.category.setBackgroundResource(R.drawable.detail_icon_idea);
-            else if(item.getCategory().equals("광고/아이디어/마케팅"))
-                holder.category.setBackgroundResource(R.drawable.detail_icon_marketing);
-            else
-                holder.category.setBackgroundResource(R.drawable.detail_icon_scenario);
-*/
         }
 
         @Override
