@@ -55,7 +55,6 @@ public class newAlarmList extends AppCompatActivity {
     Alarms alarms;
     ArrayList<AlarmData> alarm_list;
     int count;
-    AlarmData con;
     Intent intent;
     String access_token;
     Button jBefore;
@@ -66,9 +65,7 @@ public class newAlarmList extends AppCompatActivity {
         setContentView(R.layout.activity_new_alarm_list);
 
         context = this;
-
         mListView = (ListView) findViewById(R.id.alistView);
-
         scrollView = (ScrollView) findViewById(R.id.scrollView1);
 
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
@@ -76,14 +73,15 @@ public class newAlarmList extends AppCompatActivity {
 
         alarm_list = new ArrayList<AlarmData>();
 
-        loadAlarm(access_token);
+        loadAlarm(access_token);            // 서버에서 정보 받아오기
 
+        // 알람 목록 중 선택했을 경우
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 AlarmData mData = mAdapter.mListData.get(position);
-                Toast.makeText(newAlarmList.this, mData.msg_url, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(newAlarmList.this, mData.msg_url, Toast.LENGTH_SHORT).show();
                 String temp = mData.msg_url.substring(0, 14);
 
                 System.out.println(temp);
@@ -95,6 +93,7 @@ public class newAlarmList extends AppCompatActivity {
             }
         });
 
+        // 뒤로가는 버튼 누를 경우
         jBefore = (Button) findViewById(R.id.aBefore);
         jBefore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +106,7 @@ public class newAlarmList extends AppCompatActivity {
         mListView.setAdapter(mAdapter);
     }
 
+    //*** 레이아웃 그려줄때 사용 ***//
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
@@ -127,6 +127,7 @@ public class newAlarmList extends AppCompatActivity {
     }
 
 
+    //*** 서버에서 알람목록 가져오기 ***//
     void loadAlarm(String access_token)
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -135,8 +136,6 @@ public class newAlarmList extends AppCompatActivity {
                 .build();
 
         WazapService service = retrofit.create(WazapService.class);
-
-
 
         Call<Alarms> call = service.getAlarmlist(access_token, 200);
         call.enqueue(new Callback<Alarms>() {
@@ -147,10 +146,10 @@ public class newAlarmList extends AppCompatActivity {
                     Log.d("SUCCESS", response.message());
                     alarms = response.body();
 
-
                     String result = new Gson().toJson(alarms);
-                    Log.d("SUCESS-----", result);
+                    //Log.d("SUCESS-----", result);
 
+                    // adapter에 data추가
                     JSONObject jsonRes;
                     try {
                         jsonRes = new JSONObject(result);
@@ -220,6 +219,7 @@ public class newAlarmList extends AppCompatActivity {
             return position;
         }
 
+        //* 서버에서 받은값 저장 *//
         public void addItem(String msg_url, String msg, String date, String img ,int alarm_id, int is_check, String username){
             AlarmData addInfo = null;
             addInfo = new AlarmData();
@@ -249,6 +249,7 @@ public class newAlarmList extends AppCompatActivity {
             mAdapter.notifyDataSetChanged();
         }
 
+        //* 화면에 목록 그리기 *//
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             final ViewHolder holder;
@@ -269,6 +270,7 @@ public class newAlarmList extends AppCompatActivity {
 
             AlarmData mData = mListData.get(position);
 
+            // 알람이미지 불러오기
             try {
                 String thumb = URLDecoder.decode(mData.getProfile_img(), "EUC_KR");
                 //    Glide.with(context).load(thumb).error(R.drawable.icon_user).override(50,50).crossFade().into(jImg);
@@ -285,6 +287,7 @@ public class newAlarmList extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            // 알람 메세지,날짜 불러오기
             holder.mText.setText(mData.username + mData.msg);
             holder.mDate.setText(mData.alramdate);
 

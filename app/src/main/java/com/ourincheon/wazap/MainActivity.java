@@ -66,28 +66,6 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
             }
         });
 
-
-  /*      final TextView spinnerT =(TextView)findViewById(R.id.spinnerT);
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //spinnerT.setText(""+parent.getItemAtPosition(position));기
-
-                *//****fragment로 값보내****//*
-                FragmentPage fragment = new FragmentPage();
-                Bundle bundle = new Bundle();
-                bundle.putInt("category",position);
-                fragment.setArguments(bundle);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-*/
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -115,13 +93,10 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
         // 사용자 이름, 이미지 불러오기
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-       nickname.setText(pref.getString("name",""));
-
+        nickname.setText(pref.getString("name",""));
         profileImg = (ImageView)header.findViewById(R.id.imageView);
-       thumbnail = pref.getString("profile_img","");
-    //    ThumbnailImage thumb = new ThumbnailImage(thumbnail,profileImg);
-    //    thumb.execute();
-
+        thumbnail = pref.getString("profile_img","");
+        // Glide로 이미지그리기
         Glide.with(context).load(thumbnail).asBitmap().centerCrop().error(R.drawable.icon_user).into(new BitmapImageViewTarget(profileImg) {
             @Override
             protected void setResource(Bitmap resource) {
@@ -132,21 +107,21 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
             }
         });
 
+        // 프로필 버튼 눌렀을 경우 - 내 페이지 보기로 이동
         ImageView profileBtn = (ImageView)header.findViewById(R.id.showProBtn);
         profileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //  Toast.makeText(getApplicationContext(), "프로필 보기", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(MainActivity.this, showMypageActivity.class);
                 i.putExtra("flag",0);
                 SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
                 String user_id = pref.getString("user_id", "");
                 i.putExtra("user_id",user_id);
-                // i.putExtra("KakaoInfo",kakao);
                 startActivity(i);
             }
         });
 
+        // 찜목록 버튼 눌렀을 경우 - 찜목록창으로 이동
         Button side_Button1 = (Button) findViewById(R.id.side_button1);//custom navigation view Button setOnClickListener
         side_Button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
             }
         });
 
+        // 신청목록 버튼 눌렀을 경우 - 신청목록 창으로 이동
         Button side_Button2 = (Button) findViewById(R.id.side_button2);
         side_Button2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,27 +141,26 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
             }
         });
 
-
+        // 내가쓴 공고 버튼 눌렀을 경우 - 공고목록 창으로 이동
         Button side_Button3 = (Button) findViewById(R.id.side_button3);
         side_Button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ContestList.class);
                 startActivity(intent);
-
             }
         });
 
-
+        // 알람 버튼 눌렀을 경우 - 알람목록 창으로 이동
         ImageView alarmBtn = (ImageView) findViewById(R.id.alarmBtn);
         alarmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, newAlarmList.class);
                 startActivity(intent);
-
             }
         });
+
         navigationView.setNavigationItemSelectedListener(this);
         backPressCloseHandler = new BackPressCloseHandler(this);
     }
