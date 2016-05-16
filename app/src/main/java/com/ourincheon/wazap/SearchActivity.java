@@ -65,6 +65,7 @@ public class SearchActivity extends AppCompatActivity {
         sText =(NotoTextView)findViewById(R.id.searchNo);
         sBox =(EditText) findViewById(R.id.search_box);
 
+        // 검색버튼 터치시 검색
         sBtn =(Button)findViewById(R.id.search_btn);
         sBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +76,7 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    //*** 서버로 검색요청 ***//
     void searchTitle(String text)
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -87,7 +89,6 @@ public class SearchActivity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         String access_token = pref.getString("access_token", "");
 
-        System.out.println("------------" + text + "------------" + access_token);
         Call<Contests> call = service.getSearchlist(access_token, text, 300);
         call.enqueue(new Callback<Contests>() {
             @Override
@@ -97,10 +98,7 @@ public class SearchActivity extends AppCompatActivity {
                     Log.d("SUCCESS", response.message());
                     contest = response.body();
 
-                    String result = new Gson().toJson(contest);
-                    Log.d("SUCESS-----", result);
-                  //  Toast.makeText(getApplicationContext(), ""+contests.getMsg(), Toast.LENGTH_LONG).show();
-
+                    // 검색 결과가 없을 경우, 결과없음 표시
                     if(contest.isResult()==false)
                         sText.setVisibility(View.VISIBLE);
                     else
@@ -127,7 +125,6 @@ public class SearchActivity extends AppCompatActivity {
                         items.add(item[i]);
 
                         content.setAdapter(rec);
-
                     }
 
 

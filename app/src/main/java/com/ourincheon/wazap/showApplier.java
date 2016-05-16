@@ -95,6 +95,7 @@ public class showApplier extends AppCompatActivity {
 
         loadPage();
 
+        // 수락여부에 따라 다른 텍스트보여주기, 서버로 요청하기
         pBtn = (TextView) findViewById(R.id.pButton);
         if(is_ok == 0)
             pBtn.setText("수락하기");
@@ -102,7 +103,6 @@ public class showApplier extends AppCompatActivity {
             pBtn.setText("수락취소");
 
         pBtn.setVisibility(View.VISIBLE);
-
         pBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,13 +110,13 @@ public class showApplier extends AppCompatActivity {
                     is_ok = 1;
                 else
                     is_ok = 0;
-
                 changeMem();
             }
         });
 
     }
 
+    //*** 서버로 멤버 변경에 대해 요청하기 ***//
     void changeMem()
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -164,6 +164,7 @@ public class showApplier extends AppCompatActivity {
         });
     }
 
+    //*** 서버에서 신청자 정보 받아오기 ***//
     void loadPage()
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -173,8 +174,6 @@ public class showApplier extends AppCompatActivity {
 
         WazapService service = retrofit.create(WazapService.class);
 
-//        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
- //       String user_id = pref.getString("user_id", "");
         Log.d("SUCCESS", user_id );
 
         Call<regUser> call = service.getUserInfo(user_id);
@@ -186,12 +185,7 @@ public class showApplier extends AppCompatActivity {
                     Log.d("SUCCESS", response.message());
                     reguser = response.body();
 
-                    //user = response.body();
-                    //Log.d("SUCCESS", reguser.getMsg());
-
                     String result = new Gson().toJson(reguser);
-                    Log.d("SUCESS-----", result);
-
                     JSONObject jsonRes;
                     try {
                         jsonRes = new JSONObject(result);
@@ -201,11 +195,11 @@ public class showApplier extends AppCompatActivity {
                         sMajor.setText(jsonArr.getJSONObject(0).getString("major"));
                         sUniv.setText(jsonArr.getJSONObject(0).getString("school"));
                         sLoc.setText(jsonArr.getJSONObject(0).getString("locate"));
-                        //sKakao.setText(jsonArr.getJSONObject(0).getString("kakao_id"));
                         sIntro.setText(jsonArr.getJSONObject(0).getString("introduce"));
                         sExp.setText(jsonArr.getJSONObject(0).getString("exp"));
                         sSkill.setText(jsonArr.getJSONObject(0).getString("skill"));
 
+                        // 카카오아이디 수락된 경우만 보이
                         if(is_ok == 0)
                             sKakao.setText("수락되어야 볼 수 있습니다.");
                         else {
@@ -229,8 +223,7 @@ public class showApplier extends AppCompatActivity {
                                     sImg.setImageDrawable(circularBitmapDrawable);
                                 }
                             });
-                         //   ThumbnailImage thumb = new ThumbnailImage(thumbnail, profileImg);
-                         //   thumb.execute();
+
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }

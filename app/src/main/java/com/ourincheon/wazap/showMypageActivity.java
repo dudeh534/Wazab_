@@ -82,27 +82,14 @@ public class showMypageActivity extends AppCompatActivity {
         sImg = (FloatingActionButton)findViewById(R.id.fab);
         pBtn = (TextView)findViewById(R.id.pButton);
 
-        if(flag==1) {
-    /*        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-            profileImg = (ImageView) findViewById(R.id.sPro);
-            thumbnail = pref.getString("profile_img", "");
-            System.out.println(pref.getString("access_token", ""));
-            ThumbnailImage thumb = new ThumbnailImage(thumbnail, profileImg);
-            thumb.execute();
-            */
+        if(flag==1)
             Title.setText("팀장 상세 프로필");
-        }
         else if(flag==2)
             Title.setText("팀원 상세 프로필");
-       /* else if(flag==3) {
-            Title.setText("신청자 프로필");
-            pBtn.setVisibility(View.VISIBLE);
-        }*/
         else
             Title.setText("나의 프로필");
 
         loadPage();
-
     }
 
     @Override
@@ -111,6 +98,7 @@ public class showMypageActivity extends AppCompatActivity {
         loadPage();
     }
 
+    //*** 서버에서 정보 받아오기 ***//
     void loadPage()
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -119,10 +107,6 @@ public class showMypageActivity extends AppCompatActivity {
                 .build();
 
         WazapService service = retrofit.create(WazapService.class);
-
-//        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
- //       String user_id = pref.getString("user_id", "");
-        Log.d("SUCCESS", user_id );
 
         Call<regUser> call = service.getUserInfo(user_id);
         call.enqueue(new Callback<regUser>() {
@@ -133,12 +117,7 @@ public class showMypageActivity extends AppCompatActivity {
                     Log.d("SUCCESS", response.message());
                     reguser = response.body();
 
-                    //user = response.body();
-                    //Log.d("SUCCESS", reguser.getMsg());
-
                     String result = new Gson().toJson(reguser);
-                    Log.d("SUCESS-----", result);
-
                     JSONObject jsonRes;
                     try {
                         jsonRes = new JSONObject(result);
@@ -147,7 +126,6 @@ public class showMypageActivity extends AppCompatActivity {
                         sMajor.setText(jsonArr.getJSONObject(0).getString("major"));
                         sUniv.setText(jsonArr.getJSONObject(0).getString("school"));
                         sLoc.setText(jsonArr.getJSONObject(0).getString("locate"));
-                        //sKakao.setText(jsonArr.getJSONObject(0).getString("kakao_  id"));
                         sIntro.setText(jsonArr.getJSONObject(0).getString("introduce"));
                         sExp.setText(jsonArr.getJSONObject(0).getString("exp"));
                         sSkill.setText(jsonArr.getJSONObject(0).getString("skill"));
@@ -166,8 +144,6 @@ public class showMypageActivity extends AppCompatActivity {
                                     sImg.setImageDrawable(circularBitmapDrawable);
                                 }
                             });
-                         //   ThumbnailImage thumb = new ThumbnailImage(thumbnail, profileImg);
-                         //   thumb.execute();
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
@@ -203,14 +179,10 @@ public class showMypageActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
+        // 내 프로필인 경우에만 수정버튼 보이게
         if(flag==0) {
-            //noinspection SimplifiableIfStatement
             if (id == R.id.action_edit) {
                 Intent i = new Intent(showMypageActivity.this, MypageActivity.class);
                 startActivity(i);
