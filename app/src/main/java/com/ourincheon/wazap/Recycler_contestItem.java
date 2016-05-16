@@ -23,8 +23,6 @@ public class Recycler_contestItem implements Serializable
     String homepage;
     String category;
 
- //   private ImageView imageView;
-
 
     public String getTarget() {
         return target;

@@ -93,7 +93,7 @@ public class MasterJoinActivity extends AppCompatActivity {
         num =  intent.getExtras().getString("id");
         loadPage(num);
 
-
+        //* 모집글 마감 요청 확인 메세지 *//
         deleteD = new AlertDialog.Builder(this);
         deleteD.setMessage("모집글을 마감하시겠습니까?").setCancelable(false).setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
@@ -109,7 +109,7 @@ public class MasterJoinActivity extends AppCompatActivity {
                     }
                 });
 
-        // 마감버튼까
+        // 모집마감 버튼 누를시, 확인메세지 출력
         jButton = (TextView) findViewById(R.id.jmButton);
         jButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,21 +127,20 @@ public class MasterJoinActivity extends AppCompatActivity {
             }
         });
 
+        // 우측 상단 ...메뉴 터치시
         ad = new AlertDialog.Builder(this);
         ad.setTitle("팀원모집");
         ad.setItems(list, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (which == 0)
+                if (which == 0)         //  모집글 수정
                     editCont();
-                if (which == 1) {
-                    //!@#$!$%!!#@!%@!$@!$$
+                if (which == 1) {       // 모집글 삭제
                     ChangeStatus status = ChangeStatus.getInstance();
                     status.setDeleted();
-                    //!@#$!$%!!#@!%@!$@!$$
                     delCont();
                 }
-                if (which == 2)
+                if (which == 2)         // 취소
                     dialog.cancel();
             }
         });
@@ -174,15 +173,16 @@ public class MasterJoinActivity extends AppCompatActivity {
         loadPage(num);
     }
 
+    //*** 모집글 수정페이지로 이동 ***//
     void editCont()
     {
         Intent intent = new Intent(MasterJoinActivity.this, RecruitActivity.class);
         intent.putExtra("edit",1);
         intent.putExtra("contestD", editconData);
-        //intent.putExtra("contestD",contestData.getContests_id());
         startActivity(intent);
     }
 
+    //*** 서버에 모집글 삭제요청 보내기 ***//
     void delCont()
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -191,8 +191,6 @@ public class MasterJoinActivity extends AppCompatActivity {
                 .build();
 
         WazapService service = retrofit.create(WazapService.class);
-
-        System.out.println("!!!!!!!!!!!!!!!!!!!" + access_token);
 
         Call<LinkedTreeMap> call = service.delContest(num,access_token);
         call.enqueue(new Callback<LinkedTreeMap>() {
@@ -208,11 +206,6 @@ public class MasterJoinActivity extends AppCompatActivity {
                     if (result) {
                         Log.d("삭제 결과: ", msg);
                         Toast.makeText(getApplicationContext(), "삭제되었습니다.", Toast.LENGTH_SHORT).show();
-
-                  /*      FragmentPage fragment = new FragmentPage();
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("refresh",1);
-                        fragment.setArguments(bundle);*/
                         finish();
 
                     } else {
@@ -235,6 +228,7 @@ public class MasterJoinActivity extends AppCompatActivity {
         });
     }
 
+    //*** 서버에 모집글 마감요청 보내기 ***//
     void endContest( )
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -243,8 +237,6 @@ public class MasterJoinActivity extends AppCompatActivity {
                 .build();
 
         WazapService service = retrofit.create(WazapService.class);
-
-        System.out.println("-------------------"+num);
 
         Call<LinkedTreeMap> call = service.finishContest(num, access_token);
         call.enqueue(new Callback<LinkedTreeMap>() {
@@ -281,6 +273,7 @@ public class MasterJoinActivity extends AppCompatActivity {
         });
     }
 
+    //*** 마스트 상세페이지 정보 불러오기 ***//
     void loadPage(String num)
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -298,8 +291,6 @@ public class MasterJoinActivity extends AppCompatActivity {
 
                     Log.d("SUCCESS", response.message());
                     contest = response.body();
-
-                    Log.d("SUCCESS", contest.getMsg());
 
                     editconData.setContests_id(contest.getData().getContests_id());
                     jTitle.setText(contest.getData().getTitle());
@@ -360,11 +351,11 @@ public class MasterJoinActivity extends AppCompatActivity {
                                 img.setImageDrawable(circularBitmapDrawable);
                             }
                         });
+                        // 이미지로 붙인 멤버 클릭시, 팀원정보 상세보기로 이동
                         img.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 System.out.println("---------------------"+contest.getData().getMemberList(idx).getUsers_id());
-
                                 Intent intent = new Intent(MasterJoinActivity.this, showMypageActivity.class);
                                 intent.putExtra("user_id", contest.getData().getMemberList(idx).getUsers_id());
                                 intent.putExtra("flag",2);
@@ -373,7 +364,6 @@ public class MasterJoinActivity extends AppCompatActivity {
                         });
                         imgLayout.addView(img);
                     }
-
 
                     String[] parts = contest.getData().getPeriod().split("T");
                     Dday day = new Dday();

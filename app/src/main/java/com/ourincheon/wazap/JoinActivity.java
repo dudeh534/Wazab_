@@ -96,8 +96,8 @@ public class JoinActivity extends AppCompatActivity {
             }
         });
 
+        // 신청 값에 따라 서버에 신청 or 취소 요청
         jButton = (TextView) findViewById(R.id.jButton);
-
         jButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +108,7 @@ public class JoinActivity extends AppCompatActivity {
             }
         });
 
+        // 서버에 찜요청
         jPick = (Button) findViewById(R.id.jPick);
         jPick.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -116,6 +117,7 @@ public class JoinActivity extends AppCompatActivity {
             }
         });
 
+        // 작성자 프로필보기
         jPro = (TextView) findViewById(R.id.jPro);
         jPro.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -128,6 +130,7 @@ public class JoinActivity extends AppCompatActivity {
         });
     }
 
+    //*** 서버에 신청취소 요청보내기 ***//
     void deleteApply(String contest)
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -136,8 +139,6 @@ public class JoinActivity extends AppCompatActivity {
                 .build();
 
         WazapService service = retrofit.create(WazapService.class);
-
-        System.out.println("-------------------"+access_token+"---------"+contest);
 
         Call<LinkedTreeMap> call = service.delApply(contest, access_token);
         call.enqueue(new Callback<LinkedTreeMap>() {
@@ -177,10 +178,10 @@ public class JoinActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println("-----------------------------------------------------------------");
         loadPage(num);
     }
 
+    //*** 서버에 모집글 찜요청 보내기 ***//
     void pickContest(String num, final String access_token) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://come.n.get.us.to/")
@@ -189,7 +190,6 @@ public class JoinActivity extends AppCompatActivity {
 
         WazapService service = retrofit.create(WazapService.class);
 
-        System.out.println("-------------------" + access_token);
         Call<LinkedTreeMap> call = service.clipContests(num, access_token);
         call.enqueue(new Callback<LinkedTreeMap>() {
             @Override
@@ -211,7 +211,7 @@ public class JoinActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "찜 안됬습니다.다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                         }
                     } else
-                        removeClip();
+                        removeClip();       // 이미 찜한 게시물일 경우, 찜 취소
                 } else if (response.isSuccess()) {
                     Log.d("Response Body isNull", response.message());
                 } else {
@@ -227,6 +227,7 @@ public class JoinActivity extends AppCompatActivity {
         });
     }
 
+    //*** 서버에 찜취소 요청보내기 ***//
     void removeClip()
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -271,6 +272,7 @@ public class JoinActivity extends AppCompatActivity {
         });
     }
 
+    //*** 서버에 모집글 신청요청 보기 ***//
     void applyContest(String num, String access_token)
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -280,7 +282,6 @@ public class JoinActivity extends AppCompatActivity {
 
         WazapService service = retrofit.create(WazapService.class);
 
-        System.out.println("-------------------"+access_token);
         Call<LinkedTreeMap> call = service.applyContests(num, access_token);
         call.enqueue(new Callback<LinkedTreeMap>() {
             @Override
@@ -317,6 +318,7 @@ public class JoinActivity extends AppCompatActivity {
 
     }
 
+    //*** 서버에서 상세 모집글 정보 가져오기 ***//
     void loadPage(String num)
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -335,10 +337,7 @@ public class JoinActivity extends AppCompatActivity {
                     Log.d("SUCCESS", response.message());
                     contest = response.body();
 
-                    Log.d("SUCCESS", contest.getMsg());
-
                     if(contest.getMsg().equals("모집글 정보가 없습니다.")) {
-                        //System.out.println("======================================");
                         Toast.makeText(getApplicationContext(), contest.getMsg(), Toast.LENGTH_LONG).show();
                         finish();
                     }
@@ -358,12 +357,13 @@ public class JoinActivity extends AppCompatActivity {
 
                         Writer = contest.getData().getCont_writer();
 
+                        // 찜여부에 따라 이미지 다르게
                         if (contest.getData().getIs_clip() == 0)
                             jPick.setBackgroundResource(R.drawable.heart1);
                         else
                             jPick.setBackgroundResource(R.drawable.heart2);
 
-
+                        // 디데이
                         String[] parts = contest.getData().getPeriod().split("T");
                         Dday day = new Dday();
                         jDate.setText("D - " + day.dday(parts[0]));
@@ -392,7 +392,7 @@ public class JoinActivity extends AppCompatActivity {
                         else
                             jButton.setText("신청취소하기");
 
-                        // 멤버리스트 이미지로 붙이기
+                        //* 멤버리스트 이미지로 붙이기 *//
                         System.out.println("membersize---------------" + contest.getData().getMembersize());
                         imgLayout.removeAllViews();
                         for (int i = 0; i < contest.getData().getMembersize(); i++) {
@@ -413,11 +413,10 @@ public class JoinActivity extends AppCompatActivity {
                                     img.setImageDrawable(circularBitmapDrawable);
                                 }
                             });
+                            // 이미지로 붙인 멤버 클릭시, 팀원정보 상세보기로 이동
                             img.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    System.out.println("---------------------" + contest.getData().getMemberList(idx).getUsers_id());
-
                                     Intent intent = new Intent(JoinActivity.this, showMypageActivity.class);
                                     intent.putExtra("user_id", contest.getData().getMemberList(idx).getUsers_id());
                                     intent.putExtra("flag", 2);

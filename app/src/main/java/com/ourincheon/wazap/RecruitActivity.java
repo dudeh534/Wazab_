@@ -56,9 +56,6 @@ public class RecruitActivity extends AppCompatActivity {
     Button reDate, reBack ,reLoc;
     TextView save;
     final CheckBox[] checkbox = new CheckBox[6];
-    //CheckBox checkDe, checkAd, checkUc, checkIt,checkFo,checkEtc;
-    ImageView profileImg;
-    String thumbnail;
     ContestData con;
     ContestInfo contest2;
     int mode,contest_id;
@@ -74,15 +71,14 @@ public class RecruitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recruit_new);
 
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-
         access_token = pref.getString("access_token", "");
+
         contest2 = new ContestInfo();
 
         reTitle = (EditText) findViewById(R.id.reTitle);
         reCTitle = (EditText) findViewById(R.id.reCTitle);
         reHost = (EditText) findViewById(R.id.reHost);
         reNum = (EditText) findViewById(R.id.reNum);
-        /////       reDate = (EditText) findViewById(R.id.reDate);
         reDate = (Button) findViewById(R.id.reDate);
         reLoc = (Button) findViewById(R.id.reLoc);
         rePos = (EditText) findViewById(R.id.rePos);
@@ -93,26 +89,15 @@ public class RecruitActivity extends AppCompatActivity {
         getList();
         subcity = new ArrayAdapter<String>(RecruitActivity.this, android.R.layout.select_dialog_singlechoice);
 
-
-        /*
-        checkAd = (CheckBox) findViewById(R.id.checkAd);
-        checkDe = (CheckBox) findViewById(R.id.checkDe);
-        checkUc = (CheckBox) findViewById(R.id.checkUc);
-        checkIt = (CheckBox) findViewById(R.id.checkIt);
-        checkFo = (CheckBox) findViewById(R.id.checkFo);
-        checkEtc = (CheckBox) findViewById(R.id.checkEtc);
-*/
-        // check box //
+        //* 카테고리 선택용 체크박스 *//
         CompoundButton.OnCheckedChangeListener checker = new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton cb, boolean b) {
-                // How can I improve this condition?
                 if(count == 2 && b){
                     cb.setChecked(false);
                     Toast.makeText(getApplicationContext(), "카테고리는 두개까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
                 }else if(b){
                     count++;
-                    System.out.println("-------------------------" + cb.getText());
                     cb.setTextColor(Color.BLUE);
                     if(cb.getText().equals(Category_arr[0]))
                         cb.setButtonDrawable(R.drawable.detail_icon_marketing);
@@ -147,28 +132,26 @@ public class RecruitActivity extends AppCompatActivity {
             }
 
         };
-                checkbox[0] = (CheckBox) findViewById(R.id.checkAd);
+        checkbox[0] = (CheckBox) findViewById(R.id.checkAd);
         checkbox[0].setOnCheckedChangeListener(checker);
-                checkbox[1] = (CheckBox) findViewById(R.id.checkDe);
-            checkbox[1].setOnCheckedChangeListener(checker);
-            checkbox[2] = (CheckBox) findViewById(R.id.checkUc);
+        checkbox[1] = (CheckBox) findViewById(R.id.checkDe);
+        checkbox[1].setOnCheckedChangeListener(checker);
+        checkbox[2] = (CheckBox) findViewById(R.id.checkUc);
         checkbox[2].setOnCheckedChangeListener(checker);
-            checkbox[3] = (CheckBox) findViewById(R.id.checkIt);
+        checkbox[3] = (CheckBox) findViewById(R.id.checkIt);
         checkbox[3].setOnCheckedChangeListener(checker);
-            checkbox[4] = (CheckBox) findViewById(R.id.checkFo);
+        checkbox[4] = (CheckBox) findViewById(R.id.checkFo);
         checkbox[4].setOnCheckedChangeListener(checker);
-            checkbox[5] = (CheckBox) findViewById(R.id.checkEtc);
+        checkbox[5] = (CheckBox) findViewById(R.id.checkEtc);
         checkbox[5].setOnCheckedChangeListener(checker);
 
 
 
-        /*** DatePicker ***/
+        //** 날짜 선택용 DatePicker **//
         GregorianCalendar calendar = new GregorianCalendar();
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
-
-
         reDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,6 +159,7 @@ public class RecruitActivity extends AppCompatActivity {
             }
         });
 
+        //** 지역정보 선택용 **//
         reLoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,7 +169,6 @@ public class RecruitActivity extends AppCompatActivity {
                 alertCity.setAdapter(city, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //Toast.makeText(getApplicationContext(), city.getItem(which), Toast.LENGTH_SHORT).show();
                         getCitybased(city.getItem(which));
 
                         AlertDialog.Builder inCity = new AlertDialog.Builder(RecruitActivity.this);
@@ -211,29 +194,28 @@ public class RecruitActivity extends AppCompatActivity {
             {finish();}
         });
 
+        // 마스트상세페이지에서 수정하기로 온 경우, 화면 그려주기
         Intent intent = getIntent();
         mode = intent.getExtras().getInt("edit");
         con = (ContestData) intent.getExtras().getSerializable("contestD");
         if (mode == 1) {
-            System.out.println("----------------------------------------------");
             reTitle.setText(con.getTitle());
             reCTitle.setText(con.getCont_title());
             System.out.println(con.getTitle());
             reHost.setText(con.getHosts());
             reNum.setText(String.valueOf(con.getRecruitment()));
             reDate.setText(con.getPeriod());
-            //reLoc.setText(con.getLoc());
             reIntro.setText(con.getCover());
             rePos.setText(con.getPositions());
             reLoc.setText(con.getCont_locate());
             contest_id = con.getContests_id();
         }
 
+        // 저장 버튼 눌렀을 시
         save = (TextView) findViewById(R.id.reButton);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //               Toast.makeText(getApplicationContext(), reDate.getText().toString(), Toast.LENGTH_SHORT).show();
                 Dday date = new Dday();
                 if(date.dday(reDate.getText().toString())<0)
                     Toast.makeText(RecruitActivity.this, "이미 지난 기간을 선택할 수 없습니다.", Toast.LENGTH_SHORT).show();
@@ -257,7 +239,6 @@ public class RecruitActivity extends AppCompatActivity {
                     }
                     contest2.setPeriod(reDate.getText().toString());
                     contest2.setCont_locate(reLoc.getText().toString());
-                    //contest2.setPeriod("2016-04-29");
                     contest2.setPositions(rePos.getText().toString());
 
                     if (mode == 0)
@@ -265,16 +246,15 @@ public class RecruitActivity extends AppCompatActivity {
                     else
                         editCon(contest2);
 
-                //!@#$!$%!!#@!%@!$@!$$
                     ChangeStatus status = ChangeStatus.getInstance();
                     status.setNewed();
-                //!@#$!$%!!#@!%@!$@!$$
                     finish();
                 }
             }
         });
     }
 
+    // 날짜 선택 처리
     DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener()
     {
         @Override
@@ -291,7 +271,7 @@ public class RecruitActivity extends AppCompatActivity {
     };
 
 
-    // 시구 목록 받아오
+    //** 서버에서 시구 목록 받아오기 **//
     void getList()
     {
         String baseUrl = "http://come.n.get.us.to/";
@@ -322,17 +302,12 @@ public class RecruitActivity extends AppCompatActivity {
                     System.out.println(data);
                     if (result) {
                         Log.d("리스트 받아오기: ", msg);
-                        //Toast.makeText(getApplicationContext(), "수정되었습니다.", Toast.LENGTH_SHORT).show();
-                     //   ((MasterJoinActivity)(MasterJoinActivity.mContext)).onResume();
-
                     } else {
                         Log.d("리스트 받기 실패: ", msg);
-                        //Toast.makeText(getApplicationContext(), "수정이 안됬습니다.다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                     }
 
                 } else if (response.isSuccess()) {
                     Log.d("Response Body is NULL", response.message());
-                    //Toast.makeText(getApplicationContext(), "수정이 안됬습니다.다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Log.d("Response Error Body", response.errorBody().toString());
@@ -347,7 +322,7 @@ public class RecruitActivity extends AppCompatActivity {
         });
     }
 
-    // 시구 목록 받아오
+    //** 시구 목록 받아오기 **//
     void getCitybased(final String cityname)
     {
         String baseUrl = "http://come.n.get.us.to/";
@@ -367,30 +342,23 @@ public class RecruitActivity extends AppCompatActivity {
                     boolean result = Boolean.parseBoolean(temp.get("result").toString());
                     String msg = temp.get("msg").toString();
                     String data = temp.get("data").toString();
-                    System.out.println(data);
 
                     String[] split = (data.substring(1,data.length()-1)).split(", ");
 
                     state = cityname;
                     for(int i=0; i<split.length; i++) {
-                        System.out.println(split[i]);
                         subcity.add(split[i]);
                     }
 
                     System.out.println(data);
                     if (result) {
                         Log.d("군구리스트 받아오기: ", msg);
-                        //Toast.makeText(getApplicationContext(), "수정되었습니다.", Toast.LENGTH_SHORT).show();
-                        //   ((MasterJoinActivity)(MasterJoinActivity.mContext)).onResume();
-
                     } else {
                         Log.d("군구리스트 받기 실패: ", msg);
-                        //Toast.makeText(getApplicationContext(), "수정이 안됬습니다.다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                     }
 
                 } else if (response.isSuccess()) {
                     Log.d("Response Body is NULL", response.message());
-                    //Toast.makeText(getApplicationContext(), "수정이 안됬습니다.다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Log.d("Response Error Body", response.errorBody().toString());
@@ -405,6 +373,7 @@ public class RecruitActivity extends AppCompatActivity {
         });
     }
 
+    //** 서버에 수정요청 보내기 **//
     void editCon(ContestInfo contest)
     {
         String baseUrl = "http://come.n.get.us.to/";
@@ -414,8 +383,6 @@ public class RecruitActivity extends AppCompatActivity {
                 .build();
         WazapService service = client.create(WazapService.class);
 
-        System.out.println("========================== "+String.valueOf(contest_id));
-        System.out.println("========================== "+access_token);
         Call<LinkedTreeMap> call = service.editContest(access_token,String.valueOf(contest_id), contest);
         call.enqueue(new Callback<LinkedTreeMap>() {
             @Override
@@ -425,7 +392,6 @@ public class RecruitActivity extends AppCompatActivity {
 
                     boolean result = Boolean.parseBoolean(temp.get("result").toString());
                     String msg = temp.get("msg").toString();
-
 
                     if (result) {
                         Log.d("수정 결과: ", msg);
@@ -454,6 +420,7 @@ public class RecruitActivity extends AppCompatActivity {
         });
     }
 
+    //** 서버에 모집글 저장요청보내기 **//
     void sendContest(ContestInfo contest)
     {
         String baseUrl = "http://come.n.get.us.to/";
@@ -472,7 +439,6 @@ public class RecruitActivity extends AppCompatActivity {
 
                     boolean result = Boolean.parseBoolean(temp.get("result").toString());
                     String msg = temp.get("msg").toString();
-
 
                     if (result) {
                         Log.d("저장 결과: ", msg);

@@ -58,7 +58,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         user_id = pref2.getString("user_id", "");
         access_token = pref2.getString("access_token", "");
 
-        Log.d("SUCESS-----", item.getTitle());
         holder.title.setText(item.getTitle());
         holder.name.setText(item.getName());
         holder.text.setText(item.getText());
@@ -66,6 +65,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.recruit.setText(" / " + String.valueOf(item.getRecruit()));
         holder.member.setText(String.valueOf(item.getMember()));
 
+        //** 마감된 카드뷰의 경우 **//
         if(item.getFinish()==1) {
             holder.member.setTextColor(Color.parseColor("#b3b3b3"));
             holder.recruit.setTextColor(Color.parseColor("#b3b3b3"));
@@ -73,7 +73,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             holder.title.setTextColor(Color.parseColor("#b3b3b3"));
             holder.name.setTextColor(Color.parseColor("#b3b3b3"));
             holder.text.setTextColor(Color.parseColor("#b3b3b3"));
-
 
             holder.day.setBackgroundResource(R.drawable.scrap_info_finish);
             holder.day.setText("");
@@ -91,7 +90,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             else
                 holder.heart.setBackgroundResource(R.drawable.heart3);
 
-            //// 카테고리 명에 맞는 이미지 출력 ////
+            //* 카테고리 명에 맞는 이미지 출력 *//
             String[] temp = item.getCategory().split(" ");
             holder.category1.setTextColor(Color.parseColor("#b3b3b3"));
             holder.category2.setTextColor(Color.parseColor("#b3b3b3"));
@@ -202,13 +201,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             });
 
 
-            //// 카테고리 명에 맞는 이미지 출력 ////
+            //* 카테고리 명에 맞는 이미지 출력 *//
             String[] temp = item.getCategory().split(" ");
             holder.category1.setTextColor(Color.parseColor("#0057ff"));
             holder.category2.setTextColor(Color.parseColor("#0057ff"));
             if(temp.length == 2 ) {
                 holder.category1.setText(temp[1]);
-
                 if(temp[1].equals("사진/UCC"))
                     holder.c1.setBackgroundResource(R.drawable.detail_icon_video);
                 else if(temp[1].equals("디자인"))
@@ -256,11 +254,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     holder.c2.setBackgroundResource(R.drawable.detail_icon_scenario);
             }
         }
-
-
     }
 
-
+    //** 찜요청보내기 **//
     void pickContest(final String num, final String access_token) {
         int ret = -1;
 
@@ -271,7 +267,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         WazapService service = retrofit.create(WazapService.class);
 
-        System.out.println("-------------------" + access_token);
         Call<LinkedTreeMap> call = service.clipContests(num, access_token);
         call.enqueue(new Callback<LinkedTreeMap>() {
             @Override
@@ -297,11 +292,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     Log.d("Response Body isNull", response.message());
                 } else {
                     Log.d("Response Error Body", response.errorBody().toString());
-
                 }
             }
-
-
 
             @Override
             public void onFailure(Throwable t) {
@@ -311,6 +303,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         });
     }
 
+    //** 찜 취소 요청보내기 **//
     void removeClip(String num)
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -361,8 +354,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }else {
             return this.items.size();
         }
-
-
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

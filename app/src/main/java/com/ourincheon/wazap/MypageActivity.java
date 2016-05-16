@@ -86,6 +86,7 @@ public class MypageActivity extends AppCompatActivity {
         getInfo();
     }
 
+    //*** 서버에서 프로필 정보 요청 ***//
     void getInfo()
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -97,7 +98,6 @@ public class MypageActivity extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         String user_id = pref.getString("user_id", "");
-        Log.d("SUCCESS", user_id );
 
         Call<regUser> call = service.getUserInfo(user_id);
         call.enqueue(new Callback<regUser>() {
@@ -108,12 +108,7 @@ public class MypageActivity extends AppCompatActivity {
                     Log.d("SUCCESS", response.message());
                     reguser = response.body();
 
-                    //user = response.body();
-                    //Log.d("SUCCESS", reguser.getMsg());
-
                     String result = new Gson().toJson(reguser);
-                    Log.d("SUCESS-----", result);
-
                     JSONObject jsonRes;
                     try {
                         jsonRes = new JSONObject(result);
@@ -139,14 +134,11 @@ public class MypageActivity extends AppCompatActivity {
                                     profileImg.setImageDrawable(circularBitmapDrawable);
                                 }
                             });
-                            //   ThumbnailImage thumb = new ThumbnailImage(thumbnail, profileImg);
-                            //   thumb.execute();
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
                     } catch (JSONException e) {
                     }
-                    ;
 
                 } else if (response.isSuccess()) {
                     Log.d("Response Body isNull", response.message());
@@ -172,12 +164,9 @@ public class MypageActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        // 우측상단 버튼 누를시, 저장되어 원래 페이지로 이동
         if (id == R.id.action_save) {
             username = eName.getText().toString().trim();
             major = eMajor.getText().toString().trim();
@@ -187,8 +176,6 @@ public class MypageActivity extends AppCompatActivity {
             introduce = eIntro.getText().toString().trim();
             exp = eExp.getText().toString().trim();
             skill = eSkill.getText().toString().trim();
-
-            SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
 
             userInfo = new UserInfo( kakao_id, username, school, 94, major , skill, locate, introduce, exp);
 
@@ -205,6 +192,7 @@ public class MypageActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //*** 서버에 정보 저장하기 ***//
     void postInfo(UserInfo userInfo)
     {
          Retrofit retrofit = new Retrofit.Builder()
@@ -219,12 +207,9 @@ public class MypageActivity extends AppCompatActivity {
             @Override
             public void onResponse( Response<regMsg> response) {
                 if (response.isSuccess() && response.body() != null) {
-
                     res = response.body();
-                    Log.d("SUCCESS-------------", response.message());
                     Log.d("SUCCESS", res.getMsg());
                     Toast.makeText(getApplicationContext(), "수정 되었습니다.", Toast.LENGTH_SHORT).show();
-                    //user = response.body();
                 } else if (response.isSuccess()) {
                     Log.d("Response Body isNull", response.message());
                     Toast.makeText(getApplicationContext(), "수정 실패했습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show();
