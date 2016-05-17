@@ -3,7 +3,6 @@ package com.ourincheon.wazap;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,9 +18,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
+import com.ourincheon.wazap.Retrofit.AlarmData;
 import com.ourincheon.wazap.Retrofit.Alarms;
-import com.ourincheon.wazap.Retrofit.Contests;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +28,6 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,8 +70,8 @@ public class AlarmList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 AlarmData mData = mAdapter.mListData.get(position);
-                Toast.makeText(AlarmList.this, mData.msg_url, Toast.LENGTH_SHORT).show();
-                String temp = mData.msg_url.substring(0,14);
+                Toast.makeText(AlarmList.this, mData.getMsg_url(), Toast.LENGTH_SHORT).show();
+                String temp = mData.getMsg_url().substring(0, 14);
 
                 System.out.println(temp);
                 if(temp.equals("/contests/list"))
@@ -186,8 +183,8 @@ public class AlarmList extends AppCompatActivity {
         public void addItem(String msg_url, String msg, String date, String img ,int alarm_id, int is_check, String username){
             AlarmData addInfo = null;
             addInfo = new AlarmData();
-            addInfo.msg_url = msg_url;
-            addInfo.msg = msg;
+            addInfo.setMsg_url(msg_url);
+            addInfo.setMsg(msg);
             try {
                 String thumb = URLDecoder.decode(img, "EUC_KR");
                 addInfo.setProfile_img(thumb);
@@ -195,10 +192,10 @@ public class AlarmList extends AppCompatActivity {
                 e.printStackTrace();
             }
             String[] parts = date.split("T");
-            addInfo.alramdate=parts[0];
-            addInfo.alram_id = alarm_id;
-            addInfo.is_check = is_check;
-            addInfo.username = username;
+            addInfo.setAlramdate(parts[0]);
+            addInfo.setAlram_id(alarm_id);
+            addInfo.setIs_check(is_check);
+            addInfo.setUsername(username);
 
             mListData.add(addInfo);
         }
@@ -243,8 +240,8 @@ public class AlarmList extends AppCompatActivity {
             }
 
 
-            holder.mText.setText(mData.username + mData.msg);
-            holder.mDate.setText(mData.alramdate);
+            holder.mText.setText(mData.getUsername() + mData.getMsg());
+            holder.mDate.setText(mData.getAlramdate());
 
             return convertView;
         }

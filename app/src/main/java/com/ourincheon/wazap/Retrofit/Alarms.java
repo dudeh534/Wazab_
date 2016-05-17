@@ -1,7 +1,5 @@
 package com.ourincheon.wazap.Retrofit;
 
-import com.ourincheon.wazap.AlarmData;
-
 import java.util.ArrayList;
 import java.util.List;
 

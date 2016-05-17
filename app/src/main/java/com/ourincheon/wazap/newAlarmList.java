@@ -1,15 +1,13 @@
 package com.ourincheon.wazap;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,20 +16,16 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
+import com.ourincheon.wazap.Retrofit.AlarmData;
 import com.ourincheon.wazap.Retrofit.Alarms;
-import com.ourincheon.wazap.Retrofit.ContestData;
-import com.ourincheon.wazap.Retrofit.Contests;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,6 +64,7 @@ public class newAlarmList extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         access_token = pref.getString("access_token", "");
+        Log.d("AlarmList", "access token: "+access_token);
 
         alarm_list = new ArrayList<AlarmData>();
 
@@ -82,7 +77,7 @@ public class newAlarmList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 AlarmData mData = mAdapter.mListData.get(position);
                 //Toast.makeText(newAlarmList.this, mData.msg_url, Toast.LENGTH_SHORT).show();
-                String temp = mData.msg_url.substring(0, 14);
+                String temp = mData.getMsg_url().substring(0, 14);
 
                 System.out.println(temp);
                 if (temp.equals("/contests/list"))
@@ -137,10 +132,11 @@ public class newAlarmList extends AppCompatActivity {
 
         WazapService service = retrofit.create(WazapService.class);
 
-        Call<Alarms> call = service.getAlarmlist(access_token, 200);
+        Call<Alarms> call = service.getAlarmlist(access_token, 50);
         call.enqueue(new Callback<Alarms>() {
             @Override
             public void onResponse(Response<Alarms> response) {
+                Log.d("ALARM TEST", "responsed : "+ response.isSuccess());
                 if (response.isSuccess() && response.body() != null) {
 
                     Log.d("SUCCESS", response.message());
@@ -223,8 +219,8 @@ public class newAlarmList extends AppCompatActivity {
         public void addItem(String msg_url, String msg, String date, String img ,int alarm_id, int is_check, String username){
             AlarmData addInfo = null;
             addInfo = new AlarmData();
-            addInfo.msg_url = msg_url;
-            addInfo.msg = msg;
+            addInfo.setMsg_url(msg_url);
+            addInfo.setMsg_url(msg);
             try {
                 String thumb = URLDecoder.decode(img, "EUC_KR");
                 addInfo.setProfile_img(thumb);
@@ -232,10 +228,10 @@ public class newAlarmList extends AppCompatActivity {
                 e.printStackTrace();
             }
             String[] parts = date.split("T");
-            addInfo.alramdate=parts[0];
-            addInfo.alram_id = alarm_id;
-            addInfo.is_check = is_check;
-            addInfo.username = username;
+            addInfo.setAlramdate(parts[0]);
+            addInfo.setAlram_id(alarm_id);
+            addInfo.setIs_check(is_check);
+            addInfo.setUsername(username);
 
             mListData.add(addInfo);
         }
@@ -288,8 +284,8 @@ public class newAlarmList extends AppCompatActivity {
             }
 
             // 알람 메세지,날짜 불러오기
-            holder.mText.setText(mData.username + mData.msg);
-            holder.mDate.setText(mData.alramdate);
+            holder.mText.setText(mData.getUsername() + mData.getMsg());
+            holder.mDate.setText(mData.getAlramdate());
 
             return convertView;
         }
