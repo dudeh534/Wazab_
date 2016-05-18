@@ -136,7 +136,6 @@ public class newAlarmList extends AppCompatActivity {
         call.enqueue(new Callback<Alarms>() {
             @Override
             public void onResponse(Response<Alarms> response) {
-                Log.d("ALARM TEST", "responsed : "+ response.isSuccess());
                 if (response.isSuccess() && response.body() != null) {
 
                     Log.d("SUCCESS", response.message());
@@ -155,7 +154,6 @@ public class newAlarmList extends AppCompatActivity {
                         mAdapter = new ListViewAdapter(context);
                         System.out.println(count);
                         for (int i = 0; i < count; i++) {
-
                             mAdapter.addItem(jsonArr.getJSONObject(i).getString("msg_url"),
                                     jsonArr.getJSONObject(i).getString("msg"), jsonArr.getJSONObject(i).getString("alramdate"),
                                     jsonArr.getJSONObject(i).getString("profile_img"),
@@ -220,7 +218,7 @@ public class newAlarmList extends AppCompatActivity {
             AlarmData addInfo = null;
             addInfo = new AlarmData();
             addInfo.setMsg_url(msg_url);
-            addInfo.setMsg_url(msg);
+            addInfo.setMsg(msg);
             try {
                 String thumb = URLDecoder.decode(img, "EUC_KR");
                 addInfo.setProfile_img(thumb);
@@ -258,7 +256,6 @@ public class newAlarmList extends AppCompatActivity {
                 holder.mIcon = (ImageView) convertView.findViewById(R.id.mImage);
                 holder.mText = (TextView) convertView.findViewById(R.id.mText);
                 holder.mDate = (TextView) convertView.findViewById(R.id.mDate);
-
                 convertView.setTag(holder);
             }else{
                 holder = (ViewHolder) convertView.getTag();
