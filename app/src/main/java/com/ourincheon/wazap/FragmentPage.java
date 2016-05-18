@@ -16,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
-import com.google.gson.Gson;
 import com.ourincheon.wazap.Retrofit.Contests;
 import com.ourincheon.wazap.Retrofit.WeeklyList;
 
@@ -127,6 +126,7 @@ public class FragmentPage extends Fragment {
                 content.addOnScrollListener(new EndlessRecyclerViewScrollListener(layoutManager) {
                     @Override
                     public void onLoadMore(int page, int totalItemsCount) {
+                        Log.d("Scroll TEST", "load func : ");
                         loadPageMore(access_token);
                     }
                 });
@@ -347,7 +347,8 @@ public class FragmentPage extends Fragment {
                    // Log.d("SUCESS-----", result);
 
                     item = new Recycler_item[contest.getDatasize()];
-                    items.clear();
+                    //List<Recycler_item> items = new ArrayList<Recycler_item>();
+                    //items.clear();
                     for (int i = 0; i < contest.getDatasize(); i++) {
                         String[] parts = contest.getData(i).getPeriod().split("T");
                         Dday day = new Dday();
@@ -366,14 +367,15 @@ public class FragmentPage extends Fragment {
                                 contest.getData(i).getCont_writer(),
                                 contest.getData(i).getIs_finish()
                         );
+                        // 현재 리스트 items에 새 아이템 추가
                         items.add(item[i]);
 
-                        rec = new RecyclerAdapter(getActivity(), items, R.layout.fragment_page);
-                        int cursize = rec.getItemCount();
-                        rec.notifyItemRangeInserted(cursize,items.size()-1);
-                        content.setAdapter(rec);
                     }
 
+                    // 리사이클러 뷰 마지막에 새로운 아이템 추가
+                    RecyclerAdapter curRec = (RecyclerAdapter)content.getAdapter();
+                    int cursize = curRec.getItemCount();
+                    curRec.notifyItemRangeInserted(cursize, items.size() - 1); // cursize 위치부터 items.size 길이만큼 늘림
                 } else if (response.isSuccess()) {
                     Log.d("Response Body isNull", response.message());
                 } else {

@@ -4,6 +4,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 
 /**
  * Created by Youngdo on 2016-04-29.
@@ -75,6 +76,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
             this.previousTotalItemCount = totalItemCount;
             if (totalItemCount == 0) {
                 this.loading = true;
+                Log.d("Scroll TEST", "total item count is zero");
             }
         }
         // If it’s still loading, we check to see if the dataset count has
@@ -83,6 +85,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         if (loading && (totalItemCount > previousTotalItemCount)) {
             loading = false;
             previousTotalItemCount = totalItemCount;
+            Log.d("Scroll TEST", "still loading");
         }
 
         // If it isn’t currently loading, we check to see if we have breached
@@ -93,6 +96,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
             currentPage++;
             onLoadMore(currentPage, totalItemCount);
             loading = true;
+            Log.d("Scroll TEST", "reload action");
         }
     }
 
