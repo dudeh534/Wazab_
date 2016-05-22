@@ -93,7 +93,8 @@
         <activity
             android:name=".showWeeklyActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".SearchActivity" />
+        <activity android:name=".SearchActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".newAlarmList"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
