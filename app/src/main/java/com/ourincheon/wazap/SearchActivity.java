@@ -1,31 +1,20 @@
 package com.ourincheon.wazap;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.ourincheon.wazap.Retrofit.ContestData;
 import com.ourincheon.wazap.Retrofit.Contests;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +43,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search2);
 
-        content = (RecyclerView)findViewById(R.id.recyclerView);
+        content = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         content.setHasFixedSize(true);
         content.setLayoutManager(layoutManager);
@@ -62,11 +51,22 @@ public class SearchActivity extends AppCompatActivity {
         context = this;
 
 
-        sText =(NotoTextView)findViewById(R.id.searchNo);
-        sBox =(EditText) findViewById(R.id.search_box);
+        sText = (NotoTextView) findViewById(R.id.searchNo);
+        sBox = (EditText) findViewById(R.id.search_box);
+        // 입력완료 리슨
+        //sBox.setOnEditorActionListener(this);
+        sBox.setImeOptions(EditorInfo.IME_ACTION_DONE); // 키보드 확인 버튼 클릭시
+        sBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE)
+                    sBtn.performClick(); // sBtn 클릭
+                return false;
+            }
+        });
 
         // 검색버튼 터치시 검색
-        sBtn =(Button)findViewById(R.id.search_btn);
+        sBtn = (Button) findViewById(R.id.search_btn);
         sBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,8 +77,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     //*** 서버로 검색요청 ***//
-    void searchTitle(String text)
-    {
+    void searchTitle(String text) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://come.n.get.us.to/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -99,7 +98,7 @@ public class SearchActivity extends AppCompatActivity {
                     contest = response.body();
 
                     // 검색 결과가 없을 경우, 결과없음 표시
-                    if(contest.isResult()==false)
+                    if (contest.isResult() == false)
                         sText.setVisibility(View.VISIBLE);
                     else
                         sText.setVisibility(View.INVISIBLE);
@@ -142,7 +141,5 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
     }
-
 }
-
 

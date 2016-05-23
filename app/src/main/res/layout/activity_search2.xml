@@ -29,7 +29,10 @@
             android:layout_width="220dp"
             android:layout_height="50dp"
             android:id="@+id/search_box"
-            android:layout_toRightOf="@+id/imageView22" />
+            android:layout_toRightOf="@+id/imageView22"
+            android:singleLine="true"
+            android:lines="1"
+            android:imeOptions="actionDone" />
 
         <LinearLayout
             android:orientation="horizontal"
