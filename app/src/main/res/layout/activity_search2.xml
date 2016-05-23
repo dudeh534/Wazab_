@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ourincheon.wazap.SearchActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -24,35 +24,34 @@
             android:layout_toLeftOf="@+id/searchNo"
             android:layout_toStartOf="@+id/searchNo" />
 
+        <!--android:layout_width="220dp"-->
         <EditText
             android:hint="검색어를 입력하세요"
             android:layout_width="220dp"
             android:layout_height="50dp"
             android:id="@+id/search_box"
             android:layout_toRightOf="@+id/imageView22"
+            android:layout_toEndOf="@+id/imageView22"
+            android:layout_toLeftOf="@+id/search_btn"
+            android:layout_toStartOf="@+id/search_btn"
+            android:backgroundTint="#000000"
             android:singleLine="true"
             android:lines="1"
             android:imeOptions="actionDone" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@+id/search_box"
-            android:id="@+id/linearLayout14"
-            android:layout_above="@+id/recyclerView"
-            android:layout_toRightOf="@+id/search_box"
-            android:padding="15dp">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/search_icon"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:id="@+id/search_btn"/>
-        </LinearLayout>
+        <ImageButton
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_gravity="center"
+            android:background="@drawable/search_icon"
+            android:layout_marginEnd="15.67dp"
+            android:layout_marginRight="15.67dp"
+            android:layout_marginStart="15.67dp"
+            android:layout_marginLeft="15.67dp"
+            android:id="@+id/search_btn"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
         <com.ourincheon.wazap.NotoTextView
             android:text="검색결과가 없습니다."
@@ -63,7 +62,7 @@
             android:layout_height="wrap_content"
             android:visibility="invisible"
             android:id="@+id/searchNo"/>
-    </LinearLayout>
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id = "@+id/recyclerView"

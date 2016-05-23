@@ -10,8 +10,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.ourincheon.wazap.Retrofit.Contests;
@@ -30,7 +30,7 @@ public class SearchActivity extends AppCompatActivity {
     RecyclerView content;
     Context context;
     EditText sBox;
-    Button sBtn;
+    ImageButton sBtn;
     NotoTextView sText;
     RecyclerAdapter rec;
     List<Recycler_item> items;
@@ -66,7 +66,7 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         // 검색버튼 터치시 검색
-        sBtn = (Button) findViewById(R.id.search_btn);
+        sBtn = (ImageButton) findViewById(R.id.search_btn);
         sBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
