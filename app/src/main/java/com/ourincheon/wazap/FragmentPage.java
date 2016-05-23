@@ -41,9 +41,7 @@ public class FragmentPage extends Fragment {
     private int position;
     Contests contest;
     WeeklyList weekly;
-    RecyclerAdapter rec;
     contestRecyclerAdapter conRec;
-    List<Recycler_item> items;
     List<Recycler_contestItem> contestItems;
     Recycler_item[] item;
     Recycler_contestItem[] contestItem;
@@ -76,9 +74,6 @@ public class FragmentPage extends Fragment {
         System.out.println(user_id);
         access_token = pref.getString("access_token", "");
 
-        // 모집글 리스트
-        items = new ArrayList<>();
-
         // 공모전 리스트
         contestItems = new ArrayList<>();
 
@@ -96,7 +91,6 @@ public class FragmentPage extends Fragment {
                 swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        items = new ArrayList<>();
                         loadPage(access_token);
                         swipeRefreshLayout.setRefreshing(false);
                     }
@@ -172,12 +166,14 @@ public class FragmentPage extends Fragment {
         ChangeStatus status = ChangeStatus.getInstance();
         System.out.println("=========================Refresh " + status.getNewed());
         if(status.getNewed()==1) {          // 추가된 경우
-            items = new ArrayList<>();
+            RecyclerAdapter rec = (RecyclerAdapter)content.getAdapter();
+            rec.items = new ArrayList<>();
             loadPage(access_token);
             status.removeNewed();
         }
         else if(status.getDeleted()==1) {   // 삭제된 경우
-            items = new ArrayList<>();
+            RecyclerAdapter rec = (RecyclerAdapter)content.getAdapter();
+            rec.items = new ArrayList<>();
             loadPage(access_token);
             status.removeDeleted();
         }
@@ -275,8 +271,9 @@ public class FragmentPage extends Fragment {
                     //String result = new Gson().toJson(contest);
                     //Log.d("SUCESS-----", result);
 
-                    item = new Recycler_item[contest.getDatasize()];
-                    items.clear();
+                    Recycler_item[] item = new Recycler_item[contest.getDatasize()];
+                    RecyclerAdapter rec = new RecyclerAdapter(getActivity(), R.layout.fragment_page);
+//                    items.clear();
 
                     for (int i = 0; i < contest.getDatasize(); i++) {
                         String[] parts = contest.getData(i).getPeriod().split("T");
@@ -296,11 +293,12 @@ public class FragmentPage extends Fragment {
                                 contest.getData(i).getCont_writer(),
                                 contest.getData(i).getIs_finish()
                         );
-                        items.add(item[i]);
-
-                        rec = new RecyclerAdapter(getActivity(), items, R.layout.fragment_page);
-                        content.setAdapter(rec);
+                        rec.items.add(item[i]);
                     }
+                    Log.d("TEST", rec.items.toString());
+
+                    // 모집글 리스트 초기화
+                    content.setAdapter(rec);
 
 
                 } else if (response.isSuccess()) {
@@ -346,7 +344,9 @@ public class FragmentPage extends Fragment {
                    // String result = new Gson().toJson(contest);
                    // Log.d("SUCESS-----", result);
 
-                    item = new Recycler_item[contest.getDatasize()];
+                    Recycler_item[] item = new Recycler_item[contest.getDatasize()];
+                    RecyclerAdapter curRec = (RecyclerAdapter)content.getAdapter();
+                    int cursize = curRec.getItemCount();
                     //List<Recycler_item> items = new ArrayList<Recycler_item>();
                     //items.clear();
                     for (int i = 0; i < contest.getDatasize(); i++) {
@@ -368,14 +368,13 @@ public class FragmentPage extends Fragment {
                                 contest.getData(i).getIs_finish()
                         );
                         // 현재 리스트 items에 새 아이템 추가
-                        items.add(item[i]);
+                        curRec.items.add(item[i]);
 
                     }
 
                     // 리사이클러 뷰 마지막에 새로운 아이템 추가
-                    RecyclerAdapter curRec = (RecyclerAdapter)content.getAdapter();
-                    int cursize = curRec.getItemCount();
-                    curRec.notifyItemRangeInserted(cursize, items.size() - 1); // cursize 위치부터 items.size 길이만큼 늘림
+
+                    curRec.notifyItemRangeInserted(cursize, contest.getDatasize() - 1); // cursize 위치부터 items.size 길이만큼 늘림
                 } else if (response.isSuccess()) {
                     Log.d("Response Body isNull", response.message());
                 } else {

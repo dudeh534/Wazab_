@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.gson.internal.LinkedTreeMap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,6 +40,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public RecyclerAdapter(Context context, List<Recycler_item> items, int item_layout) {
         this.context = context;
         this.items = items;
+        this.item_layout = item_layout;//번호별로 상세페이지
+    }
+
+    public RecyclerAdapter(Context context, int item_layout) {
+        this.context = context;
+        this.items = new ArrayList<>();
         this.item_layout = item_layout;//번호별로 상세페이지
     }
 
