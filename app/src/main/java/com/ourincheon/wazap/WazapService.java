@@ -3,6 +3,7 @@ package com.ourincheon.wazap;
 
 import com.google.gson.internal.LinkedTreeMap;
 import com.ourincheon.wazap.KaKao.infoKaKao;
+import com.ourincheon.wazap.Retrofit.AlarmRead;
 import com.ourincheon.wazap.Retrofit.Alarms;
 import com.ourincheon.wazap.Retrofit.Appliers;
 import com.ourincheon.wazap.Retrofit.ContestInfo;
@@ -112,6 +113,14 @@ public interface WazapService {
             @Header("access-token") String access_token,
       //      @Query("start_id") int start_id,
             @Query("amount") int amount
+    );
+
+    // 알람읽기 처리
+    @PUT("alrams/{alarm_id}")
+    Call<AlarmRead> setReadAlarm(
+            @Header("access-token") String access_token,
+            //      @Query("start_id") int start_id,
+            @Path("alarm_id") int alarm_id
     );
 
     // 찜목록 받아오기

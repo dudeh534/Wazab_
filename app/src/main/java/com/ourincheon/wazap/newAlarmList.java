@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -25,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.gson.Gson;
 import com.ourincheon.wazap.Retrofit.AlarmData;
+import com.ourincheon.wazap.Retrofit.AlarmRead;
 import com.ourincheon.wazap.Retrofit.Alarms;
 
 import org.json.JSONArray;
@@ -76,15 +78,10 @@ public class newAlarmList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 AlarmData mData = mAdapter.mListData.get(position);
-                //Toast.makeText(newAlarmList.this, mData.msg_url, Toast.LENGTH_SHORT).show();
                 String temp = mData.getMsg_url().substring(0, 14);
-
-                System.out.println(temp);
-                if (temp.equals("/contests/list"))
-                    intent = new Intent(newAlarmList.this, ContestList.class);
-                else if (temp.equals("/contests/appl"))
-                    intent = new Intent(newAlarmList.this, ApplyList.class);
-                startActivity(intent);
+                // 알림 읽기 처리 후 액티비티 이동
+                Log.d("TEST", mData.getAlram_id()+" , "+access_token);
+                readAlarm(access_token, mData.getAlram_id(), temp);
             }
         });
 
@@ -181,12 +178,53 @@ public class newAlarmList extends AppCompatActivity {
         });
     }
 
+    // 알람 읽기 처리
+    protected void readAlarm(String access_token, int alarmId, final String url) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://come.n.get.us.to/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        WazapService service = retrofit.create(WazapService.class);
+
+        Call<AlarmRead> call = service.setReadAlarm(access_token, alarmId);
+        call.enqueue(new Callback<AlarmRead>() {
+            @Override
+            public void onResponse(Response<AlarmRead> response) {
+                if (response.isSuccess() && response.body() != null) {
+
+                    Log.d("SUCCESS", response.message());
+                    AlarmRead readResult = response.body();
+
+                    // 읽기처리 성공 후 해당 액티비티로 이동
+                    if (readResult.isResult()) {
+                        if (url.equals("/contests/list"))
+                            intent = new Intent(newAlarmList.this, ContestList.class);
+                        else if (url.equals("/contests/appl"))
+                            intent = new Intent(newAlarmList.this, ApplyList.class);
+                        startActivity(intent);
+                    }
+                } else if (response.isSuccess()) {
+                    Log.d("Response Body isNull", response.message());
+                } else {
+                    Log.d("Response Error Body", response.errorBody().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+                Log.e("Error", t.getMessage());
+            }
+        });
+    }
 
 
     private class ViewHolder {
         public ImageView mIcon;
         public TextView mText;
         public TextView mDate;
+        public LinearLayout mList;
     }
 
     private class ListViewAdapter extends BaseAdapter {
@@ -256,6 +294,7 @@ public class newAlarmList extends AppCompatActivity {
                 holder.mIcon = (ImageView) convertView.findViewById(R.id.mImage);
                 holder.mText = (TextView) convertView.findViewById(R.id.mText);
                 holder.mDate = (TextView) convertView.findViewById(R.id.mDate);
+                holder.mList = (LinearLayout) convertView.findViewById(R.id.mList);
                 convertView.setTag(holder);
             }else{
                 holder = (ViewHolder) convertView.getTag();
@@ -280,6 +319,10 @@ public class newAlarmList extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            if (mData.getIs_check() == 0) {
+                holder.mList.setBackgroundResource(R.color.unread_item);
+            }
+
             // 알람 메세지,날짜 불러오기
             holder.mText.setText(mData.getUsername() + mData.getMsg());
             holder.mDate.setText(mData.getAlramdate());
@@ -287,6 +330,5 @@ public class newAlarmList extends AppCompatActivity {
             return convertView;
         }
     }
-
 
 }

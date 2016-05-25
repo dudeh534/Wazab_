@@ -20,4 +20,5 @@
     <color name="color8">#4A4A4C</color>
     <color name="color9">#BDD1DC</color>
     <color name="wazab">#0057ff</color>
+    <color name="unread_item">#EDF3FF</color>
 </resources>

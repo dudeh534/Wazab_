@@ -295,7 +295,6 @@ public class FragmentPage extends Fragment {
                         );
                         rec.items.add(item[i]);
                     }
-                    Log.d("TEST", rec.items.toString());
 
                     // 모집글 리스트 초기화
                     content.setAdapter(rec);
