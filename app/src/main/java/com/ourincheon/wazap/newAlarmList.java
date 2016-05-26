@@ -70,7 +70,7 @@ public class newAlarmList extends AppCompatActivity {
 
         alarm_list = new ArrayList<AlarmData>();
 
-        loadAlarm(access_token);            // 서버에서 정보 받아오기
+//        loadAlarm(access_token);            // 서버에서 정보 받아오기
 
         // 알람 목록 중 선택했을 경우
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -96,6 +96,12 @@ public class newAlarmList extends AppCompatActivity {
 
         mAdapter = new ListViewAdapter(this);
         mListView.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadAlarm(access_token);
     }
 
     //*** 레이아웃 그려줄때 사용 -높이계산용 ***//
