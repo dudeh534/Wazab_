@@ -161,6 +161,16 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
             }
         });
 
+        // 셋팅 버튼 눌렀을 경우 - 셋팅 창으로 이동
+        ImageView settingBtn = (ImageView) findViewById(R.id.setting);
+        settingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Setting.class);
+                startActivity(intent);
+            }
+        });
+
         navigationView.setNavigationItemSelectedListener(this);
         backPressCloseHandler = new BackPressCloseHandler(this);
     }

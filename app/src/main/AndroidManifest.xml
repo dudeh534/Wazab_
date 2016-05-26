@@ -97,6 +97,8 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".newAlarmList"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".Setting"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 
 </manifest>

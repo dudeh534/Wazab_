@@ -128,7 +128,8 @@
                 android:layout_width="26.33dp"
                 android:layout_height="26.33dp"
                 android:layout_marginLeft="13.67dp"
-                android:src="@drawable/setting" />
+                android:src="@drawable/setting"
+                android:id="@+id/setting"/>
 
 
         </LinearLayout>
