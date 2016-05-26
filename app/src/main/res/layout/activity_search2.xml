@@ -19,8 +19,12 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp"
             android:id="@+id/imageView22"
-            android:src="@drawable/detail_title_banner"
+            android:src="@drawable/wazap_logo"
             android:layout_toLeftOf="@+id/searchNo"
             android:layout_toStartOf="@+id/searchNo" />
 
