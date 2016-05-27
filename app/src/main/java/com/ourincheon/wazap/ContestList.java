@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 import com.ourincheon.wazap.Retrofit.ApplierData;
 import com.ourincheon.wazap.Retrofit.Appliers;
 import com.ourincheon.wazap.Retrofit.ContestData;
@@ -339,91 +340,7 @@ public class ContestList extends AppCompatActivity {
                 holder.mListView1 = (ListView) convertView.findViewById(R.id.applierlistView);
                 holder.DetailArea = (LinearLayout) convertView.findViewById(R.id.btnArea);
                 holder.DetailArea.setSelected(selectItem.get(position, false));
-                holder.DetailArea.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                 /*       ContestData mData = mAdapter.mListData.get(position);
-                        Intent intent = new Intent(ContestList.this, MasterJoinActivity.class);
-                        intent.putExtra("id",String.valueOf(mData.getContests_id()));
-                        startActivity(intent);
-                   */
 
-                        //여기 신청자 목록 눌렀을 때
-                        if (selectItem.get(position, false)) {
-                            selectItem.delete(position);
-                            holder.DetailArea.setSelected(false);//? 이거는 왜 안돼
-                            holder.open_layout.setVisibility(View.GONE);
-                            setListViewHeightBasedOnChildren_delete(mListView,position);
-                        } else {
-                            selectItem.put(position, true);
-                            holder.DetailArea.setSelected(true);
-                            holder.open_layout.setVisibility(View.VISIBLE);
-                            ContestData mData = mAdapter.mListData.get(position);
-                            num = String.valueOf(mData.getContests_id());
-                            SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-                            access_token = pref.getString("access_token", "");
-                            applier_list = new ArrayList<ApplierData>();
-                            mAdapter1 = new ListViewAdapter1(ContestList.this);
-                            //-----------------------------------
-                            Retrofit retrofit = new Retrofit.Builder()
-                                    .baseUrl("http://come.n.get.us.to/")
-                                    .addConverterFactory(GsonConverterFactory.create())
-                                    .build();
-
-                            WazapService service = retrofit.create(WazapService.class);
-
-                            Call<Appliers> call = service.getApplierlist(num, access_token);
-                            call.enqueue(new Callback<Appliers>() {
-                                @Override
-                                public void onResponse(Response<Appliers> response) {
-                                    if (response.isSuccess() && response.body() != null) {
-
-                                        Log.d("SUCCESS", response.message());
-                                        appliers = response.body();
-
-                                        String result = new Gson().toJson(appliers);
-                                        Log.d("SUCESS-----", result);
-
-                                        JSONObject jsonRes;
-                                        try {
-                                            jsonRes = new JSONObject(result);
-                                            JSONArray jsonArr = jsonRes.getJSONArray("data");
-                                            count = jsonArr.length();
-                                            System.out.println(count);
-                                            if(count==0)
-                                                Toast.makeText(ContestList.this, "신청자가 없습니다.", Toast.LENGTH_LONG).show();
-                                            mAdapter1 = new ListViewAdapter1(mContext);
-                                            for (int i = 0; i < count; i++) {
-                                                mAdapter1.addItem(jsonArr.getJSONObject(i).getString("profile_img"),
-                                                        jsonArr.getJSONObject(i).getString("username"),
-                                                        jsonArr.getJSONObject(i).getString("app_users_id"),
-                                                        Integer.parseInt(jsonArr.getJSONObject(i).getString("applies_id")),
-                                                        Integer.parseInt(jsonArr.getJSONObject(i).getString("is_check")));
-                                            }
-                                            holder.mListView1.setAdapter(mAdapter1);
-                                            holder.mListView1.setDivider(null);
-                                            holder.mListView1.setDividerHeight(0);
-                                            setListViewHeightBasedOnChildren(holder.mListView1);
-                                            setListViewHeightBasedOnChildren_add(mListView, position);
-                                        } catch (JSONException e) {
-                                        }
-
-                                    } else if (response.isSuccess()) {
-                                        Log.d("Response Body isNull", response.message());
-                                    } else {
-                                        Log.d("Response Error Body", response.errorBody().toString());
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Throwable t) {
-                                    t.printStackTrace();
-                                    Log.e("Error", t.getMessage());
-                                }
-                            });
-                        }
-                    }
-                });
 
                 // 코드 수정할것-너무지저분
                 holder.Detail = (Button) convertView.findViewById(R.id.rdetail);
@@ -489,6 +406,8 @@ public class ContestList extends AppCompatActivity {
                                                         Integer.parseInt(jsonArr.getJSONObject(i).getString("applies_id")),
                                                         Integer.parseInt(jsonArr.getJSONObject(i).getString("is_check")));
                                             }
+                                            // TODO 여기가 세개이상인데 리스트뷰 크기가 3개이상 안늘어남
+                                            Log.d("TEST", "신청자 목록 길이: "+mAdapter1.getCount());
                                             holder.mListView1.setAdapter(mAdapter1);
                                             holder.mListView1.setDivider(null);
                                             holder.mListView1.setDividerHeight(0);
@@ -742,6 +661,60 @@ public class ContestList extends AppCompatActivity {
                     intent.putExtra("contest_id", num);
                     intent.putExtra("is_ok", mData.getIs_check());
                     startActivity(intent);
+                }
+            });
+
+            // 수락 버튼 눌렀을 경우
+            holder.aABtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //*** 서버로 멤버 변경에 대해 요청하기 ***//
+                    if (mData.getIs_check() == 0){
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl("http://come.n.get.us.to/")
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+
+                        WazapService service = retrofit.create(WazapService.class);
+
+                        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+                        String access_token = pref.getString("access_token", "");
+
+                        Call<LinkedTreeMap> call = service.changeMember(num, String.valueOf(mData.getApplies_id()), access_token);
+                        call.enqueue(new Callback<LinkedTreeMap>() {
+                            @Override
+                            public void onResponse(Response<LinkedTreeMap> response) {
+                                if (response.isSuccess() && response.body() != null) {
+
+                                    LinkedTreeMap temp = response.body();
+
+                                    boolean result = Boolean.parseBoolean(temp.get("result").toString());
+                                    String msg = temp.get("msg").toString();
+
+                                    if (result) {
+                                        Log.d("저장 결과: ", msg);
+                                        Toast.makeText(getApplicationContext(), "멤버 변경 되었습니다.", Toast.LENGTH_SHORT).show();
+                                        mData.setIs_check(1);
+                                        holder.aABtn.setBackgroundResource(R.drawable.accept_button_on);
+                                    } else {
+                                        Log.d("저장 실패: ", msg);
+                                        Toast.makeText(getApplicationContext(), "멤버 변경 안됬습니다.다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                } else if (response.isSuccess()) {
+                                    Log.d("Response Body isNull", response.message());
+                                } else {
+                                    Log.d("Response Error Body", response.errorBody().toString());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Throwable t) {
+                                t.printStackTrace();
+                                Log.e("Error", t.getMessage());
+                            }
+                        });
+                    }
                 }
             });
 
