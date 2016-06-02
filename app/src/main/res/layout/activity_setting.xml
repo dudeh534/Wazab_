@@ -38,35 +38,187 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/setting_view">
 
-        <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="33dp"
+            android:text="Push 관리"
+            android:textSize="12dp"
+            android:textColor="#727272"
+            android:id="@+id/push_text"/>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/push_text"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingStart="7dp"
+            android:paddingLeft="7dp"
+            android:orientation="horizontal"
+            android:background="@color/color6"
+            android:id="@+id/push_setting">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="Push 알림 수신 허용"
+                android:textSize="14dp"
+                android:textColor="@color/color7"/>
+
 
             <ToggleButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="푸쉬"
-                android:textOff="푸쉬켜기"
-                android:textOn="푸쉬끄기"
+                android:layout_width="36dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="17dp"
+                android:layout_marginRight="17dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/push_selector"
+                android:checked="true"
+                android:textOff=""
+                android:textOn=""
+                style="?android:attr/borderlessButtonStyle"
+                android:scaleType="fitCenter"
+                android:cropToPadding="true"
                 android:id="@+id/push_onoff"/>
-        </LinearLayout>
 
-        <LinearLayout
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="44.6dp"
+            android:layout_below="@id/push_setting"
+            android:text="소개"
+            android:textSize="12dp"
+            android:textColor="#727272"
+            android:id="@+id/intro_text"/>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="50dp"
+            android:layout_below="@id/intro_text"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingStart="7dp"
+            android:paddingLeft="7dp"
+            android:background="@color/color6"
+            android:orientation="horizontal"
+            android:id="@+id/intro_layout">
 
-            <Button
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="로그아웃"
-                android:id="@+id/logout_button"/>
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="WAZAP 소개"
+                android:textSize="14dp"
+                android:textColor="@color/color7"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="26dp"
+                android:layout_marginEnd="26dp"
+                android:background="#00000000"
+                android:src="@drawable/detail_btn_front"
+                android:scaleType="fitCenter"
+                android:id="@+id/intro_button"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="44.6dp"
+            android:layout_below="@id/intro_layout"
+            android:text="프로그램 정보"
+            android:textSize="12dp"
+            android:textColor="#727272"
+            android:id="@+id/app_info_text"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/app_info_text"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingStart="7dp"
+            android:paddingLeft="7dp"
+            android:background="@color/color6"
+            android:orientation="horizontal"
+            android:id="@+id/app_info_layout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="버전 정보"
+                android:textSize="14dp"
+                android:textColor="@color/color7"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="15.3dp"
+                android:layout_marginEnd="15.3dp"
+                android:text="@string/app_version"
+                android:textColor="@color/wazab"/>
+        </RelativeLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="62.6dp"
+            android:layout_below="@id/app_info_layout"
+            android:layout_marginStart="7dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginRight="7dp"
+            android:background="@color/color6"
+            style="?android:attr/borderlessButtonStyle"
+            android:text="로그아웃"
+            android:textSize="14dp"
+            android:textColor="@drawable/logout_button"
+            android:textColorHighlight="@drawable/logout_button"
+            android:textColorLink="@drawable/logout_button"
+            android:id="@+id/logout_button"/>
+    </RelativeLayout>
 </LinearLayout>

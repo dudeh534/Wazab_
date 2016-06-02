@@ -14,5 +14,6 @@
     <string name="facebook_app_id">1727300620824623</string>
     <string name="title_activity_join">JoinActivity</string>
     <string name="title_activity_master_join">MasterJoinActivity</string>
-
+    <string name="app_version">앱 버전:v1.0</string>
+    <string name="introduce">와서잡아\n\n-개발자-\n류영수\n서계원\n유호균\n채영도\n홍수민\n\n-디자이너-\n오이담\n이소현\n최현철</string>
 </resources>
