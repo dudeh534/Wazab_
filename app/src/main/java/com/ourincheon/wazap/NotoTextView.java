@@ -13,10 +13,12 @@ import android.widget.TextView;
 public class NotoTextView extends TextView {
     public NotoTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setType(context);
     }
 
     public NotoTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setType(context);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
