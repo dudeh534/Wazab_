@@ -9,6 +9,8 @@ import android.content.pm.Signature;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -23,6 +25,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.gson.internal.LinkedTreeMap;
 import com.ourincheon.wazap.MainActivity;
+import com.ourincheon.wazap.NotoTextView;
 import com.ourincheon.wazap.R;
 
 import org.json.JSONException;
@@ -45,12 +48,12 @@ import retrofit2.Retrofit;
 public class FacebookLogin extends Activity {
     CallbackManager callbackManager;
     AccessToken accessToken;
+    TextView anonymousLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
     //    getHash();
         /* android app key 생성
         try {
@@ -64,11 +67,11 @@ public class FacebookLogin extends Activity {
         } catch (NoSuchAlgorithmException e) {
         }*/
 
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_login);
 
 
 
-        FacebookSdk.sdkInitialize(this.getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
 
         // If the access token is available already assign it.
@@ -82,6 +85,14 @@ public class FacebookLogin extends Activity {
             finish();
         }
 
+        anonymousLogin = (NotoTextView) findViewById(R.id.anonymous_login);
+        anonymousLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                loginComplete();
+            }
+        });
 
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {

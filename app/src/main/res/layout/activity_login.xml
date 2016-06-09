@@ -11,12 +11,24 @@
     tools:context="com.ourincheon.wazap.KaKao.LoginActivity">
 
     <com.facebook.login.widget.LoginButton
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:id="@+id/login_button"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_marginBottom="9.3dp"
+        android:layout_above="@+id/anonymous_login"
+        android:layout_centerHorizontal="true" />
+
+    <com.ourincheon.wazap.NotoTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="로그인"
-        android:id="@+id/login_button"
-        android:layout_marginBottom="86dp"
+        android:layout_alignRight="@+id/login_button"
+        android:layout_alignEnd="@+id/login_button"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginBottom="41.6dp"
+        android:text="둘러보기 →"
+        android:textColor="@color/color6"
+        android:id="@+id/anonymous_login"/>
 
 </RelativeLayout>
