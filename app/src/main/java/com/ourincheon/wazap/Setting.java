@@ -36,6 +36,9 @@ public class Setting extends AppCompatActivity {
         pushOnOffBtn = (ToggleButton) findViewById(R.id.push_onoff);
         introButton = (ImageButton) findViewById(R.id.intro_button);
 
+        if (CheckAnonymous.isAnonymous(getApplicationContext())) {
+            logoutBtn.setText("로그인");
+        }
         try {
             SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
             boolean isPush = pref.getBoolean("push", true);

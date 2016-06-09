@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -60,9 +61,13 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, RecruitActivity.class);
-                i.putExtra("edit", 0);
-                startActivity(i);
+                if (CheckAnonymous.isAnonymous(context)) {
+                    Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent i = new Intent(MainActivity.this, RecruitActivity.class);
+                    i.putExtra("edit", 0);
+                    startActivity(i);
+                }
             }
         });
 
@@ -92,32 +97,40 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         TextView nickname = (TextView)header.findViewById(R.id.nickname);
 
         // 사용자 이름, 이미지 불러오기
-        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-        nickname.setText(pref.getString("name",""));
-        profileImg = (ImageView)header.findViewById(R.id.imageView);
-        thumbnail = pref.getString("profile_img","");
-        // Glide로 이미지그리기
-        Glide.with(context).load(thumbnail).asBitmap().centerCrop().error(R.drawable.icon_user).into(new BitmapImageViewTarget(profileImg) {
-            @Override
-            protected void setResource(Bitmap resource) {
-                RoundedBitmapDrawable circularBitmapDrawable =
-                        RoundedBitmapDrawableFactory.create(context.getResources(), resource);
-                circularBitmapDrawable.setCircular(true);
-                profileImg.setImageDrawable(circularBitmapDrawable);
-            }
-        });
+        if (CheckAnonymous.isAnonymous(context)) {
+            nickname.setText("로그인이 필요합니다");
+        } else {
+            SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+            nickname.setText(pref.getString("name", ""));
+            profileImg = (ImageView) header.findViewById(R.id.imageView);
+            thumbnail = pref.getString("profile_img", "");
+            // Glide로 이미지그리기
+            Glide.with(context).load(thumbnail).asBitmap().centerCrop().error(R.drawable.icon_user).into(new BitmapImageViewTarget(profileImg) {
+                @Override
+                protected void setResource(Bitmap resource) {
+                    RoundedBitmapDrawable circularBitmapDrawable =
+                            RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                    circularBitmapDrawable.setCircular(true);
+                    profileImg.setImageDrawable(circularBitmapDrawable);
+                }
+            });
+        }
 
         // 프로필 버튼 눌렀을 경우 - 내 페이지 보기로 이동
         ImageView profileBtn = (ImageView)header.findViewById(R.id.showProBtn);
         profileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, showMypageActivity.class);
-                i.putExtra("flag",0);
-                SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-                String user_id = pref.getString("user_id", "");
-                i.putExtra("user_id",user_id);
-                startActivity(i);
+                if (CheckAnonymous.isAnonymous(context)) {
+                    Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent i = new Intent(MainActivity.this, showMypageActivity.class);
+                    i.putExtra("flag", 0);
+                    SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+                    String user_id = pref.getString("user_id", "");
+                    i.putExtra("user_id", user_id);
+                    startActivity(i);
+                }
             }
         });
 
@@ -126,8 +139,12 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         side_Button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ClipList.class);
-                startActivity(intent);
+                if (CheckAnonymous.isAnonymous(context)) {
+                    Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(MainActivity.this, ClipList.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -136,8 +153,12 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         side_Button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ApplyList.class);
-                startActivity(intent);
+                if (CheckAnonymous.isAnonymous(context)) {
+                    Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(MainActivity.this, ApplyList.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -146,8 +167,12 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         side_Button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ContestList.class);
-                startActivity(intent);
+                if (CheckAnonymous.isAnonymous(context)) {
+                    Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(MainActivity.this, ContestList.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -156,8 +181,12 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         alarmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, newAlarmList.class);
-                startActivity(intent);
+                if (CheckAnonymous.isAnonymous(context)) {
+                    Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(MainActivity.this, newAlarmList.class);
+                    startActivity(intent);
+                }
             }
         });
 

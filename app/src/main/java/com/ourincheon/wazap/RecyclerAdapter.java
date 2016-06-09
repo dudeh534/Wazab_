@@ -84,7 +84,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             holder.day.setBackgroundResource(R.drawable.scrap_info_finish);
             holder.day.setText("");
 
-            // 카드뷰 터치시-> 상세페이지로
+            // 카드뷰 터치시-> 이미 마감됨
             holder.cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -167,14 +167,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             holder.cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!item.getWriter().equals(user_id))
-                        intent = new Intent(context, JoinActivity.class);
-                    else
-                        intent = new Intent(context, MasterJoinActivity.class);
+                    if (CheckAnonymous.isAnonymous(context)) {
+                        Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_LONG).show();
+                    } else {
+                        if (!item.getWriter().equals(user_id))
+                            intent = new Intent(context, JoinActivity.class);
+                        else
+                            intent = new Intent(context, MasterJoinActivity.class);
 
-                    intent.putExtra("id", String.valueOf(item.getId()));
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
+                        intent.putExtra("id", String.valueOf(item.getId()));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
                 }
             });
 
@@ -187,22 +191,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             holder.heart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(!item.getWriter().equals(user_id)) {
-                        item.setClick();
-                        pickContest(String.valueOf(item.getId()), access_token);
+                    if (CheckAnonymous.isAnonymous(context)) {
+                        Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_LONG).show();
+                    } else {
+                        if (!item.getWriter().equals(user_id)) {
+                            item.setClick();
+                            pickContest(String.valueOf(item.getId()), access_token);
 
-                        //make heart work well
-                        if(item.getClick()%2==1 && item.getClip()==0)
-                            holder.heart.setBackgroundResource(R.drawable.heart2);
-                        else if(item.getClick()%2==0 && item.getClip()==0)
-                            holder.heart.setBackgroundResource(R.drawable.heart1);
-                        if(item.getClick()%2==1 && item.getClip()==1)
-                            holder.heart.setBackgroundResource(R.drawable.heart1);
-                        else if(item.getClick()%2==0 && item.getClip()==1)
-                            holder.heart.setBackgroundResource(R.drawable.heart2);
-                    }
-                    else {
-                        Toast.makeText(context, "글 작성자는 스크랩할 수 없습니다.", Toast.LENGTH_LONG).show();
+                            //make heart work well
+                            if (item.getClick() % 2 == 1 && item.getClip() == 0)
+                                holder.heart.setBackgroundResource(R.drawable.heart2);
+                            else if (item.getClick() % 2 == 0 && item.getClip() == 0)
+                                holder.heart.setBackgroundResource(R.drawable.heart1);
+                            if (item.getClick() % 2 == 1 && item.getClip() == 1)
+                                holder.heart.setBackgroundResource(R.drawable.heart1);
+                            else if (item.getClick() % 2 == 0 && item.getClip() == 1)
+                                holder.heart.setBackgroundResource(R.drawable.heart2);
+                        } else {
+                            Toast.makeText(context, "글 작성자는 스크랩할 수 없습니다.", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             });
@@ -265,93 +272,101 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     //** 찜요청보내기 **//
     void pickContest(final String num, final String access_token) {
-        int ret = -1;
+        if (CheckAnonymous.isAnonymous(context)) {
+            Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_LONG).show();
+        } else {
+            int ret = -1;
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://come.n.get.us.to/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://come.n.get.us.to/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
-        WazapService service = retrofit.create(WazapService.class);
+            WazapService service = retrofit.create(WazapService.class);
 
-        Call<LinkedTreeMap> call = service.clipContests(num, access_token);
-        call.enqueue(new Callback<LinkedTreeMap>() {
-            @Override
-            public void onResponse(Response<LinkedTreeMap> response) {
-                if (response.isSuccess() && response.body() != null) {
+            Call<LinkedTreeMap> call = service.clipContests(num, access_token);
+            call.enqueue(new Callback<LinkedTreeMap>() {
+                @Override
+                public void onResponse(Response<LinkedTreeMap> response) {
+                    if (response.isSuccess() && response.body() != null) {
 
-                    LinkedTreeMap temp = response.body();
+                        LinkedTreeMap temp = response.body();
 
-                    boolean result = Boolean.parseBoolean(temp.get("result").toString());
-                    String msg = temp.get("msg").toString();
+                        boolean result = Boolean.parseBoolean(temp.get("result").toString());
+                        String msg = temp.get("msg").toString();
 
-                    if (!msg.equals("이미 찜한 게시물 입니다.")) {
-                        if (result) {
-                            Log.d("저장 결과: ", msg);
-                            Toast.makeText(context, "찜 되었습니다.", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.d("저장 실패: ", msg);
-                            Toast.makeText(context, "찜 안됬습니다.다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-                        }
-                    } else
-                        removeClip(num);
-                } else if (response.isSuccess()) {
-                    Log.d("Response Body isNull", response.message());
-                } else {
-                    Log.d("Response Error Body", response.errorBody().toString());
+                        if (!msg.equals("이미 찜한 게시물 입니다.")) {
+                            if (result) {
+                                Log.d("저장 결과: ", msg);
+                                Toast.makeText(context, "찜 되었습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.d("저장 실패: ", msg);
+                                Toast.makeText(context, "찜 안됬습니다.다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                            }
+                        } else
+                            removeClip(num);
+                    } else if (response.isSuccess()) {
+                        Log.d("Response Body isNull", response.message());
+                    } else {
+                        Log.d("Response Error Body", response.errorBody().toString());
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
-                t.printStackTrace();
-                Log.e("Error", t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Throwable t) {
+                    t.printStackTrace();
+                    Log.e("Error", t.getMessage());
+                }
+            });
+        }
     }
 
     //** 찜 취소 요청보내기 **//
     void removeClip(String num)
     {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://come.n.get.us.to/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        if (CheckAnonymous.isAnonymous(context)) {
+            Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_LONG).show();
+        } else {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://come.n.get.us.to/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
-        WazapService service = retrofit.create(WazapService.class);
+            WazapService service = retrofit.create(WazapService.class);
 
-        Call<LinkedTreeMap> call = service.delClip(num, access_token);
-        call.enqueue(new Callback<LinkedTreeMap>() {
-            @Override
-            public void onResponse(Response<LinkedTreeMap> response) {
-                if (response.isSuccess() && response.body() != null) {
+            Call<LinkedTreeMap> call = service.delClip(num, access_token);
+            call.enqueue(new Callback<LinkedTreeMap>() {
+                @Override
+                public void onResponse(Response<LinkedTreeMap> response) {
+                    if (response.isSuccess() && response.body() != null) {
 
-                    LinkedTreeMap temp = response.body();
+                        LinkedTreeMap temp = response.body();
 
-                    boolean result = Boolean.parseBoolean(temp.get("result").toString());
-                    String msg = temp.get("msg").toString();
+                        boolean result = Boolean.parseBoolean(temp.get("result").toString());
+                        String msg = temp.get("msg").toString();
 
-                    if (result) {
-                        Log.d("저장 결과: ", msg);
-                        Toast.makeText(context, "찜 취소되었습니다.", Toast.LENGTH_SHORT).show();
+                        if (result) {
+                            Log.d("저장 결과: ", msg);
+                            Toast.makeText(context, "찜 취소되었습니다.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.d("저장 실패: ", msg);
+                            Toast.makeText(context, "찜 취소안됬습니다.다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } else if (response.isSuccess()) {
+                        Log.d("Response Body isNull", response.message());
                     } else {
-                        Log.d("저장 실패: ", msg);
-                        Toast.makeText(context, "찜 취소안됬습니다.다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                        Log.d("Response Error Body", response.errorBody().toString());
                     }
-
-                } else if (response.isSuccess()) {
-                    Log.d("Response Body isNull", response.message());
-                } else {
-                    Log.d("Response Error Body", response.errorBody().toString());
                 }
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
-                t.printStackTrace();
-                Log.e("Error", t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Throwable t) {
+                    t.printStackTrace();
+                    Log.e("Error", t.getMessage());
+                }
+            });
+        }
     }
 
     @Override

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.ourincheon.wazap.Retrofit.Contests;
 import com.ourincheon.wazap.Retrofit.WeeklyList;
@@ -105,8 +106,12 @@ public class FragmentPage extends Fragment {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         //System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqq " + position);
-                        category_value= position;
-                        loadPage(access_token);
+                        if (CheckAnonymous.isAnonymous(mContext)) {
+                            Toast.makeText(mContext, "로그인이 필요합니다.", Toast.LENGTH_LONG).show();
+                        } else {
+                            category_value = position;
+                            loadPage(access_token);
+                        }
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {}
