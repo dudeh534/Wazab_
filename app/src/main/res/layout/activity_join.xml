@@ -61,7 +61,7 @@
         <com.ourincheon.wazap.NotoTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="D - 23"
+            android:text="D - "
             android:layout_gravity="center_vertical|right"
             android:layout_marginRight="12dp"
             android:textColor="#FF0000"
@@ -70,7 +70,6 @@
 
         <com.ourincheon.wazap.NotoTextView
             android:id="@+id/jTitle"
-            android:hint="title"
             android:textSize="17dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -112,7 +111,7 @@
             <com.ourincheon.wazap.NotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="변요한"
+                android:text="이름"
                 android:id="@+id/jName"
                 android:layout_marginLeft="28.33dp"
                 android:layout_marginTop="13dp" />
@@ -133,7 +132,7 @@
                 <com.ourincheon.wazap.NotoTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="dudeh534"
+                    android:text="******"
                     android:id="@+id/jKakao"
                     android:layout_marginLeft="4dp"
                     android:layout_marginTop="8dp" />
@@ -220,7 +219,6 @@
             <com.ourincheon.wazap.NotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="레드닷 어워즈"
                 android:id="@+id/jCTitle"
                 android:layout_marginTop="26.33dp"
                 android:textSize="14dp" />
@@ -228,7 +226,6 @@
             <com.ourincheon.wazap.NotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="주최"
                 android:id="@+id/jHost"
                 android:layout_marginTop="18.67dp"
                 android:textSize="14dp" />
@@ -254,40 +251,25 @@
                     android:id="@+id/imageView8" />
             </LinearLayout>
 
-            <com.ourincheon.wazap.NotoTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="디자인"
-                android:id="@+id/jCate"
-                android:layout_marginTop="18.67dp"
-                android:textSize="14dp" />
-
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/imageView9" />
-
+                    android:id="@+id/jCate1"
+                    android:layout_marginTop="18.67dp"
+                    android:textSize="14dp" />
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/imageView10" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageView11" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageView12" />
+                    android:id="@+id/jCate2"
+                    android:layout_marginTop="18.67dp"
+                    android:textSize="14dp" />
             </LinearLayout>
+
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -297,7 +279,6 @@
                 <com.ourincheon.wazap.NotoTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1"
                     android:id="@+id/jMem"
                     android:layout_marginTop="18.67dp"
                     android:textSize="14dp" />
@@ -305,7 +286,6 @@
                 <com.ourincheon.wazap.NotoTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" / 3"
                     android:id="@+id/jRec"
                     android:layout_marginTop="18.67dp"
                     android:textSize="14dp" />
@@ -316,7 +296,6 @@
             <com.ourincheon.wazap.NotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="27"
                 android:id="@+id/jApply"
                 android:layout_marginTop="18.67dp"
                 android:textSize="14dp" />
@@ -324,7 +303,6 @@
             <com.ourincheon.wazap.NotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="서울"
                 android:id="@+id/jLoc"
                 android:layout_marginTop="18.67dp"
                 android:textSize="14dp" />
@@ -332,7 +310,6 @@
             <com.ourincheon.wazap.NotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="개발"
                 android:id="@+id/jPos"
                 android:layout_marginTop="18.67dp"
                 android:textSize="14dp" />
@@ -406,7 +383,6 @@
         <com.ourincheon.wazap.NotoTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="소"
             android:id="@+id/jCover"
             android:layout_gravity="left|top"
             android:layout_below="@+id/textView7"

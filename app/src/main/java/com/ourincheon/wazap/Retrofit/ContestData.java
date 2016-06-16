@@ -1,6 +1,6 @@
 package com.ourincheon.wazap.Retrofit;
 
-import com.facebook.FacebookRequestError;
+import org.json.JSONArray;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ public class ContestData  implements Serializable {
     String hosts;
     String username;
     String categories;
+    JSONArray categoriesArray;
     // List<CateData>
     String period;
     String cover;
@@ -169,20 +170,19 @@ public class ContestData  implements Serializable {
         return categories;
     }
 
-     public String getCategories() {
-     String str="";
+    public String getCategories() {
+        String str="";
         String[] temp;
-         categories = categories.substring(1,categories.length()-1);
+        categories = categories.substring(1,categories.length()-1);
         temp = categories.split("\"");
-         for(int i=0; i<temp.length; i++)
-             str += temp[i]+" ";
-
+        for(int i=0; i<temp.length; i++)
+            str += temp[i]+" ";
         return str;
-     }
+    }
 
     public void setCategories(String categories) {
-            this.categories = categories;
-        }
+        this.categories = categories;
+    }
 
     /*
 

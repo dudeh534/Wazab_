@@ -1,22 +1,18 @@
 package com.ourincheon.wazap;
 
-import android.app.ActionBar;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,20 +21,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
-import com.ourincheon.wazap.Retrofit.ContestData;
-import com.ourincheon.wazap.Retrofit.MemberList;
 import com.ourincheon.wazap.Retrofit.reqContest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,7 +37,8 @@ import retrofit2.Retrofit;
 public class JoinActivity extends AppCompatActivity {
     Context context;
     reqContest contest;
-    TextView jTitle,jCTitle,jButton,jCate,jApply,jRec,jName,jCover,jMem,jDate,jHost,jLoc,jPos,jPro,jKakao;
+    TextView jTitle,jCTitle,jButton,jApply,jRec,jName,jCover,jMem,jDate,jHost,jLoc,jPos,jPro,jKakao;
+    ImageView jCate[] = new ImageView[2];
     ImageView jImg;
     String access_token,num,Writer;
     int is_apply;
@@ -65,7 +53,8 @@ public class JoinActivity extends AppCompatActivity {
 
         jTitle = (TextView) findViewById(R.id.jTitle);
         jCTitle = (TextView) findViewById(R.id.jCTitle);
-        jCate =  (TextView) findViewById(R.id.jCate);
+        jCate[0] =  (ImageView) findViewById(R.id.jCate1);
+        jCate[1] =  (ImageView) findViewById(R.id.jCate2);
         jApply = (TextView) findViewById(R.id.jApply);
         jRec = (TextView) findViewById(R.id.jRec);
         jName = (TextView) findViewById(R.id.jName);
@@ -344,7 +333,7 @@ public class JoinActivity extends AppCompatActivity {
                     else {
                         jTitle.setText(contest.getData().getTitle());
                         jCTitle.setText(contest.getData().getCont_title());
-                        jCate.setText(contest.getData().getCategories());
+                        //jCate.setText(contest.getData().getCategories());
                         jApply.setText(String.valueOf(contest.getData().getAppliers()));
                         jMem.setText(String.valueOf(contest.getData().getMembers()));
                         jRec.setText(" / " + String.valueOf(contest.getData().getRecruitment()));
@@ -356,6 +345,58 @@ public class JoinActivity extends AppCompatActivity {
                         jKakao.setText(contest.getData().getKakao_id());
 
                         Writer = contest.getData().getCont_writer();
+
+                        // 카테고리 목록별로 아이콘으로 나타냄
+                        String[] category = contest.getData().getCategories().split(",");
+                        if (category.length == 1) {
+                            // 카테고리에 따라 그림으로
+                            switch (category[0].trim()) {
+                                case "사진/UCC":
+                                    jCate[0].setImageResource(R.drawable.detail_icon_video);
+                                    break;
+                                case "디자인":
+                                    jCate[0].setImageResource(R.drawable.detail_icon_design);
+                                    break;
+                                case "게임/소프트웨어":
+                                    jCate[0].setImageResource(R.drawable.detail_icon_it);
+                                    break;
+                                case "해외":
+                                    jCate[0].setImageResource(R.drawable.detail_icon_idea);
+                                    break;
+                                case "광고/아이디어/마케팅":
+                                    jCate[0].setImageResource(R.drawable.detail_icon_marketing);
+                                    break;
+                                case "기타":
+                                    jCate[0].setImageResource(R.drawable.detail_icon_scenario);
+                                    break;
+
+                            }
+                        } else {
+                            for (int i=0; i<category.length; i++) {
+                                // 카테고리에 따라 그림으로
+                                switch (category[i].trim()) {
+                                    case "사진/UCC":
+                                        jCate[i].setImageResource(R.drawable.detail_icon_video);
+                                        break;
+                                    case "디자인":
+                                        jCate[i].setImageResource(R.drawable.detail_icon_design);
+                                        break;
+                                    case "게임/소프트웨어":
+                                        jCate[i].setImageResource(R.drawable.detail_icon_it);
+                                        break;
+                                    case "해외":
+                                        jCate[i].setImageResource(R.drawable.detail_icon_idea);
+                                        break;
+                                    case "광고/아이디어/마케팅":
+                                        jCate[i].setImageResource(R.drawable.detail_icon_marketing);
+                                        break;
+                                    case "기타":
+                                        jCate[i].setImageResource(R.drawable.detail_icon_scenario);
+                                        break;
+
+                                }
+                            }
+                        }
 
                         // 찜여부에 따라 이미지 다르게
                         if (contest.getData().getIs_clip() == 0)
