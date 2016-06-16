@@ -63,7 +63,7 @@
         android:layout_marginRight="4dp"
         android:layout_marginTop="3.33dp">
 
-        <EditText
+        <com.ourincheon.wazap.NotoEditText
             android:id="@+id/reTitle"
             android:hint="제목을 입력하세요"
             android:textSize="17dp"
@@ -182,7 +182,7 @@
             android:background="#ffffff"
             android:weightSum="1">
 
-            <EditText
+            <com.ourincheon.wazap.NotoEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/reCTitle"
@@ -192,7 +192,7 @@
                 android:textSize="13dp"
                 android:backgroundTint="#ffffff"/>
 
-            <EditText
+            <com.ourincheon.wazap.NotoEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/reHost"
@@ -213,7 +213,7 @@
                     android:layout_height="20dp"
                     android:orientation="horizontal">
 
-                <CheckBox
+                <com.ourincheon.wazap.NotoCheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="광고/아이디어/마케팅"
@@ -222,7 +222,7 @@
                     android:textSize="13dp"
                     android:button="@drawable/detail_disable_marketing"/>
 
-                <CheckBox
+                <com.ourincheon.wazap.NotoCheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="디자인"
@@ -238,7 +238,7 @@
                     android:layout_height="20dp"
                     android:orientation="horizontal">
 
-                <CheckBox
+                <com.ourincheon.wazap.NotoCheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="사진/UCC"
@@ -248,7 +248,7 @@
                     android:button="@drawable/detail_disable_video"/>
 
 
-                    <CheckBox
+                    <com.ourincheon.wazap.NotoCheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="해외"
@@ -264,7 +264,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:orientation="horizontal">
-                <CheckBox
+                <com.ourincheon.wazap.NotoCheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="게임/소프트웨어"
@@ -273,7 +273,7 @@
                     android:textSize="13dp"
                     android:button="@drawable/detail_disable_it"/>
 
-                <CheckBox
+                <com.ourincheon.wazap.NotoCheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="기타"
@@ -291,7 +291,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp">
 
-                <EditText
+                <com.ourincheon.wazap.NotoEditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="모집 인원을 입력하세요"
@@ -302,14 +302,14 @@
 
             </LinearLayout>
 
-            <Button
+            <com.ourincheon.wazap.NotoButtonView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:hint="날짜를 선택하세요"
                 android:id="@+id/reDate"
                 android:textSize="14dp" />
 
-            <Button
+            <com.ourincheon.wazap.NotoButtonView
                 android:hint="지역을 선택하세요"
                 android:id="@+id/reLoc"
                 android:textSize="14dp"
@@ -318,7 +318,7 @@
                 />
 
 
-            <EditText
+            <com.ourincheon.wazap.NotoEditText
                 android:hint="모집포지션을 입력하세요"
                 android:id="@+id/rePos"
                 android:textSize="14dp"
@@ -364,7 +364,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="12dp" />
 
-        <EditText
+        <com.ourincheon.wazap.NotoEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"

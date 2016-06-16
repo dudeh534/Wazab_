@@ -44,7 +44,7 @@
         android:orientation="vertical"
         android:id="@+id/setting_view">
 
-        <TextView
+        <com.ourincheon.wazap.NotoTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
@@ -73,7 +73,7 @@
             android:background="@color/color6"
             android:id="@+id/push_setting">
 
-            <TextView
+            <com.ourincheon.wazap.NotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -102,7 +102,7 @@
 
         </RelativeLayout>
 
-        <TextView
+        <com.ourincheon.wazap.NotoTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
@@ -132,7 +132,7 @@
             android:orientation="horizontal"
             android:id="@+id/intro_layout">
 
-            <TextView
+            <com.ourincheon.wazap.NotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -184,7 +184,7 @@
             android:orientation="horizontal"
             android:id="@+id/app_info_layout">
 
-            <TextView
+            <com.ourincheon.wazap.NotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -193,7 +193,7 @@
                 android:textSize="14dp"
                 android:textColor="@color/color7"/>
 
-            <TextView
+            <com.ourincheon.wazap.NotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
