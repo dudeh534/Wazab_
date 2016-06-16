@@ -19,8 +19,10 @@ import android.widget.Toast;
 
 import com.ourincheon.wazap.Retrofit.Contests;
 import com.ourincheon.wazap.Retrofit.WeeklyList;
+import com.ourincheon.wazap.category.contest.ContestStyle;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -101,11 +103,18 @@ public class FragmentPage extends Fragment {
                 //* 카테고리 선택 스피너 *//
                 LinearLayout linearLayout_spinner = (LinearLayout) linearLayout.findViewById(R.id.linearLayout_mother);
                 Spinner spinner = (Spinner) linearLayout_spinner.findViewById(R.id.spinner);
+                // adapter로 카테고리 스피너 폰트 변경
+                ContestStyle adapter = new ContestStyle(
+                        getContext(),
+                        R.layout.support_simple_spinner_dropdown_item,
+                        Arrays.asList(getResources().getStringArray(R.array.categories))
+                );
+                spinner.setAdapter(adapter);
+                // 리스너 추가
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     // 눌렸을시, 해당 카테고리 리스트만 출력
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        //System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqq " + position);
                         if (CheckAnonymous.isAnonymous(mContext)) {
                             Toast.makeText(mContext, "로그인이 필요합니다.", Toast.LENGTH_LONG).show();
                         } else {
@@ -394,4 +403,6 @@ public class FragmentPage extends Fragment {
         });
         dialog.dismiss();
     }
+
+
 }

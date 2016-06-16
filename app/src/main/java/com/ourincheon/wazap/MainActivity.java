@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -91,6 +93,21 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         tabLayout.setTabTextColors(Color.GRAY, Color.BLACK);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.wazab));
 
+        // TabLayout 폰트 설정
+        Typeface mTypeface = Typeface.createFromAsset(context.getAssets(),"NotoSansKR-Regular-Hestia.otf");
+        ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
+        int tabsCount = vg.getChildCount();
+        for (int j = 0; j < tabsCount; j++) {
+            ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
+            int tabChildsCount = vgTab.getChildCount();
+            for (int k = 0; k < tabChildsCount; k++) {
+                View tabViewChild = vgTab.getChildAt(k);
+                if (tabViewChild instanceof TextView) {
+                    ((TextView) tabViewChild).setTypeface(mTypeface, Typeface.NORMAL);
+                }
+            }
+        }
+        // 폰트 설정 끝
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.inflateHeaderView(R.layout.nav_header_nevigation);

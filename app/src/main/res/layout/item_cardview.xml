@@ -16,7 +16,7 @@
         android:layout_marginRight="4dp"
         card_view:cardBackgroundColor="@android:color/white"
         card_view:cardElevation="0.5sp"
-        card_view:cardUseCompatPadding="true">
+        card_view:cardUseCompatPadding="false">
 
         <RelativeLayout
             android:layout_width="match_parent"
