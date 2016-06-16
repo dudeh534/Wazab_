@@ -31,13 +31,15 @@
                 android:layout_alignParentStart="true" />
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
                 android:id="@+id/category_image"
-                android:background="@drawable/detail_icon_design"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="7dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:scaleType="fitStart"/>
 
             <TextView
                 android:layout_width="300dp"

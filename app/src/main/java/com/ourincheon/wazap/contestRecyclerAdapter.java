@@ -1,22 +1,17 @@
 package com.ourincheon.wazap;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.ourincheon.wazap.Retrofit.WeeklyData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,18 +59,27 @@ public class contestRecyclerAdapter extends RecyclerView.Adapter<contestRecycler
             // 카테고리별 분류
             String[] temp=item.getCategory().split(",");
             for(int j=0; j<temp.length; j++) {
-                if(temp[j].trim().equals("광고/아이디어/마케팅"))
-                    holder.category.setBackgroundResource(R.drawable.detail_icon_marketing);
-                else if(temp[j].trim().equals("디자인/플래"))
-                    holder.category.setBackgroundResource(R.drawable.detail_icon_design);
+                if(temp[j].trim().equals("광고/아이디어"))
+                    holder.category.setImageResource(R.drawable.list_icon_advertising_word);
+                else if(temp[j].trim().equals("건축/인테리어"))
+                    holder.category.setImageResource(R.drawable.list_icon_architecture_word);
+                else if(temp[j].trim().equals("예체능"))
+                    holder.category.setImageResource(R.drawable.list_icon_art_word);
+                else if(temp[j].trim().equals("브랜드/네이밍"))
+                    holder.category.setImageResource(R.drawable.list_icon_brand_word);
+                else if(temp[j].trim().equals("디자인/플래시"))
+                    holder.category.setImageResource(R.drawable.list_icon_design_word);
+                else if(temp[j].trim().equals("체험기/사용기"))
+                    holder.category.setImageResource(R.drawable.list_icon_experience_word);
+                else if(temp[j].trim().equals("문학/시나리오"))
+                    holder.category.setImageResource(R.drawable.list_icon_literature_word);
+                else if(temp[j].trim().equals("마케팅"))
+                    holder.category.setImageResource(R.drawable.list_icon_marketing_word);
                 else if(temp[j].trim().equals("사진/영상/UCC"))
-                    holder.category.setBackgroundResource(R.drawable.detail_icon_video);
-                else if(temp[j].trim().equals("게임/소프트웨어"))
-                    holder.category.setBackgroundResource(R.drawable.detail_icon_it);
-                else if(temp[j].trim().equals("해외"))
-                    holder.category.setBackgroundResource(R.drawable.detail_icon_idea);
+                    holder.category.setImageResource(R.drawable.list_icon_photo_word);
                 else
-                    holder.category.setBackgroundResource(R.drawable.detail_icon_scenario);
+                    holder.category.setImageResource(R.drawable.list_icon_thesis_word); // 학술/논문
+                // TODO 4가지 카테고리 추가해야함
             }
         }
 

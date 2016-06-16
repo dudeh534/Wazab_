@@ -257,16 +257,18 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="14dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/jCate1"
                     android:layout_marginTop="18.67dp"
+                    android:scaleType="fitCenter"
                     android:textSize="14dp" />
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="14dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/jCate2"
                     android:layout_marginTop="18.67dp"
+                    android:scaleType="fitCenter"
                     android:textSize="14dp" />
             </LinearLayout>
 
