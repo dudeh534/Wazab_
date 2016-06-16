@@ -7,9 +7,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,12 +53,14 @@ public class FacebookLogin extends Activity {
     CallbackManager callbackManager;
     AccessToken accessToken;
     TextView anonymousLogin;
+    RelativeLayout progressLayout;
+    ProgressBar proBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-    //    getHash();
+        //    getHash();
         /* android app key 생성
         try {
             PackageInfo info = getPackageManager().getPackageInfo(this.getPackageName(), PackageManager.GET_SIGNATURES);
@@ -70,17 +76,16 @@ public class FacebookLogin extends Activity {
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_login);
 
-
+        progressLayout = (RelativeLayout) findViewById(R.id.progress_layout);
 
         callbackManager = CallbackManager.Factory.create();
 
         // If the access token is available already assign it.
-      //  accessToken = AccessToken.getCurrentAccessToken();
+        //  accessToken = AccessToken.getCurrentAccessToken();
 
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
 
-        if(!pref.getString("name", "").equals(""))
-        {
+        if (!pref.getString("name", "").equals("")) {
             loginComplete();
             finish();
         }
@@ -107,18 +112,18 @@ public class FacebookLogin extends Activity {
                                             JSONObject object,
                                             GraphResponse response) {
                                         // Application code
-                                       try {
+                                        try {
 //                                            Log.d("test : ", object.getString("name"));
-                                           SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-                                           SharedPreferences.Editor editor = pref.edit();
+                                            SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = pref.edit();
 
-                                           // userName 저장
-                                           editor.putString("name", object.getString("name"));
-                                           editor.commit();
+                                            // userName 저장
+                                            editor.putString("name", object.getString("name"));
+                                            editor.commit();
 
-                                       } catch (JSONException e) {
-                                           e.printStackTrace();
-                                       }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
                                         Log.d("test : ", response.toString());
                                         setUserInfo(object);
                                     }
@@ -142,7 +147,8 @@ public class FacebookLogin extends Activity {
                     }
                 });
     }
-    private void getHash(){
+
+    private void getHash() {
         try {
             PackageInfo info = getPackageManager().getPackageInfo(this.getPackageName(), PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
@@ -158,6 +164,10 @@ public class FacebookLogin extends Activity {
     // 사용자 정보 저장 프로세스
     void setUserInfo(JSONObject object) {
         try {
+            progressLayout.setVisibility(ProgressBar.VISIBLE);
+            proBar = (ProgressBar) findViewById(R.id.progress_bar);
+            startProgressbar();
+
             SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
 
@@ -166,14 +176,14 @@ public class FacebookLogin extends Activity {
             editor.putString("user_id", user_id);
 
             // 사진 URL 저장, 파라미터로 small, normal, large, square 넣어도 됨
-            URL url = new URL("https://graph.facebook.com/"+user_id+"/picture?type=normal");
+            URL url = new URL("https://graph.facebook.com/" + user_id + "/picture?type=normal");
             editor.putString("profile_img", url.toString());
 
             // Access_token 저장
             editor.putString("access_token", accessToken.getToken());
             editor.commit();
 
-            System.out.println("------------------"+pref.getString("access_token",""));
+            System.out.println("------------------" + pref.getString("access_token", ""));
             String baseUrl = "http://come.n.get.us.to";
             Retrofit client = new Retrofit.Builder()
                     .baseUrl(baseUrl)
@@ -195,7 +205,6 @@ public class FacebookLogin extends Activity {
 
                         boolean result = Boolean.parseBoolean(temp.get("result").toString());
                         String msg = temp.get("msg").toString();
-
                         if (result) {
                             Log.d("저장 결과: ", msg);
                             Toast.makeText(getApplicationContext(), "로그인 되었습니다.", Toast.LENGTH_LONG);
@@ -203,6 +212,8 @@ public class FacebookLogin extends Activity {
                         } else {
                             Log.d("저장 실패: ", msg);
                         }
+                        stopProgressbar();
+                        progressLayout.setVisibility(ProgressBar.GONE);
                         loginComplete();
                         finish();
                     } else if (response.isSuccess())
@@ -255,4 +266,52 @@ public class FacebookLogin extends Activity {
         AppEventsLogger.deactivateApp(this);
     }
 
+    private volatile Thread progressBarThread;
+    private int CurrentPosition = 0;
+
+    protected synchronized void startProgressbar() {
+        if (progressBarThread == null) {
+            progressBarThread = new Thread(null, backgroundThread, "startProgressBarThread");
+            CurrentPosition = 0;
+
+            progressBarThread.start();
+        }
+    }
+
+    protected synchronized void stopProgressbar() {
+        if (progressBarThread != null) {
+            Thread tmpThread = progressBarThread;
+            progressBarThread = null;
+            tmpThread.interrupt();
+        }
+        progressLayout.setVisibility(ProgressBar.GONE);
+    }
+
+    private Runnable backgroundThread = new Runnable() {
+        @Override
+        public void run() {
+            if (Thread.currentThread() == progressBarThread) {
+                CurrentPosition = 0;
+                final int total = 100;
+                while (CurrentPosition < total) {
+                    try {
+                        progressBarHandle.sendMessage(progressBarHandle.obtainMessage());
+                        Thread.sleep(100);
+                    } catch (final InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (final Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        private Handler progressBarHandle = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                CurrentPosition++;
+                proBar.setProgress(CurrentPosition);
+            }
+        };
+    };
 }
