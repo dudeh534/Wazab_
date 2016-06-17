@@ -7,8 +7,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -53,8 +51,8 @@ public class FacebookLogin extends Activity {
     CallbackManager callbackManager;
     AccessToken accessToken;
     TextView anonymousLogin;
-    RelativeLayout progressLayout;
     ProgressBar proBar;
+    RelativeLayout progressLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +74,7 @@ public class FacebookLogin extends Activity {
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_login);
 
+        proBar = (ProgressBar) findViewById(R.id.progressBar);
         progressLayout = (RelativeLayout) findViewById(R.id.progress_layout);
 
         callbackManager = CallbackManager.Factory.create();
@@ -103,6 +102,8 @@ public class FacebookLogin extends Activity {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
+
+                        startProgressbar();
                         // App code
                         GraphRequest request = GraphRequest.newMeRequest(
                                 accessToken = AccessToken.getCurrentAccessToken(),
@@ -164,10 +165,6 @@ public class FacebookLogin extends Activity {
     // 사용자 정보 저장 프로세스
     void setUserInfo(JSONObject object) {
         try {
-            progressLayout.setVisibility(ProgressBar.VISIBLE);
-            proBar = (ProgressBar) findViewById(R.id.progress_bar);
-            startProgressbar();
-
             SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
 
@@ -213,7 +210,7 @@ public class FacebookLogin extends Activity {
                             Log.d("저장 실패: ", msg);
                         }
                         stopProgressbar();
-                        progressLayout.setVisibility(ProgressBar.GONE);
+                        //progressLayout.setVisibility(ProgressBar.GONE);
                         loginComplete();
                         finish();
                     } else if (response.isSuccess())
@@ -266,52 +263,16 @@ public class FacebookLogin extends Activity {
         AppEventsLogger.deactivateApp(this);
     }
 
-    private volatile Thread progressBarThread;
-    private int CurrentPosition = 0;
+    // 프로그래스바 동작
+    protected void startProgressbar() {
+        proBar.setVisibility(ProgressBar.VISIBLE);
+        progressLayout.setVisibility(View.VISIBLE);
+        progressLayout.bringToFront();
 
-    protected synchronized void startProgressbar() {
-        if (progressBarThread == null) {
-            progressBarThread = new Thread(null, backgroundThread, "startProgressBarThread");
-            CurrentPosition = 0;
-
-            progressBarThread.start();
-        }
     }
 
-    protected synchronized void stopProgressbar() {
-        if (progressBarThread != null) {
-            Thread tmpThread = progressBarThread;
-            progressBarThread = null;
-            tmpThread.interrupt();
-        }
-        progressLayout.setVisibility(ProgressBar.GONE);
+    protected void stopProgressbar() {
+        proBar.setVisibility(ProgressBar.GONE);
+        progressLayout.setVisibility(View.GONE);
     }
-
-    private Runnable backgroundThread = new Runnable() {
-        @Override
-        public void run() {
-            if (Thread.currentThread() == progressBarThread) {
-                CurrentPosition = 0;
-                final int total = 100;
-                while (CurrentPosition < total) {
-                    try {
-                        progressBarHandle.sendMessage(progressBarHandle.obtainMessage());
-                        Thread.sleep(100);
-                    } catch (final InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (final Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-        private Handler progressBarHandle = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                CurrentPosition++;
-                proBar.setProgress(CurrentPosition);
-            }
-        };
-    };
 }

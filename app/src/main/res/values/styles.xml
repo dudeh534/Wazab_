@@ -31,4 +31,12 @@
 
     </style>
 
+    <!-- Facebook login progress bar -->
+    <style name="FullyTranslucent" parent="FullyTranslucent.Base"/>
+    <style name="FullyTranslucent.Base" parent="android:Theme.Translucent.NoTitleBar">
+        <item name="android:progressBarStyle">@style/InvisibleProgress</item>
+    </style>
+    <style name="InvisibleProgress">
+        <item name="android:visibility">gone</item>
+    </style>
 </resources>
