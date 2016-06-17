@@ -1,7 +1,10 @@
 package com.ourincheon.wazap;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,6 +38,7 @@ public class contestRecyclerAdapter extends RecyclerView.Adapter<contestRecycler
             return new ViewHolder(v);
         }
 
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
             final Recycler_contestItem item = items.get(position);
@@ -45,6 +49,7 @@ public class contestRecyclerAdapter extends RecyclerView.Adapter<contestRecycler
             holder.date.setText(item.getDate());
 
             Glide.with(context).load(item.getImg()).error(R.drawable.testcontest).override(400,100).centerCrop().crossFade().into(holder.imageView);
+            holder.imageView.setColorFilter(Color.argb(100, 0, 0, 0));
 
             // 각각 카드뷰 누를 경우, 상세 공모전 보기로 이동
             holder.cardview.setOnClickListener(new View.OnClickListener() {
