@@ -203,7 +203,7 @@
                 android:text="@string/app_version"
                 android:textColor="@color/wazab"/>
         </RelativeLayout>
-        <Button
+        <com.ourincheon.wazap.NotoButtonView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="62.6dp"

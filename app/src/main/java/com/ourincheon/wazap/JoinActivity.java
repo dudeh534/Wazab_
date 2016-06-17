@@ -38,7 +38,7 @@ public class JoinActivity extends AppCompatActivity {
     Context context;
     reqContest contest;
     TextView jTitle,jCTitle,jButton,jApply,jRec,jName,jCover,jMem,jDate,jHost,jLoc,jPos,jPro,jKakao;
-    ImageView jCate[] = new ImageView[2];
+    TextView jCate[] = new TextView[2];
     ImageView jImg;
     String access_token,num,Writer;
     int is_apply;
@@ -53,8 +53,8 @@ public class JoinActivity extends AppCompatActivity {
 
         jTitle = (TextView) findViewById(R.id.jTitle);
         jCTitle = (TextView) findViewById(R.id.jCTitle);
-        jCate[0] =  (ImageView) findViewById(R.id.jCate1);
-        jCate[1] =  (ImageView) findViewById(R.id.jCate2);
+        jCate[0] =  (TextView) findViewById(R.id.jCate1);
+        jCate[1] =  (TextView) findViewById(R.id.jCate2);
         jApply = (TextView) findViewById(R.id.jApply);
         jRec = (TextView) findViewById(R.id.jRec);
         jName = (TextView) findViewById(R.id.jName);
@@ -349,6 +349,8 @@ public class JoinActivity extends AppCompatActivity {
                         // 카테고리 목록별로 아이콘으로 나타냄
                         String[] category = contest.getData().getCategories().split(",");
                         if (category.length == 1) {
+                            jCate[0].setText(category[0].trim());
+                            /*
                             // 카테고리에 따라 그림으로
                             switch (category[0].trim()) {
                                 case "사진/UCC":
@@ -370,9 +372,11 @@ public class JoinActivity extends AppCompatActivity {
                                     jCate[0].setImageResource(R.drawable.detail_icon_scenario);
                                     break;
 
-                            }
+                            }*/
                         } else {
                             for (int i=0; i<category.length; i++) {
+                                jCate[i].setText(category[i].trim());
+                                /*
                                 // 카테고리에 따라 그림으로
                                 switch (category[i].trim()) {
                                     case "사진/UCC":
@@ -394,7 +398,7 @@ public class JoinActivity extends AppCompatActivity {
                                         jCate[i].setImageResource(R.drawable.detail_icon_scenario);
                                         break;
 
-                                }
+                                }*/
                             }
                         }
 
