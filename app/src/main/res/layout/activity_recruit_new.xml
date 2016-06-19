@@ -96,8 +96,8 @@
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"/>
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="360dp"
         android:layout_below="@+id/lineardivider"
@@ -105,231 +105,252 @@
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayout7"
         android:layout_marginRight="4dp"
-        android:layout_marginLeft="4dp">
+        android:layout_marginLeft="4dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:background="#ffffff">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="124dp"
-            android:layout_height="match_parent"
-            android:background="#ffffff">
+        <!-- START 공모전 명칭 -->
+        <com.ourincheon.wazap.NotoTextView
+            android:layout_width="111dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="26.33dp"
+            android:text="공모전 명칭"
+            android:id="@+id/textVie"
+            android:layout_gravity="left"
+            android:textSize="13dp" />
 
-            <com.ourincheon.wazap.NotoTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="공모전 명칭"
-                android:id="@+id/textVie"
-                android:layout_gravity="left|center_horizontal"
-                android:layout_marginTop="26.33dp"
-                android:textSize="13dp"
-                android:layout_marginLeft="12dp" />
+        <com.ourincheon.wazap.NotoEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/textVie"
+            android:layout_toEndOf="@+id/textVie"
+            android:layout_alignBaseline="@+id/textVie"
+            android:id="@+id/reCTitle"
+            android:hint="입력하세요"
+            android:textSize="13dp"
+            android:backgroundTint="#ffffff"/>
+        <!-- END 공모전 명칭 -->
 
-            <com.ourincheon.wazap.NotoTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="공모전 주최"
-                android:id="@+id/textView18"
-                android:layout_gravity="left|center_horizontal"
-                android:layout_marginTop="26.33dp"
-                android:textSize="13dp"
-                android:layout_marginLeft="12dp" />
+        <!-- START 공모전 주최 -->
+        <com.ourincheon.wazap.NotoTextView
+            android:layout_width="111dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textVie"
+            android:layout_marginTop="20.33dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:text="공모전 주최"
+            android:id="@+id/textView18"
+            android:textSize="13dp" />
 
-            <com.ourincheon.wazap.NotoTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="카테고리"
-                android:id="@+id/textView19"
-                android:layout_gravity="left|center_horizontal"
-                android:layout_marginTop="18.67dp"
-                android:layout_marginLeft="12dp" />
+        <com.ourincheon.wazap.NotoEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/textView18"
+            android:layout_toEndOf="@+id/textView18"
+            android:layout_alignBaseline="@+id/textView18"
+            android:id="@+id/reHost"
+            android:hint="입력하세요"
+            android:textSize="13dp"
+            android:backgroundTint="#ffffff"/>
+        <!-- END 공모전 주최 -->
 
-            <com.ourincheon.wazap.NotoTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="모집인원"
-                android:id="@+id/textView20"
-                android:layout_marginTop="70dp"
-                android:layout_marginLeft="12dp" />
-
-            <com.ourincheon.wazap.NotoTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="모집마감일"
-                android:id="@+id/textView25"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="12dp" />
-
-            <com.ourincheon.wazap.NotoTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="지역"
-                android:id="@+id/textView26"
-                android:layout_marginTop="22dp"
-                android:layout_marginLeft="12dp" />
-
-            <com.ourincheon.wazap.NotoTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="모집포지션"
-                android:id="@+id/textView27"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="12dp" />
-        </LinearLayout>
+        <!-- START 카테고리 -->
+        <com.ourincheon.wazap.NotoTextView
+            android:layout_width="111dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20.33dp"
+            android:layout_below="@+id/textView18"
+            android:text="카테고리"
+            android:id="@+id/textView19"
+            android:layout_gravity="left" />
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff"
-            android:weightSum="1">
-
-            <com.ourincheon.wazap.NotoEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/reCTitle"
-                android:layout_marginRight="12dp"
-                android:hint="입력하세요"
-                android:layout_marginTop="20dp"
-                android:textSize="13dp"
-                android:backgroundTint="#ffffff"/>
-
-            <com.ourincheon.wazap.NotoEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/reHost"
-                android:layout_marginRight="12dp"
-                android:hint="입력하세요"
-                android:layout_marginTop="10dp"
-                android:textSize="13dp"
-                android:backgroundTint="#ffffff"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0.66dp"
+            android:layout_toRightOf="@+id/textView19"
+            android:layout_toEndOf="@+id/textView19"
+            android:layout_alignTop="@+id/textView19">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="7dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:orientation="horizontal">
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
 
                 <com.ourincheon.wazap.NotoCheckBox
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="6"
                     android:text="광고/아이디어/마케팅"
                     android:id="@+id/checkAd"
                     android:checked="false"
                     android:textSize="13dp"
-                    android:button="@drawable/detail_disable_marketing"/>
+                    android:button="@drawable/detail_disable_marketing" />
 
                 <com.ourincheon.wazap.NotoCheckBox
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="4"
                     android:text="디자인"
                     android:id="@+id/checkDe"
+                    android:checked="false"
                     android:textSize="13dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:button="@drawable/detail_disable_design"/>
 
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:orientation="horizontal">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="18.67dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
 
                 <com.ourincheon.wazap.NotoCheckBox
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="6"
                     android:text="사진/UCC"
-                    android:layout_marginTop="5dp"
                     android:id="@+id/checkUc"
+                    android:checked="false"
                     android:textSize="13dp"
                     android:button="@drawable/detail_disable_video"/>
 
 
-                    <com.ourincheon.wazap.NotoCheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="해외"
-                        android:layout_marginTop="5dp"
-                        android:id="@+id/checkFo"
-                        android:layout_marginLeft="80dp"
-                        android:textSize="13dp"
-                        android:button="@drawable/detail_disable_idea"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:orientation="horizontal">
                 <com.ourincheon.wazap.NotoCheckBox
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:text="해외"
+                    android:id="@+id/checkFo"
+                    android:checked="false"
+                    android:textSize="13dp"
+                    android:button="@drawable/detail_disable_idea"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="18.67dp"
+                android:orientation="horizontal"
+                android:weightSum="10" >
+
+                <com.ourincheon.wazap.NotoCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
                     android:text="게임/소프트웨어"
                     android:id="@+id/checkIt"
-                    android:layout_marginTop="5dp"
+                    android:checked="false"
                     android:textSize="13dp"
                     android:button="@drawable/detail_disable_it"/>
 
                 <com.ourincheon.wazap.NotoCheckBox
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="4"
                     android:text="기타"
-                    android:layout_marginTop="5dp"
                     android:id="@+id/checkEtc"
+                    android:checked="false"
                     android:textSize="13dp"
-                    android:layout_marginLeft="50dp"
                     android:button="@drawable/detail_disable_scenario"/>
-                </LinearLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp">
-
-                <com.ourincheon.wazap.NotoEditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="모집 인원을 입력하세요"
-                    android:id="@+id/reNum"
-                    android:inputType="number"
-                    android:textSize="14dp"
-                    android:backgroundTint="#ffffff"/>
-
-            </LinearLayout>
-
-            <com.ourincheon.wazap.NotoButtonView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:hint="날짜를 선택하세요"
-                android:id="@+id/reDate"
-                android:textSize="14dp" />
-
-            <com.ourincheon.wazap.NotoButtonView
-                android:hint="지역을 선택하세요"
-                android:id="@+id/reLoc"
-                android:textSize="14dp"
-                android:layout_height="40dp"
-                android:layout_width="match_parent"
-                />
-
-
-            <com.ourincheon.wazap.NotoEditText
-                android:hint="모집포지션을 입력하세요"
-                android:id="@+id/rePos"
-                android:textSize="14dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:backgroundTint="#ffffff"
-                android:layout_marginTop="4dp" />
-
-
         </LinearLayout>
-    </LinearLayout>
+        <!-- END 카테고리 -->
+
+        <!-- START 모집인원 -->
+        <com.ourincheon.wazap.NotoTextView
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="98.33dp"
+            android:layout_below="@+id/textView19"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:text="모집인원"
+            android:id="@+id/textView20" />
+
+        <com.ourincheon.wazap.NotoEditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/textView20"
+            android:layout_toEndOf="@+id/textView20"
+            android:layout_alignBaseline="@+id/textView20"
+            android:hint="모집 인원을 입력하세요"
+            android:id="@+id/reNum"
+            android:inputType="number"
+            android:textSize="14dp"
+            android:backgroundTint="#ffffff"/>
+        <!-- END 모집인원 -->
+
+        <!-- START 모집마감일 -->
+        <com.ourincheon.wazap.NotoTextView
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20.33dp"
+            android:layout_below="@+id/textView20"
+            android:text="모집마감일"
+            android:id="@+id/textView25" />
+
+        <com.ourincheon.wazap.NotoButtonView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/textView25"
+            android:layout_toEndOf="@+id/textView25"
+            android:layout_alignBaseline="@+id/textView25"
+            android:hint="날짜를 선택하세요"
+            android:id="@+id/reDate"
+            android:textSize="14dp" />
+        <!-- END 모집마감일 -->
+
+        <!-- START 지역 -->
+        <com.ourincheon.wazap.NotoTextView
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20.33dp"
+            android:layout_below="@+id/textView25"
+            android:text="지역"
+            android:id="@+id/textView26" />
+
+        <com.ourincheon.wazap.NotoButtonView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/textView26"
+            android:layout_toEndOf="@+id/textView26"
+            android:layout_alignBaseline="@+id/textView26"
+            android:hint="지역을 선택하세요"
+            android:id="@+id/reLoc"
+            android:textSize="14dp"
+            />
+        <!-- END 지역 -->
+
+        <!-- START 모집포지션 -->
+        <com.ourincheon.wazap.NotoTextView
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20.33dp"
+            android:layout_below="@+id/textView26"
+            android:text="모집포지션"
+            android:id="@+id/textView27" />
+
+        <com.ourincheon.wazap.NotoEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/textView27"
+            android:layout_toEndOf="@+id/textView27"
+            android:layout_alignBaseline="@+id/textView27"
+            android:hint="모집포지션을 입력하세요"
+            android:id="@+id/rePos"
+            android:textSize="14dp"
+            android:backgroundTint="#ffffff" />
+        <!-- END 모집포지션 -->
+
+    </RelativeLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
