@@ -38,13 +38,13 @@ public class TutorialAdapter extends PagerAdapter {
         ImageView img = (ImageView)view.findViewById(R.id.chlidimg);
         switch (position){
             case 0:
-                img.setImageResource(R.drawable.first);
+                img.setBackgroundResource(R.drawable.first);
                 break;
             case 1:
-                img.setImageResource(R.drawable.second);
+                img.setBackgroundResource(R.drawable.second);
                 break;
             case 2:
-                img.setImageResource(R.drawable.third);
+                img.setBackgroundResource(R.drawable.third);
                 break;
             default:
                 break;
