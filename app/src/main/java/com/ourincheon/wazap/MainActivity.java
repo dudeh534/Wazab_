@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
-
+        Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
+        startActivity(intent);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         Drawable drawable = getResources().getDrawable(R.drawable.detail_title_banner);
         toolbar.setBackground(drawable);
