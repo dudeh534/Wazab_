@@ -149,7 +149,7 @@
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:id="@+id/imageView14"
-                        android:background="#727272"
+                        android:src="@drawable/host_icon"
                         android:layout_marginRight="7.67dp"
                         android:layout_marginTop="2dp" />
 

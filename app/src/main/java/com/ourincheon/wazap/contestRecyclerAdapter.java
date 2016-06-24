@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,7 @@ public class contestRecyclerAdapter extends RecyclerView.Adapter<contestRecycler
             // 카테고리별 분류
             String[] temp=item.getCategory().split(",");
             for(int j=0; j<temp.length; j++) {
+                Log.d("TEST", temp[j].trim());
                 if(temp[j].trim().equals("광고/아이디어"))
                     holder.category.setImageResource(R.drawable.list_icon_advertising_word);
                 else if(temp[j].trim().equals("건축/인테리어"))
@@ -82,9 +84,18 @@ public class contestRecyclerAdapter extends RecyclerView.Adapter<contestRecycler
                     holder.category.setImageResource(R.drawable.list_icon_marketing_word);
                 else if(temp[j].trim().equals("사진/영상/UCC"))
                     holder.category.setImageResource(R.drawable.list_icon_photo_word);
+                else if(temp[j].trim().equals("학술/논문"))
+                    holder.category.setImageResource(R.drawable.list_icon_thesis_word);
+                else if(temp[j].trim().equals("만화/캐릭터"))
+                    holder.category.setImageResource(R.drawable.list_icon_comic_word);
+                else if(temp[j].trim().equals("유사공모전"))
+                    holder.category.setImageResource(R.drawable.list_icon_similar_word);
+                else if(temp[j].trim().equals("해외"))
+                    holder.category.setImageResource(R.drawable.list_icon_global_word);
                 else
-                    holder.category.setImageResource(R.drawable.list_icon_thesis_word); // 학술/논문
-                // TODO 4가지 카테고리 추가해야함
+                    holder.category.setImageResource(R.drawable.list_icon_etc_word);
+
+                // TODO 게임 추가해야함
             }
         }
 
