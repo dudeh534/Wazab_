@@ -47,6 +47,7 @@ public class contestRecyclerAdapter extends RecyclerView.Adapter<contestRecycler
             holder.title.setText(item.getTitle());
             holder.text_con.setText(item.getHost());
             holder.dday.setText(item.getDday());
+            Log.d("Date!!!!", item.getDate());
             holder.date.setText(item.getDate());
 
             Glide.with(context).load(item.getImg()).error(R.drawable.testcontest).override(400,100).centerCrop().crossFade().into(holder.imageView);
