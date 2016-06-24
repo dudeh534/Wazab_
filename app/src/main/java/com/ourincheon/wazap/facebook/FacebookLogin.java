@@ -25,6 +25,7 @@ import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.internal.LinkedTreeMap;
 import com.ourincheon.wazap.MainActivity;
 import com.ourincheon.wazap.NotoTextView;
@@ -237,6 +238,9 @@ public class FacebookLogin extends Activity {
 
     void loginComplete() {
         // 완료후 액티비티 이동
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        FCMRegistration(pref.getString("user_id", ""));
+
         final Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -274,5 +278,11 @@ public class FacebookLogin extends Activity {
     protected void stopProgressbar() {
         proBar.setVisibility(ProgressBar.GONE);
         progressLayout.setVisibility(View.GONE);
+    }
+
+    protected void FCMRegistration(String userId) {
+        // [START subscribe_topics]
+        FirebaseMessaging.getInstance().subscribeToTopic(userId);
+        // [END subscribe_topics]
     }
 }
