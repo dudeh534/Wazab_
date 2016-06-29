@@ -51,6 +51,8 @@ import retrofit2.Retrofit;
 /*숨기는 뷰까지 만들어 놨고 이제 상세보기 눌렀을때 그 뷰가 보이도록 그리고 list set하도록
 * 상세보기 눌렀을때 고정*/
 public class ContestList extends AppCompatActivity {
+    private final String TAG = "ContestList";
+
     public static Context mContext;
     public static ArrayList<ApplierData> mListData = new ArrayList<ApplierData>();
     public static HashMap<Integer,Integer> List_SIZE = new HashMap<>();
@@ -64,8 +66,8 @@ public class ContestList extends AppCompatActivity {
     private ListView mListView2 = null;
     private ListViewAdapter mAdapter = null;
     private Not_ListViewAdapter not_listAdapter = null;
-    private static int temp = 0;
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
+    private int temp = 0;
+    public void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
             // pre-condition
@@ -79,12 +81,14 @@ public class ContestList extends AppCompatActivity {
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        params.height = totalHeight + (listAdapter.getCount() - 1);
+        //params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
         listView.requestLayout();
     }
 
-    public static void setListViewHeightBasedOnChildren_add(ListView listView,int position) {
+    public void setListViewHeightBasedOnChildren_add(ListView parentListView, ListView listView,int position) {
+        ListAdapter parentListAdapter = parentListView.getAdapter();
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
             // pre-condition
@@ -100,13 +104,13 @@ public class ContestList extends AppCompatActivity {
 
         temp += List_SIZE.get(position);
 
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = 211 * temp + totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-        listView.requestLayout();
+        ViewGroup.LayoutParams params = parentListView.getLayoutParams();
+        params.height = params.height + totalHeight;
+        parentListView.setLayoutParams(params);
+        parentListView.requestLayout();
     }
 
-    public static void setListViewHeightBasedOnChildren_delete(ListView listView, int position) {
+    public void setListViewHeightBasedOnChildren_delete(ListView listView, int position) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
             // pre-condition
@@ -123,7 +127,8 @@ public class ContestList extends AppCompatActivity {
 
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = 211 * temp + totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        params.height = 211 * temp + totalHeight + (listAdapter.getCount() - 1);
+        //params.height = 211 * temp + totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
         listView.requestLayout();
     }
@@ -412,7 +417,7 @@ public class ContestList extends AppCompatActivity {
                                             holder.mListView1.setDivider(null);
                                             holder.mListView1.setDividerHeight(0);
                                             setListViewHeightBasedOnChildren(holder.mListView1);
-                                            setListViewHeightBasedOnChildren_add(mListView, position);
+                                            setListViewHeightBasedOnChildren_add(mListView, holder.mListView1, position);
                                         } catch (JSONException e) {
                                         }
 
