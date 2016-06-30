@@ -41,8 +41,7 @@
                     android:textColor="#b7b7b7"
                     android:layout_marginTop="7dp" />
 
-                <LinearLayout
-                    android:orientation="horizontal"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -50,13 +49,17 @@
                         android:layout_marginLeft="20dp"
                         android:layout_width="11dp"
                         android:layout_height="11dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
                         android:id="@+id/img1"
-                        android:background="#575757"
+                        android:background="#0057ff"
                         android:layout_marginRight="1dp"
                         android:layout_marginTop="5dp" />
                     <com.ourincheon.wazap.NotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/img1"
+                        android:layout_toEndOf="@+id/img1"
                         android:text="카테고리"
                         android:id="@+id/ncCate1"
                         android:layout_marginLeft="1dp"
@@ -68,40 +71,55 @@
                     <ImageView
                         android:layout_width="11dp"
                         android:layout_height="11dp"
+                        android:layout_toRightOf="@+id/ncCate1"
+                        android:layout_toEndOf="@+id/ncCate1"
                         android:id="@+id/img2"
                         android:layout_marginRight="1dp"
                         android:layout_marginTop="5dp" />
                     <com.ourincheon.wazap.NotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/ncCate2"
+                        android:layout_toRightOf="@+id/img2"
+                        android:layout_toEndOf="@+id/img2"
+                        android:layout_toLeftOf="@+id/textView28"
+                        android:layout_toStartOf="@+id/textView28"
                         android:layout_marginLeft="1dp"
+                        android:layout_marginStart="1dp"
                         android:layout_marginBottom="16dp"
                         android:layout_marginTop="3dp"
                         android:layout_marginRight="6dp"
-                        android:textSize="13dp" />
+                        android:layout_marginEnd="6dp"
+                        android:lines="1"
+                        android:text=""
+                        android:textSize="13dp"
+                        android:ellipsize="end"
+                        android:id="@+id/ncCate2" />
+
+
 
                     <com.ourincheon.wazap.NotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/ncMember"
+                        android:layout_toStartOf="@+id/ncMember"
                         android:text="|"
-                        android:id="@+id/textView27"
+                        android:id="@+id/textView28"
                         android:layout_marginTop="3dp"
                         android:layout_marginBottom="17.33dp"
-                        android:textSize="11dp"
-                        android:textColor="#b7b7b7"/>
+                        android:textSize="11dp" />
 
                     <com.ourincheon.wazap.NotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
                         android:text="모집인원 2명"
                         android:id="@+id/ncMember"
                         android:layout_marginTop="4dp"
                         android:layout_marginBottom="16dp"
                         android:textSize="13dp"
-                        android:layout_marginLeft="6dp"
-                        android:textColor="#b7b7b7"/>
-                </LinearLayout>
+                        android:layout_marginLeft="6dp" />
+                </RelativeLayout>
             </LinearLayout>
 
             <Button

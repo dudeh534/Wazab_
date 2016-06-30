@@ -41,7 +41,8 @@
             android:layout_marginTop="13dp"
             android:textSize="20dp"
             android:textColor="#0067ff"
-            android:layout_marginRight="15.33dp" />
+            android:layout_marginRight="15.33dp"
+            style="@style/Widget.AppCompat.Button.Borderless" />
 
     </LinearLayout>
 
