@@ -308,7 +308,7 @@ public class JoinActivity extends AppCompatActivity {
     }
 
     //*** 서버에서 상세 모집글 정보 가져오기 ***//
-    void loadPage(String num)
+    void loadPage(final String num)
     {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://come.n.get.us.to/")
@@ -329,8 +329,9 @@ public class JoinActivity extends AppCompatActivity {
                     if(contest.getMsg().equals("모집글 정보가 없습니다.")) {
                         Toast.makeText(getApplicationContext(), contest.getMsg(), Toast.LENGTH_LONG).show();
                         finish();
-                    }
-                    else {
+                    } else if (contest.getData() == null) {
+                        loadPage(num);
+                    } else {
                         jTitle.setText(contest.getData().getTitle());
                         jCTitle.setText(contest.getData().getCont_title());
                         //jCate.setText(contest.getData().getCategories());
@@ -445,18 +446,19 @@ public class JoinActivity extends AppCompatActivity {
                             final int idx = i;
                             final ImageView img = new ImageView(context);
                             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                            params.setMargins(0, 0, 20, 0);
+                            params.setMargins(0, 0, 0, 0);
                             img.setLayoutParams(params);
-                            System.out.println(contest.getData().getMemberList(i).getProfile_img());
+                            System.out.println("fffffffdfdsadfsd"+contest.getData().getMemberList(i).getProfile_img());
                             //Glide.with(context).load(contest.getData().getMemberList(i).getProfile_img()).error(R.drawable.icon_user).override(70,70).crossFade().into(img);
-                            int size = PixelToDp(context, 150);
-                            Glide.with(context).load(contest.getData().getMemberList(i).getProfile_img()).asBitmap().override(size, size).centerCrop().error(R.drawable.icon_user).into(new BitmapImageViewTarget(img) {
+                            int size = PixelToDp(context, 300);
+                            Glide.with(context).load(contest.getData().getMemberList(i).getProfile_img()).asBitmap().centerCrop().override(size, size).into(new BitmapImageViewTarget(img) {
                                 @Override
                                 protected void setResource(Bitmap resource) {
                                     RoundedBitmapDrawable circularBitmapDrawable =
                                             RoundedBitmapDrawableFactory.create(context.getResources(), resource);
                                     circularBitmapDrawable.setCircular(true);
                                     img.setImageDrawable(circularBitmapDrawable);
+
                                 }
                             });
                             // 이미지로 붙인 멤버 클릭시, 팀원정보 상세보기로 이동

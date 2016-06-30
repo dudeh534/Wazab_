@@ -1,25 +1,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/detail_title_banner"
-        android:padding="1dp"
         android:orientation="horizontal"
-        android:id="@+id/linearLayout">
+        android:padding="1dp">
 
         <Button
             android:id="@+id/jBefore"
             android:layout_width="15dp"
             android:layout_height="24dp"
-            android:background="@drawable/detail_btn_back"
             android:layout_marginLeft="16.47dp"
-            android:layout_marginTop="13dp" />
+            android:layout_marginTop="13dp"
+            android:background="@drawable/detail_btn_back" />
 
         <com.ourincheon.wazap.NotoTextView
             android:layout_width="0dp"
@@ -35,149 +38,178 @@
             android:id="@+id/jPick"
             android:layout_width="26.67dp"
             android:layout_height="24.67dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="11.67dp"
-            android:background="@drawable/heart1"
-            android:layout_gravity="center_vertical" />
+            android:layout_marginEnd="11.67dp"
+            android:background="@drawable/heart1" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout5"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="3.67dp"
         android:layout_below="@+id/linearLayout"
-        android:background="#c9c9c9"></LinearLayout>
+        android:background="#c9c9c9"
+        android:orientation="vertical"/>
 
-    <FrameLayout
+    <RelativeLayout
+        android:id="@+id/titleLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/titleLayout"
+        android:layout_marginLeft="16.47dp"
         android:layout_below="@+id/linearLayout5">
 
         <com.ourincheon.wazap.NotoTextView
+            android:id="@+id/jTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="D - "
-            android:layout_gravity="center_vertical|right"
-            android:layout_marginRight="12dp"
-            android:textColor="#FF0000"
-            android:textSize="13dp"
-            android:id="@+id/jDate" />
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/jDate"
+            android:layout_toStartOf="@+id/jDate"
+            android:textColor="#000000"
+            android:textSize="17dp"
+            android:textStyle="bold" />
 
         <com.ourincheon.wazap.NotoTextView
-            android:id="@+id/jTitle"
-            android:textSize="17dp"
+            android:id="@+id/jDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textStyle="bold"
-            android:textColor="#000000"/>
-    </FrameLayout>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_centerVertical="true"
+            android:text="D - "
+            android:textColor="#FF0000"
+            android:textSize="13dp"
+            android:background="@drawable/round_edge"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
+
+    </RelativeLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/lineardivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/titleLayout"
-        android:id="@+id/lineardivider"
-        android:background="#c9c9c9"/>
+        android:background="#c9c9c9"
+        android:orientation="horizontal" />
 
     <!-- START 본문 -->
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/linearLayout7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lineardivider"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout7">
+        android:layout_below="@+id/lineardivider"
+        android:orientation="horizontal">
 
         <!-- START Profile -->
-        <LinearLayout
-            android:orientation="vertical"
+        <RelativeLayout
             android:layout_width="107dp"
             android:layout_height="match_parent">
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="57dp"
-                android:layout_height="57dp"
-                android:id="@+id/jImg"
-                android:background="@drawable/icon_user"
-                android:layout_marginTop="29.33dp"
-                android:layout_marginLeft="18.67dp" />
-
-            <com.ourincheon.wazap.NotoTextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="이름"
-                android:id="@+id/jName"
-                android:layout_marginLeft="28.33dp"
-                android:layout_marginTop="13dp" />
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_centerHorizontal="true"
+                android:id="@+id/ProfileRelative">
 
                 <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:id="@+id/imageView5"
-                    android:layout_marginLeft="12.67dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/kakaotalk_icon"/>
+                    android:id="@+id/jImg"
+                    android:layout_width="57dp"
+                    android:layout_height="57dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/icon_user" />
 
                 <com.ourincheon.wazap.NotoTextView
+                    android:id="@+id/jName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="******"
-                    android:id="@+id/jKakao"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="8dp" />
-            </LinearLayout>
+                    android:layout_below="@+id/jImg"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="15dp"
+                    android:text="이름" />
 
+                <LinearLayout
+                    android:id="@+id/jkakaoL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/jName"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/imageView5"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:background="@drawable/kakaotalk_icon"
+                            android:layout_centerVertical="true"/>
+
+                        <com.ourincheon.wazap.NotoTextView
+                            android:id="@+id/jKakao"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:text="******"
+                            android:layout_toRightOf="@+id/imageView5"
+                            android:layout_centerVertical="true"/>
+                    </RelativeLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
             <com.ourincheon.wazap.NotoTextView
-                android:layout_width="65.67dp"
-                android:layout_height="20dp"
-                android:text="상세프로필"
                 android:id="@+id/jPro"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/ProfileRelative"
+                android:layout_centerHorizontal="true"
+                android:text="상세프로필"
                 android:textColor="#FF0000"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="23.33dp" />
-        </LinearLayout>
+                android:textSize="13dp" />
+        </RelativeLayout>
         <!-- END Profile -->
 
         <!-- START 모집내용 -->
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="26.33dp"
                 android:orientation="horizontal"
-                android:weightSum="10"
-                android:layout_marginTop="26.33dp">
+                android:weightSum="10">
 
                 <com.ourincheon.wazap.NotoTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="공모전 명칭"
                     android:id="@+id/textView18"
-                    android:textSize="13dp"
-                    android:layout_weight="3.5"/>
-
-                <com.ourincheon.wazap.NotoTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="3.5"
+                    android:text="공모전 명칭"
+                    android:textSize="13dp" />
+
+                <com.ourincheon.wazap.NotoTextView
                     android:id="@+id/jCTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:textSize="14dp"
                     android:layout_weight="6.5 "/>
             </LinearLayout>
@@ -190,19 +222,19 @@
                 android:weightSum="10">
 
                 <com.ourincheon.wazap.NotoTextView
+                    android:id="@+id/textVie"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="3.5"
                     android:text="공모전 주최"
-                    android:id="@+id/textVie"
-                    android:textSize="13dp"
-                    android:layout_weight="3.5"/>
+                    android:textSize="13dp" />
 
                 <com.ourincheon.wazap.NotoTextView
+                    android:id="@+id/jHost"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:id="@+id/jHost"
                     android:textSize="14dp"
                     android:layout_weight="6.5"/>
             </LinearLayout>
@@ -215,32 +247,34 @@
                 android:weightSum="10">
 
                 <com.ourincheon.wazap.NotoTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="카테고리"
                     android:id="@+id/textView19"
-                    android:textSize="13dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="start|center_vertical"
-                    android:layout_weight="3.5"/>
+                    android:layout_weight="3.5"
+                    android:text="카테고리"
+                    android:textSize="13dp" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="6.5">
+                    android:layout_weight="6.5"
+                    android:orientation="vertical">
 
                     <com.ourincheon.wazap.NotoTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:id="@+id/jCate1"
-                        android:textSize="14dp"
-                        android:layout_gravity="center_vertical"/>
-                    <com.ourincheon.wazap.NotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/jCate2"
                         android:textSize="14dp"
                         android:layout_gravity="center_vertical"/>
+
+                    <com.ourincheon.wazap.NotoTextView
+                        android:id="@+id/jCate2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:layout_gravity="center_vertical"/>
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -252,31 +286,31 @@
                 android:weightSum="10">
 
                 <com.ourincheon.wazap.NotoTextView
+                    android:id="@+id/textView20"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="모집/전체인원"
-                    android:id="@+id/textView20"
-                    android:textSize="13dp"
                     android:layout_gravity="start|center_vertical"
-                    android:layout_weight="3.5"/>
+                    android:layout_weight="3.5"
+                    android:text="모집/전체인원"
+                    android:textSize="13dp" />
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="6.5"
-                    android:layout_gravity="center_vertical" >
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <com.ourincheon.wazap.NotoTextView
+                        android:id="@+id/jMem"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/jMem"
                         android:textSize="14dp" />
 
                     <com.ourincheon.wazap.NotoTextView
+                        android:id="@+id/jRec"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/jRec"
                         android:textSize="14dp" />
                 </LinearLayout>
             </LinearLayout>
@@ -289,21 +323,22 @@
                 android:weightSum="10">
 
                 <com.ourincheon.wazap.NotoTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="신청인원"
                     android:id="@+id/textView25"
-                    android:textSize="13dp"
-                    android:layout_gravity="start|center_vertical"
-                    android:layout_weight="3.5"/>
-
-                <com.ourincheon.wazap.NotoTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_weight="3.5"
+                    android:text="신청인원"
+                    android:textSize="13dp" />
+
+                <com.ourincheon.wazap.NotoTextView
                     android:id="@+id/jApply"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:textSize="14dp"
                     android:layout_weight="6.5"
                     android:layout_gravity="center_vertical" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -314,21 +349,22 @@
                 android:weightSum="10">
 
                 <com.ourincheon.wazap.NotoTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="모임지역"
                     android:id="@+id/textView26"
-                    android:textSize="13dp"
-                    android:layout_gravity="start|center_vertical"
-                    android:layout_weight="3.5"/>
-
-                <com.ourincheon.wazap.NotoTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_weight="3.5"
+                    android:text="모임지역"
+                    android:textSize="13dp" />
+
+                <com.ourincheon.wazap.NotoTextView
                     android:id="@+id/jLoc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:textSize="14dp"
                     android:layout_weight="6.5"
                     android:layout_gravity="center_vertical" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -339,21 +375,22 @@
                 android:weightSum="10">
 
                 <com.ourincheon.wazap.NotoTextView
+                    android:id="@+id/textView27"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="모집직군"
-                    android:id="@+id/textView27"
-                    android:textSize="13dp"
                     android:layout_gravity="start|center_vertical"
-                    android:layout_weight="3.5"/>
+                    android:layout_weight="3.5"
+                    android:text="모집직군"
+                    android:textSize="13dp" />
 
                 <com.ourincheon.wazap.NotoTextView
+                    android:id="@+id/jPos"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/jPos"
                     android:textSize="14dp"
                     android:layout_weight="6.5"
                     android:layout_gravity="center_vertical" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -366,23 +403,23 @@
                 <com.ourincheon.wazap.NotoTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="팀원리스트"
-                    android:textSize="13dp"
                     android:layout_gravity="start|center_vertical"
-                    android:layout_weight="3.5"/>
+                    android:layout_weight="3.5"
+                    android:text="팀원리스트"
+                    android:textSize="13dp" />
 
                 <HorizontalScrollView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:fadeScrollbars="false"
-                    android:layout_weight="6.5">
+                    android:layout_weight="6.5"
+                    android:fadeScrollbars="false">
+
                     <LinearLayout
+                        android:id="@+id/imgLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/imgLayout"
-                        android:orientation="horizontal">
-                    </LinearLayout>
+                        android:orientation="horizontal"></LinearLayout>
                 </HorizontalScrollView>
 
             </LinearLayout>
@@ -393,71 +430,71 @@
 
     <!-- START Detail -->
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/lineardivider1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/linearLayout7"
         android:layout_marginTop="18.67dp"
-        android:id="@+id/lineardivider1"
-        android:background="#c9c9c9"/>
+        android:background="#c9c9c9"
+        android:orientation="horizontal" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/lineardivider1"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/lineardivider1">
 
         <com.ourincheon.wazap.NotoTextView
+            android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="소개"
-            android:id="@+id/textView7"
-            android:layout_marginTop="22dp"
-            android:textSize="20dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="22dp" />
+            android:layout_marginBottom="22dp"
+            android:layout_marginTop="22dp"
+            android:text="소개"
+            android:textSize="20dp" />
 
         <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/frameLayout"
-            android:layout_marginTop="30dp"
             android:layout_below="@+id/textView7"
             android:layout_centerHorizontal="true"
-            android:layout_margin="25dp">
+            android:layout_margin="25dp"
+            android:layout_marginTop="30dp">
 
         </FrameLayout>
 
         <com.ourincheon.wazap.NotoTextView
+            android:id="@+id/jCover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/jCover"
-            android:layout_gravity="left|top"
             android:layout_below="@+id/textView7"
             android:layout_centerHorizontal="true"
+            android:layout_gravity="left|top"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:textSize="13dp"
-            android:textColor="#363636" />
+            android:textColor="#363636"
+            android:textSize="13dp" />
 
     </RelativeLayout>
     <!-- END Detail -->
 
     <com.ourincheon.wazap.NotoTextView
-        android:textColor="#ffffff"
+        android:id="@+id/jButton"
         android:layout_width="match_parent"
         android:layout_height="41.33dp"
-        android:background="#0056ff"
-        android:text="신청하기"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:gravity="center"
-        android:textSize="20dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/jButton" />
+        android:background="#0056ff"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="신청하기"
+        android:textColor="#ffffff"
+        android:textSize="20dp" />
 
 </RelativeLayout>

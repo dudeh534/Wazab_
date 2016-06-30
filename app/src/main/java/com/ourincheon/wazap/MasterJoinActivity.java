@@ -269,7 +269,7 @@ public class MasterJoinActivity extends AppCompatActivity {
     }
 
     //*** 마스트 상세페이지 정보 불러오기 ***//
-    void loadPage(String num)
+    void loadPage(final String num)
     {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://come.n.get.us.to/")
@@ -287,33 +287,36 @@ public class MasterJoinActivity extends AppCompatActivity {
                     Log.d("SUCCESS", response.message());
                     contest = response.body();
 
-                    editconData.setContests_id(contest.getData().getContests_id());
-                    jTitle.setText(contest.getData().getTitle());
-                    editconData.setTitle(contest.getData().getTitle());
-                    jCTitle.setText(contest.getData().getCont_title());
-                    editconData.setCont_title(contest.getData().getCont_title());
-                    jApply.setText(String.valueOf(contest.getData().getAppliers()));
-                    jMem.setText(String.valueOf(contest.getData().getMembers()));
-                    jRec.setText(" / "+String.valueOf(contest.getData().getRecruitment()));
-                    editconData.setRecruitment(contest.getData().getRecruitment());
-                    jName.setText(contest.getData().getUsername());
-                    editconData.setUsername(contest.getData().getUsername());
-                    jCover.setText(contest.getData().getCover());
-                    editconData.setCover(contest.getData().getCover());
-                    jHost.setText(contest.getData().getHosts());
-                    editconData.setHosts(contest.getData().getHosts());
-                    jLoc.setText(contest.getData().getCont_locate());
-                    editconData.setCont_locate(contest.getData().getCont_locate());
-                    jPos.setText(contest.getData().getPositions());
-                    editconData.setPositions(contest.getData().getPositions());
-                    jKakao.setText(contest.getData().getKakao_id());
+                    if (contest.getData() == null) {
+                        loadPage(num);
+                    } else {
+                        editconData.setContests_id(contest.getData().getContests_id());
+                        jTitle.setText(contest.getData().getTitle());
+                        editconData.setTitle(contest.getData().getTitle());
+                        jCTitle.setText(contest.getData().getCont_title());
+                        editconData.setCont_title(contest.getData().getCont_title());
+                        jApply.setText(String.valueOf(contest.getData().getAppliers()));
+                        jMem.setText(String.valueOf(contest.getData().getMembers()));
+                        jRec.setText(" / " + String.valueOf(contest.getData().getRecruitment()));
+                        editconData.setRecruitment(contest.getData().getRecruitment());
+                        jName.setText(contest.getData().getUsername());
+                        editconData.setUsername(contest.getData().getUsername());
+                        jCover.setText(contest.getData().getCover());
+                        editconData.setCover(contest.getData().getCover());
+                        jHost.setText(contest.getData().getHosts());
+                        editconData.setHosts(contest.getData().getHosts());
+                        jLoc.setText(contest.getData().getCont_locate());
+                        editconData.setCont_locate(contest.getData().getCont_locate());
+                        jPos.setText(contest.getData().getPositions());
+                        editconData.setPositions(contest.getData().getPositions());
+                        jKakao.setText(contest.getData().getKakao_id());
 
 
-                    // 카테고리 목록별로 아이콘으로 나타냄
-                    String[] category = contest.getData().getCategories().split(",");
-                    if (category.length == 1) {
-                        jCate[0].setText(category[0].trim());
-                        jCate[1].setVisibility(View.GONE);
+                        // 카테고리 목록별로 아이콘으로 나타냄
+                        String[] category = contest.getData().getCategories().split(",");
+                        if (category.length == 1) {
+                            jCate[0].setText(category[0].trim());
+                            jCate[1].setVisibility(View.GONE);
                             /*
                             // 카테고리에 따라 그림으로
                             switch (category[0].trim()) {
@@ -337,9 +340,9 @@ public class MasterJoinActivity extends AppCompatActivity {
                                     break;
 
                             }*/
-                    } else {
-                        for (int i=0; i<category.length; i++) {
-                            jCate[i].setText(category[i].trim());
+                        } else {
+                            for (int i = 0; i < category.length; i++) {
+                                jCate[i].setText(category[i].trim());
                                 /*
                                 // 카테고리에 따라 그림으로
                                 switch (category[i].trim()) {
@@ -363,67 +366,67 @@ public class MasterJoinActivity extends AppCompatActivity {
                                         break;
 
                                 }*/
+                            }
                         }
+
+                        try {
+                            String thumb = URLDecoder.decode(contest.getData().getProfile_img(), "EUC_KR");
+                            //Glide.with(mContext).load(thumb).error(R.drawable.icon_user).override(50,50).crossFade().into(jImg);
+                            Glide.with(mContext).load(thumb).asBitmap().centerCrop().error(R.drawable.icon_user).into(new BitmapImageViewTarget(jImg) {
+                                @Override
+                                protected void setResource(Bitmap resource) {
+                                    RoundedBitmapDrawable circularBitmapDrawable =
+                                            RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                                    circularBitmapDrawable.setCircular(true);
+                                    jImg.setImageDrawable(circularBitmapDrawable);
+                                }
+                            });
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+
+                        // 멤버리스트 이미지로 붙이기
+                        System.out.println("membersize---------------" + contest.getData().getMembersize());
+                        imgLayout.removeAllViews();
+                        for (int i = 0; i < contest.getData().getMembersize(); i++) {
+                            final int idx = i;
+                            final ImageView img = new ImageView(mContext);
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            params.setMargins(0, 0, 20, 0);
+                            img.setLayoutParams(params);
+                            System.out.println(contest.getData().getMemberList(i).getProfile_img());
+                            //Glide.with(context).load(contest.getData().getMemberList(i).getProfile_img()).error(R.drawable.icon_user).override(70,70).crossFade().into(img);
+                            int size = PixelToDp(mContext, 150);
+                            Glide.with(mContext).load(contest.getData().getMemberList(i).getProfile_img()).asBitmap().override(size, size).centerCrop().error(R.drawable.icon_user).into(new BitmapImageViewTarget(img) {
+                                @Override
+                                protected void setResource(Bitmap resource) {
+                                    RoundedBitmapDrawable circularBitmapDrawable =
+                                            RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                                    circularBitmapDrawable.setCircular(true);
+                                    img.setImageDrawable(circularBitmapDrawable);
+                                }
+                            });
+                            // 이미지로 붙인 멤버 클릭시, 팀원정보 상세보기로 이동
+                            img.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    System.out.println("---------------------" + contest.getData().getMemberList(idx).getUsers_id());
+                                    Intent intent = new Intent(MasterJoinActivity.this, showMypageActivity.class);
+                                    intent.putExtra("user_id", contest.getData().getMemberList(idx).getUsers_id());
+                                    intent.putExtra("flag", 2);
+                                    startActivity(intent);
+                                }
+                            });
+                            imgLayout.addView(img);
+                        }
+
+                        String[] parts = contest.getData().getPeriod().split("T");
+                        Dday day = new Dday();
+                        jDate.setText("D - " + day.dday(parts[0]));
+                        editconData.setPeriod(parts[0]);
+
+                        contestData = contest.getData();
                     }
-
-                    try {
-                        String thumb = URLDecoder.decode(contest.getData().getProfile_img(), "EUC_KR");
-                        //Glide.with(mContext).load(thumb).error(R.drawable.icon_user).override(50,50).crossFade().into(jImg);
-                        Glide.with(mContext).load(thumb).asBitmap().centerCrop().error(R.drawable.icon_user).into(new BitmapImageViewTarget(jImg) {
-                            @Override
-                            protected void setResource(Bitmap resource) {
-                                RoundedBitmapDrawable circularBitmapDrawable =
-                                        RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
-                                circularBitmapDrawable.setCircular(true);
-                                jImg.setImageDrawable(circularBitmapDrawable);
-                            }
-                        });
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-
-                    // 멤버리스트 이미지로 붙이기
-                    System.out.println("membersize---------------" + contest.getData().getMembersize());
-                    imgLayout.removeAllViews();
-                    for(int i=0; i<contest.getData().getMembersize(); i++) {
-                        final int idx = i;
-                        final ImageView img = new ImageView(mContext);
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-                        params.setMargins(0, 0, 20, 0);
-                        img.setLayoutParams(params);
-                        System.out.println(contest.getData().getMemberList(i).getProfile_img());
-                        //Glide.with(context).load(contest.getData().getMemberList(i).getProfile_img()).error(R.drawable.icon_user).override(70,70).crossFade().into(img);
-                        int size = PixelToDp(mContext,150);
-                        Glide.with(mContext).load(contest.getData().getMemberList(i).getProfile_img()).asBitmap().override(size,size).centerCrop().error(R.drawable.icon_user).into(new BitmapImageViewTarget(img) {
-                            @Override
-                            protected void setResource(Bitmap resource) {
-                                RoundedBitmapDrawable circularBitmapDrawable =
-                                        RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
-                                circularBitmapDrawable.setCircular(true);
-                                img.setImageDrawable(circularBitmapDrawable);
-                            }
-                        });
-                        // 이미지로 붙인 멤버 클릭시, 팀원정보 상세보기로 이동
-                        img.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                System.out.println("---------------------"+contest.getData().getMemberList(idx).getUsers_id());
-                                Intent intent = new Intent(MasterJoinActivity.this, showMypageActivity.class);
-                                intent.putExtra("user_id", contest.getData().getMemberList(idx).getUsers_id());
-                                intent.putExtra("flag",2);
-                                startActivity(intent);
-                            }
-                        });
-                        imgLayout.addView(img);
-                    }
-
-                    String[] parts = contest.getData().getPeriod().split("T");
-                    Dday day = new Dday();
-                    jDate.setText("D - "+day.dday(parts[0]));
-                    editconData.setPeriod(parts[0]);
-
-                    contestData = contest.getData();
-
                 } else if (response.isSuccess()) {
                     Log.d("Response Body isNull", response.message());
                 } else {
