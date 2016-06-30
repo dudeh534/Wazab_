@@ -13,7 +13,7 @@ public class TutorialActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tutorial_layout);
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        TutorialAdapter adapter = new TutorialAdapter(getLayoutInflater());
+        TutorialAdapter adapter = new TutorialAdapter(this, getLayoutInflater());
         viewPager.setAdapter(adapter);
     }
 }

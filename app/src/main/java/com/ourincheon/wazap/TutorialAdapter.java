@@ -1,9 +1,12 @@
 package com.ourincheon.wazap;
 
+import android.app.Activity;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 /**
@@ -12,8 +15,10 @@ import android.widget.ImageView;
 public class TutorialAdapter extends PagerAdapter {
 
     LayoutInflater inflater;
+    Activity parent;
 
-    public TutorialAdapter(LayoutInflater inflater){
+    public TutorialAdapter(Activity parent, LayoutInflater inflater){
+        this.parent = parent;
         this.inflater = inflater;
     }
     @Override
@@ -38,13 +43,23 @@ public class TutorialAdapter extends PagerAdapter {
         ImageView img = (ImageView)view.findViewById(R.id.chlidimg);
         switch (position){
             case 0:
-                img.setBackgroundResource(R.drawable.first);
+                img.setBackgroundResource(R.drawable.tutorial_first);
                 break;
             case 1:
-                img.setBackgroundResource(R.drawable.second);
+                img.setBackgroundResource(R.drawable.tutorial_second);
                 break;
             case 2:
-                img.setBackgroundResource(R.drawable.third);
+                NotoTextView startBtn = (NotoTextView) view.findViewById(R.id.wazap_start_btn);
+                startBtn.setVisibility(View.VISIBLE);
+                Animation anima = AnimationUtils.loadAnimation(view.getContext(), R.anim.start_btn_up);
+                startBtn.startAnimation(anima);
+                startBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        parent.finish();
+                    }
+                });
+                img.setBackgroundResource(R.drawable.tutorial_third);
                 break;
             default:
                 break;
