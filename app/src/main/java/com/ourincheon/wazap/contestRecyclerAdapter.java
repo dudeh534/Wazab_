@@ -79,6 +79,8 @@ public class contestRecyclerAdapter extends RecyclerView.Adapter<contestRecycler
                     holder.category.setImageResource(R.drawable.list_icon_design_word);
                 else if(temp[j].trim().equals("체험기/사용기"))
                     holder.category.setImageResource(R.drawable.list_icon_experience_word);
+                else if(temp[j].trim().equals("게임/소프트웨어"))
+                    holder.category.setImageResource(R.drawable.list_icon_game_word);
                 else if(temp[j].trim().equals("문학/시나리오"))
                     holder.category.setImageResource(R.drawable.list_icon_literature_word);
                 else if(temp[j].trim().equals("마케팅"))

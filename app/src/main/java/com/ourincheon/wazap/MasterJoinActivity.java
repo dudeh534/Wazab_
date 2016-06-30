@@ -5,10 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -24,18 +23,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import com.ourincheon.wazap.Retrofit.ContestData;
 import com.ourincheon.wazap.Retrofit.reqContest;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,7 +43,8 @@ public class MasterJoinActivity extends AppCompatActivity {
     reqContest contest;
     ContestData contestData;
     ContestData editconData;
-    TextView jTitle,jCTitle,jButton,jmList,jCate,jApply,jRec,jName,jCover,jMem,jDate,jHost,jLoc,jPos,jKakao;
+    TextView jTitle,jCTitle,jButton,jmList,jApply,jRec,jName,jCover,jMem,jDate,jHost,jLoc,jPos,jKakao;
+    TextView jCate[] = new TextView[2];
     Button eBtn,jBefore;
     ImageView jImg;
     String access_token,num;
@@ -69,22 +63,23 @@ public class MasterJoinActivity extends AppCompatActivity {
         editconData = new ContestData();
 
         jTitle = (TextView) findViewById(R.id.jmTitle);
-        jCTitle = (TextView) findViewById(R.id.jmCTitle);
-        jCate =  (TextView) findViewById(R.id.jmCate);
-        jApply = (TextView) findViewById(R.id.jmApply);
-        jRec = (TextView) findViewById(R.id.jmRec);
-        jName = (TextView) findViewById(R.id.jmName);
-        jCover = (TextView) findViewById(R.id.jmCover);
-        jMem = (TextView) findViewById(R.id.jmMem);
+        jCTitle = (TextView) findViewById(R.id.jCTitle);
+        jCate[0] =  (TextView) findViewById(R.id.jCate1);
+        jCate[1] =  (TextView) findViewById(R.id.jCate2);
+        jApply = (TextView) findViewById(R.id.jApply);
+        jRec = (TextView) findViewById(R.id.jRec);
+        jName = (TextView) findViewById(R.id.jName);
+        jCover = (TextView) findViewById(R.id.jCover);
+        jMem = (TextView) findViewById(R.id.jMem);
         jDate = (TextView) findViewById(R.id.jmDate);
-        jHost = (TextView) findViewById(R.id.jmHost);
-        jLoc = (TextView) findViewById(R.id.jmLoc);
-        jPos = (TextView) findViewById(R.id.jmPos);
-        jKakao = (TextView) findViewById(R.id.jmKakao);
+        jHost = (TextView) findViewById(R.id.jHost);
+        jLoc = (TextView) findViewById(R.id.jLoc);
+        jPos = (TextView) findViewById(R.id.jPos);
+        jKakao = (TextView) findViewById(R.id.jKakao);
 
-        jImg = (ImageView) findViewById(R.id.jmImg);
+        jImg = (ImageView) findViewById(R.id.jImg);
 
-        imgLayout= (LinearLayout) findViewById(R.id.mimgLayout);
+        imgLayout= (LinearLayout) findViewById(R.id.imgLayout);
 
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         access_token = pref.getString("access_token", "");
@@ -297,7 +292,6 @@ public class MasterJoinActivity extends AppCompatActivity {
                     editconData.setTitle(contest.getData().getTitle());
                     jCTitle.setText(contest.getData().getCont_title());
                     editconData.setCont_title(contest.getData().getCont_title());
-                    jCate.setText(contest.getData().getCategories());
                     jApply.setText(String.valueOf(contest.getData().getAppliers()));
                     jMem.setText(String.valueOf(contest.getData().getMembers()));
                     jRec.setText(" / "+String.valueOf(contest.getData().getRecruitment()));
@@ -313,6 +307,64 @@ public class MasterJoinActivity extends AppCompatActivity {
                     jPos.setText(contest.getData().getPositions());
                     editconData.setPositions(contest.getData().getPositions());
                     jKakao.setText(contest.getData().getKakao_id());
+
+
+                    // 카테고리 목록별로 아이콘으로 나타냄
+                    String[] category = contest.getData().getCategories().split(",");
+                    if (category.length == 1) {
+                        jCate[0].setText(category[0].trim());
+                        jCate[1].setVisibility(View.GONE);
+                            /*
+                            // 카테고리에 따라 그림으로
+                            switch (category[0].trim()) {
+                                case "사진/UCC":
+                                    jCate[0].setImageResource(R.drawable.detail_icon_video);
+                                    break;
+                                case "디자인":
+                                    jCate[0].setImageResource(R.drawable.detail_icon_design);
+                                    break;
+                                case "게임/소프트웨어":
+                                    jCate[0].setImageResource(R.drawable.detail_icon_it);
+                                    break;
+                                case "해외":
+                                    jCate[0].setImageResource(R.drawable.detail_icon_idea);
+                                    break;
+                                case "광고/아이디어/마케팅":
+                                    jCate[0].setImageResource(R.drawable.detail_icon_marketing);
+                                    break;
+                                case "기타":
+                                    jCate[0].setImageResource(R.drawable.detail_icon_scenario);
+                                    break;
+
+                            }*/
+                    } else {
+                        for (int i=0; i<category.length; i++) {
+                            jCate[i].setText(category[i].trim());
+                                /*
+                                // 카테고리에 따라 그림으로
+                                switch (category[i].trim()) {
+                                    case "사진/UCC":
+                                        jCate[i].setImageResource(R.drawable.detail_icon_video);
+                                        break;
+                                    case "디자인":
+                                        jCate[i].setImageResource(R.drawable.detail_icon_design);
+                                        break;
+                                    case "게임/소프트웨어":
+                                        jCate[i].setImageResource(R.drawable.detail_icon_it);
+                                        break;
+                                    case "해외":
+                                        jCate[i].setImageResource(R.drawable.detail_icon_idea);
+                                        break;
+                                    case "광고/아이디어/마케팅":
+                                        jCate[i].setImageResource(R.drawable.detail_icon_marketing);
+                                        break;
+                                    case "기타":
+                                        jCate[i].setImageResource(R.drawable.detail_icon_scenario);
+                                        break;
+
+                                }*/
+                        }
+                    }
 
                     try {
                         String thumb = URLDecoder.decode(contest.getData().getProfile_img(), "EUC_KR");

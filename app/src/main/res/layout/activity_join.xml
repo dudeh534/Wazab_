@@ -176,6 +176,7 @@
                 <com.ourincheon.wazap.NotoTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:id="@+id/jCTitle"
                     android:textSize="14dp"
                     android:layout_weight="6.5 "/>
@@ -200,6 +201,7 @@
                 <com.ourincheon.wazap.NotoTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:id="@+id/jHost"
                     android:textSize="14dp"
                     android:layout_weight="6.5"/>
@@ -231,12 +233,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/jCate1"
-                        android:textSize="14dp" />
+                        android:textSize="14dp"
+                        android:layout_gravity="center_vertical"/>
                     <com.ourincheon.wazap.NotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/jCate2"
-                        android:textSize="14dp" />
+                        android:textSize="14dp"
+                        android:layout_gravity="center_vertical"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -260,7 +264,8 @@
                     android:orientation="horizontal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="6.5">
+                    android:layout_weight="6.5"
+                    android:layout_gravity="center_vertical" >
 
                     <com.ourincheon.wazap.NotoTextView
                         android:layout_width="wrap_content"
@@ -297,7 +302,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/jApply"
                     android:textSize="14dp"
-                    android:layout_weight="6.5"/>
+                    android:layout_weight="6.5"
+                    android:layout_gravity="center_vertical" />
             </LinearLayout>
 
             <LinearLayout
@@ -321,7 +327,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/jLoc"
                     android:textSize="14dp"
-                    android:layout_weight="6.5"/>
+                    android:layout_weight="6.5"
+                    android:layout_gravity="center_vertical" />
             </LinearLayout>
 
             <LinearLayout
@@ -345,7 +352,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/jPos"
                     android:textSize="14dp"
-                    android:layout_weight="6.5"/>
+                    android:layout_weight="6.5"
+                    android:layout_gravity="center_vertical" />
             </LinearLayout>
 
             <LinearLayout

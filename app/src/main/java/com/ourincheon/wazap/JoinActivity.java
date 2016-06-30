@@ -350,6 +350,7 @@ public class JoinActivity extends AppCompatActivity {
                         String[] category = contest.getData().getCategories().split(",");
                         if (category.length == 1) {
                             jCate[0].setText(category[0].trim());
+                            jCate[1].setVisibility(View.GONE);
                             /*
                             // 카테고리에 따라 그림으로
                             switch (category[0].trim()) {
