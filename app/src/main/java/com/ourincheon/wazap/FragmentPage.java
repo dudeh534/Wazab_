@@ -240,8 +240,8 @@ public class FragmentPage extends Fragment {
                         );
                         contestItems.add(contestItem[i]);
 
-                        content.setAdapter(conRec);
                     }
+                    content.setAdapter(conRec);
 
                 } else if (response.isSuccess()) {
                     Log.d("Response Body isNull", response.message());
