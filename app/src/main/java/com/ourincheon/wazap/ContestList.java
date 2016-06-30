@@ -317,6 +317,16 @@ public class ContestList extends AppCompatActivity {
 
         }
 
+        public void changeMemberCount(int position, int count) {
+            ContestData changeInfo = mListData.get(position);
+
+            // 현재 멤버수에 +1 또는 -1 을 함
+            changeInfo.setMembers(changeInfo.getMembers() + count);
+
+            mListData.set(position, changeInfo);
+            dataChange();
+        }
+
 
         public void remove(int position) {
             mListData.remove(position);
@@ -409,7 +419,8 @@ public class ContestList extends AppCompatActivity {
                                                         jsonArr.getJSONObject(i).getString("username"),
                                                         jsonArr.getJSONObject(i).getString("app_users_id"),
                                                         Integer.parseInt(jsonArr.getJSONObject(i).getString("applies_id")),
-                                                        Integer.parseInt(jsonArr.getJSONObject(i).getString("is_check")));
+                                                        Integer.parseInt(jsonArr.getJSONObject(i).getString("is_check")),
+                                                        position);
                                             }
                                             // TODO 여기가 세개이상인데 리스트뷰 크기가 3개이상 안늘어남
                                             Log.d("TEST", "신청자 목록 길이: "+mAdapter1.getCount());
@@ -549,6 +560,7 @@ public class ContestList extends AppCompatActivity {
 
     private class ListViewAdapter1 extends BaseAdapter {
         private Context mContext = null;
+        private int parentPosition;
 
         public ListViewAdapter1(Context mContext) {
             super();
@@ -572,7 +584,7 @@ public class ContestList extends AppCompatActivity {
             return position;
         }
 
-        public void addItem(String img, String name, String id, int applies, int is_check) {
+        public void addItem(String img, String name, String id, int applies, int is_check, int parentPosition) {
             ApplierData addInfo = null;
             addInfo = new ApplierData();
             try {
@@ -587,6 +599,7 @@ public class ContestList extends AppCompatActivity {
             addInfo.setApplies_id(applies);
             addInfo.setIs_check(is_check);
 
+            this.parentPosition = parentPosition;
             mListData.add(addInfo);
         }
 
@@ -601,8 +614,8 @@ public class ContestList extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            final ViewHolder1 holder;
             final Context context = parent.getContext();
+            final ViewHolder1 holder;
 
             if (convertView == null) {
                 holder = new ViewHolder1();
@@ -701,6 +714,9 @@ public class ContestList extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), "멤버 변경 되었습니다.", Toast.LENGTH_SHORT).show();
                                         mData.setIs_check(1);
                                         holder.aABtn.setBackgroundResource(R.drawable.accept_button_on);
+
+                                        // TODO mAdapter 변경후 ListView 리프레쉬 필요
+                                        mAdapter.changeMemberCount(parentPosition, 1);
                                     } else {
                                         Log.d("저장 실패: ", msg);
                                         Toast.makeText(getApplicationContext(), "멤버 변경 안됬습니다.다시 시도해주세요.", Toast.LENGTH_SHORT).show();
