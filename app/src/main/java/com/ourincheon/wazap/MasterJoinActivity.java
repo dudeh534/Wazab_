@@ -392,7 +392,7 @@ public class MasterJoinActivity extends AppCompatActivity {
                             final int idx = i;
                             final ImageView img = new ImageView(mContext);
                             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                            params.setMargins(0, 0, 9, 0);
+                            params.setMargins(0, 0, 18, 0);
                             img.setLayoutParams(params);
                             System.out.println("fffffffdfdsadfsd"+contest.getData().getMemberList(i).getProfile_img());
                             //Glide.with(context).load(contest.getData().getMemberList(i).getProfile_img()).error(R.drawable.icon_user).override(70,70).crossFade().into(img);
