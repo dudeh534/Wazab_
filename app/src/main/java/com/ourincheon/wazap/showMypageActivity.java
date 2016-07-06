@@ -28,7 +28,6 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
@@ -46,6 +45,7 @@ public class showMypageActivity extends AppCompatActivity {
     regUser reguser;
     NotoTextView Title;
     private TextView sName, sMajor, sUniv, sLoc, sKakao, sIntro, sExp,sSkill,pBtn;
+    ImageView profileBackground;
     FloatingActionButton sImg;
     String user_id;
     int flag;
@@ -69,6 +69,7 @@ public class showMypageActivity extends AppCompatActivity {
             }
         });
 
+        profileBackground = (ImageView) findViewById(R.id.profile_background);
         Title =(NotoTextView)findViewById(R.id.mytext);
         sName = (TextView) findViewById(R.id.sName);
         sMajor = (TextView)  findViewById(R.id.sMajor);
@@ -89,7 +90,6 @@ public class showMypageActivity extends AppCompatActivity {
         else
             Title.setText("나의 프로필");
 
-        loadPage();
     }
 
     @Override
@@ -122,6 +122,19 @@ public class showMypageActivity extends AppCompatActivity {
                     try {
                         jsonRes = new JSONObject(result);
                         JSONArray jsonArr = jsonRes.getJSONArray("data");
+
+                        switch ((int)(jsonArr.getJSONObject(0).getLong("users_id") % 3)) {
+                            case 0:
+                                profileBackground.setImageResource(R.drawable.profile_bg_sky);
+                                break;
+                            case 1:
+                                profileBackground.setImageResource(R.drawable.profile_bg_stars);
+                                break;
+                            case 2:
+                                profileBackground.setImageResource(R.drawable.profile_bg_balloon);
+                                break;
+                        }
+
                         sName.setText(jsonArr.getJSONObject(0).getString("username"));
                         sMajor.setText(jsonArr.getJSONObject(0).getString("major"));
                         sUniv.setText(jsonArr.getJSONObject(0).getString("school"));
@@ -149,6 +162,7 @@ public class showMypageActivity extends AppCompatActivity {
                         }
 
                     } catch (JSONException e) {
+                        e.printStackTrace();
                     }
 
                 } else if (response.isSuccess()) {

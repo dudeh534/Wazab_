@@ -385,32 +385,51 @@ public class MasterJoinActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        // 멤버리스트 이미지로 붙이기
+                        //* 멤버리스트 이미지로 붙이기 *//
                         System.out.println("membersize---------------" + contest.getData().getMembersize());
                         imgLayout.removeAllViews();
                         for (int i = 0; i < contest.getData().getMembersize(); i++) {
                             final int idx = i;
                             final ImageView img = new ImageView(mContext);
                             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                            params.setMargins(0, 0, 20, 0);
+                            params.setMargins(0, 0, 9, 0);
                             img.setLayoutParams(params);
-                            System.out.println(contest.getData().getMemberList(i).getProfile_img());
+                            System.out.println("fffffffdfdsadfsd"+contest.getData().getMemberList(i).getProfile_img());
                             //Glide.with(context).load(contest.getData().getMemberList(i).getProfile_img()).error(R.drawable.icon_user).override(70,70).crossFade().into(img);
-                            int size = PixelToDp(mContext, 150);
-                            Glide.with(mContext).load(contest.getData().getMemberList(i).getProfile_img()).asBitmap().override(size, size).centerCrop().error(R.drawable.icon_user).into(new BitmapImageViewTarget(img) {
-                                @Override
-                                protected void setResource(Bitmap resource) {
-                                    RoundedBitmapDrawable circularBitmapDrawable =
-                                            RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
-                                    circularBitmapDrawable.setCircular(true);
-                                    img.setImageDrawable(circularBitmapDrawable);
-                                }
-                            });
+                            int size = PixelToDp(mContext, 300);
+
+                            if (!contest.getData().getMemberList(i).getProfile_img().equals("test_img_url")) {
+                                Glide.with(mContext).load(contest.getData().getMemberList(i).getProfile_img()).asBitmap().centerCrop().override(size, size).into(new BitmapImageViewTarget(img) {
+                                    @Override
+                                    protected void setResource(Bitmap resource) {
+                                        RoundedBitmapDrawable circularBitmapDrawable =
+                                                RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                                        circularBitmapDrawable.setCircular(true);
+                                        img.setImageDrawable(circularBitmapDrawable);
+
+                                    }
+                                });
+                            } else {
+                                Glide.with(mContext)
+                                        .load(R.drawable.icon_user)
+                                        .asBitmap()
+                                        .centerCrop()
+                                        .override(size, size)
+                                        .into(new BitmapImageViewTarget(img) {
+                                            @Override
+                                            protected void setResource(Bitmap resource) {
+                                                RoundedBitmapDrawable circularBitmapDrawable =
+                                                        RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                                                circularBitmapDrawable.setCircular(true);
+                                                img.setImageDrawable(circularBitmapDrawable);
+
+                                            }
+                                        });
+                            }
                             // 이미지로 붙인 멤버 클릭시, 팀원정보 상세보기로 이동
                             img.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    System.out.println("---------------------" + contest.getData().getMemberList(idx).getUsers_id());
                                     Intent intent = new Intent(MasterJoinActivity.this, showMypageActivity.class);
                                     intent.putExtra("user_id", contest.getData().getMemberList(idx).getUsers_id());
                                     intent.putExtra("flag", 2);

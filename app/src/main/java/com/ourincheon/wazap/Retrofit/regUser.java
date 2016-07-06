@@ -1,7 +1,5 @@
 package com.ourincheon.wazap.Retrofit;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +25,7 @@ public class regUser
 
 class JSONData{
     public String username;
+    long users_id;
     String major;
     String school;
     String locate;
