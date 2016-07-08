@@ -1,5 +1,6 @@
 package com.ourincheon.wazap;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,5 +16,12 @@ public class TutorialActivity extends AppCompatActivity{
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         TutorialAdapter adapter = new TutorialAdapter(this, getLayoutInflater());
         viewPager.setAdapter(adapter);
+
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putBoolean("is_first", false);
+
+        editor.apply();
     }
 }

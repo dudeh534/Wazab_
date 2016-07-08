@@ -50,8 +50,13 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
-        Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
-        startActivity(intent);
+
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        boolean isFirst = pref.getBoolean("is_first", true);
+        if (isFirst) {
+            Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
+            startActivity(intent);
+        }
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         Drawable drawable = getResources().getDrawable(R.drawable.detail_title_banner);
         toolbar.setBackground(drawable);
@@ -118,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         if (CheckAnonymous.isAnonymous(context)) {
             nickname.setText("로그인이 필요합니다");
         } else {
-            SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
             nickname.setText(pref.getString("name", ""));
             profileImg = (ImageView) header.findViewById(R.id.imageView);
             thumbnail = pref.getString("profile_img", "");

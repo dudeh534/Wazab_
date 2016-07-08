@@ -23,4 +23,5 @@
     <color name="color10">#FF2400</color>
     <color name="unread_item">#EDF3FF</color>
     <color name="contest_list_cover">#33000000</color>
+    <color name="none_color">#00000000</color>
 </resources>

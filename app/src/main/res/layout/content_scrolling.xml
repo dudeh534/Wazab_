@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ourincheon.myapplication.ScrollingActivity"
-    tools:showIn="@layout/activity_scrolling">
+    android:layout_above="@+id/pButton"
+    android:layout_below="@+id/profile_background"
+    tools:showIn="@layout/activity_scrolling"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#f2f3f3"
-        android:layout_marginTop="33dp">
+        android:background="#f2f3f3">
 
         <LinearLayout
             android:id="@+id/linearLayout10"
@@ -28,8 +28,6 @@
                 android:id="@+id/sName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:hint="이름"
                 android:textSize="17dp"
@@ -69,8 +67,6 @@
             android:id="@+id/linearLayout11"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/linearLayout10"
             android:orientation="vertical"
             android:background="#ffffff"
@@ -94,11 +90,8 @@
 
                 <com.ourincheon.wazap.NotoTextView
                     android:id="@+id/sUniv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/sIntro"
-                    android:layout_toEndOf="@+id/linearLayout10"
-                    android:layout_toRightOf="@+id/linearLayout10"
                     android:hint="학교"
                     android:textSize="13dp"
                     android:layout_gravity="center"
@@ -127,11 +120,8 @@
 
                 <com.ourincheon.wazap.NotoTextView
                     android:id="@+id/sMajor"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/linearLayout10"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignStart="@+id/linearLayout10"
                     android:hint="전공 및 희망역할"
                     android:textSize="13dp"
                     android:layout_gravity="center"
@@ -160,11 +150,8 @@
 
                 <com.ourincheon.wazap.NotoTextView
                     android:id="@+id/sSkill"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/sUniv"
-                    android:layout_alignLeft="@+id/sUniv"
-                    android:layout_alignStart="@+id/sUniv"
                     android:hint="포지션"
                     android:textSize="13dp"
                     android:layout_gravity="center"
@@ -193,11 +180,8 @@
 
                 <com.ourincheon.wazap.NotoTextView
                     android:id="@+id/sLoc"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/sExp"
-                    android:layout_alignBottom="@+id/sExp"
-                    android:layout_centerHorizontal="true"
                     android:hint="지역"
                     android:textSize="13dp"
                     android:layout_gravity="center"
@@ -220,7 +204,6 @@
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:text="자기소개"
                 android:textSize="13dp"
                 android:layout_gravity="center_horizontal"
@@ -246,13 +229,13 @@
             android:background="#ffffff"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="1dp">
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="5dp" >
 
             <com.ourincheon.wazap.NotoTextView
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:text="기타"
                 android:textSize="13dp"
                 android:layout_gravity="center_horizontal"
@@ -269,23 +252,5 @@
                 android:singleLine="false"
                 android:textSize="12dp" />
         </LinearLayout>
-
-        <com.ourincheon.wazap.NotoTextView
-            android:textColor="#ffffff"
-            android:layout_width="match_parent"
-            android:layout_height="41.33dp"
-            android:background="#0056ff"
-            android:text="수락하기"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/pButton"
-            android:visibility="invisible"/>
-
-
     </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+</LinearLayout>

@@ -1,63 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="#f2f3f3">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+
+    <LinearLayout
+        android:id="@+id/toolbar2"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        >
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:background="#0057ff"
+        android:orientation="horizontal"
+        android:padding="1dp">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            android:background="@drawable/nature1"
-            android:alpha="0.7">
+        <Button
+            android:id="@+id/aBefore"
+            android:layout_width="15dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="16.47dp"
+            android:background="@drawable/detail_btn_back_white"
+            android:layout_gravity="center_vertical" />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar2"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_width="match_parent"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme"
-                android:background="#0057ff">
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <com.ourincheon.wazap.NotoTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="나의 프로필 수정"
-                        android:textColor="#ffffff"
-                        android:id="@+id/mytext"
-                        android:textSize="18dp"
-                        android:layout_gravity="center" />
-                </FrameLayout>
-            </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
+        <com.ourincheon.wazap.NotoTextView
+            android:id="@+id/mytext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="나의 프로필 수정"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
 
-    <include layout="@layout/content_scrolling_setting" />
+        <com.ourincheon.wazap.NotoButtonView
+            android:id="@+id/edit_btn"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16.47dp"
+            android:layout_gravity="center_vertical"
+            android:text="수정"
+            android:textColor="@color/color5"
+            android:textSize="16dp"
+            android:background="@color/none_color" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/ePro"
-        android:layout_width="wrap_content"
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/icon_user"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="center|bottom"
-        android:scaleType="center"
-        app:backgroundTint="#ffffff"/>
-</android.support.design.widget.CoordinatorLayout>
+        android:layout_below="@+id/toolbar2">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/profile_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="33dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/profile_bg_sky"
+                    android:scaleType="fitStart" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignBottom="@+id/profile_background"
+                    android:layout_marginBottom="33dp"
+                    android:src="@color/color7"
+                    android:scaleType="fitStart"
+                    android:alpha="0.3" />
+
+                <ImageView
+                    android:id="@+id/ePro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/profile_background"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/icon_user"
+                    android:scaleType="center" />
+            </RelativeLayout>
+
+            <include layout="@layout/content_scrolling_setting" />
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

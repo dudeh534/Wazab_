@@ -7,11 +7,9 @@ import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,14 +56,39 @@ public class MypageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.detail_btn_back_white);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+
+        Button aBefore = (Button) findViewById(R.id.aBefore);
+        NotoButtonView editBtn = (NotoButtonView) findViewById(R.id.edit_btn);
+        aBefore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        // 우측상단 버튼 누를시, 저장되어 원래 페이지로 이동
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                username = eName.getText().toString().trim();
+                major = eMajor.getText().toString().trim();
+                school = eUniv.getText().toString().trim();
+                locate = eLoc.getText().toString().trim();
+                kakao_id = eKakao.getText().toString();
+                introduce = eIntro.getText().toString().trim();
+                exp = eExp.getText().toString().trim();
+                skill = eSkill.getText().toString().trim();
+
+                userInfo = new UserInfo( kakao_id, username, school, 94, major , skill, locate, introduce, exp);
+
+                if(major.equals("") || locate.equals("") || kakao_id.equals("") || skill.equals("") || introduce.equals("") || exp.equals(""))
+                    Toast.makeText(getApplicationContext(), "필수사항을 모두 입력해주세요.", Toast.LENGTH_LONG).show();
+                else
+                {
+                    postInfo(userInfo);
+                    ((showMypageActivity)(showMypageActivity.showContext)).onResume();
+                    finish();
+                }
             }
         });
 
@@ -153,43 +176,6 @@ public class MypageActivity extends AppCompatActivity {
                 Log.e("Errorglg''';kl", t.getMessage());
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_mypage, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        // 우측상단 버튼 누를시, 저장되어 원래 페이지로 이동
-        if (id == R.id.action_save) {
-            username = eName.getText().toString().trim();
-            major = eMajor.getText().toString().trim();
-            school = eUniv.getText().toString().trim();
-            locate = eLoc.getText().toString().trim();
-            kakao_id = eKakao.getText().toString();
-            introduce = eIntro.getText().toString().trim();
-            exp = eExp.getText().toString().trim();
-            skill = eSkill.getText().toString().trim();
-
-            userInfo = new UserInfo( kakao_id, username, school, 94, major , skill, locate, introduce, exp);
-
-            if(major.equals("") || locate.equals("") || kakao_id.equals("") || skill.equals("") || introduce.equals("") || exp.equals(""))
-                Toast.makeText(getApplicationContext(), "필수사항을 모두 입력해주세요.", Toast.LENGTH_LONG).show();
-            else
-            {
-                postInfo(userInfo);
-                ((showMypageActivity)(showMypageActivity.showContext)).onResume();
-                finish();
-            }
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     //*** 서버에 정보 저장하기 ***//
