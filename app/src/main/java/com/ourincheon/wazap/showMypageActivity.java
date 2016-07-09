@@ -131,7 +131,7 @@ public class showMypageActivity extends AppCompatActivity {
                     try {
                         jsonRes = new JSONObject(result);
                         JSONArray jsonArr = jsonRes.getJSONArray("data");
-/*
+
                         switch ((int)(jsonArr.getJSONObject(0).getLong("users_id") % 3)) {
                             case 0:
                                 profileBackground.setImageResource(R.drawable.profile_bg_sky);
@@ -142,7 +142,9 @@ public class showMypageActivity extends AppCompatActivity {
                             case 2:
                                 profileBackground.setImageResource(R.drawable.profile_bg_balloon);
                                 break;
-                        }*/
+                        }
+
+                        profileBackground.setVisibility(View.VISIBLE);
 
                         sName.setText(jsonArr.getJSONObject(0).getString("username"));
                         sMajor.setText(jsonArr.getJSONObject(0).getString("major"));

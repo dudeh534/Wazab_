@@ -66,8 +66,9 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="33dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/profile_bg_sky"
-                    android:scaleType="fitStart" />
+                    android:src="@color/color7"
+                    android:scaleType="fitStart"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:layout_width="match_parent"

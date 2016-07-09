@@ -42,6 +42,7 @@ import retrofit2.Retrofit;
 public class MypageActivity extends AppCompatActivity {
 
     Context mcontext;
+    ImageView profileBackground;
     ImageView profileImg;
     String thumbnail;
     regUser reguser;
@@ -92,6 +93,7 @@ public class MypageActivity extends AppCompatActivity {
             }
         });
 
+        profileBackground = (ImageView) findViewById(R.id.profile_background);
         mcontext = this;
         eName = (TextView) findViewById(R.id.eName);
         eMajor = (EditText) findViewById(R.id.eMajor);
@@ -136,6 +138,20 @@ public class MypageActivity extends AppCompatActivity {
                     try {
                         jsonRes = new JSONObject(result);
                         JSONArray jsonArr = jsonRes.getJSONArray("data");
+
+                        switch ((int)(jsonArr.getJSONObject(0).getLong("users_id") % 3)) {
+                            case 0:
+                                profileBackground.setImageResource(R.drawable.profile_bg_sky);
+                                break;
+                            case 1:
+                                profileBackground.setImageResource(R.drawable.profile_bg_stars);
+                                break;
+                            case 2:
+                                profileBackground.setImageResource(R.drawable.profile_bg_balloon);
+                                break;
+                        }
+                        profileBackground.setVisibility(View.VISIBLE);
+
                         Log.d("username", jsonArr.getJSONObject(0).getString("username"));
                         eName.setText(jsonArr.getJSONObject(0).getString("username"));
                         eMajor.setText(jsonArr.getJSONObject(0).getString("major"));

@@ -5,15 +5,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +48,7 @@ public class showApplier extends AppCompatActivity {
     regUser reguser;
     NotoTextView Title;
     private TextView sName, sMajor, sUniv, sLoc, sKakao, sIntro, sExp,sSkill,pBtn;
-    FloatingActionButton sImg;
+    ImageView sImg;
     String user_id,contest_id,applies_id;
     int is_ok;
 
@@ -66,11 +66,9 @@ public class showApplier extends AppCompatActivity {
         contest_id =intent.getExtras().getString("contest_id");
         applies_id =intent.getExtras().getString("applies_id");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.detail_btn_back_white);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        Button aBefore = (Button) findViewById(R.id.aBefore);
+        ImageButton settingBtn = (ImageButton) findViewById(R.id.setting_btn);
+        aBefore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -87,7 +85,7 @@ public class showApplier extends AppCompatActivity {
         sExp = (TextView) findViewById(R.id.sExp);
         sSkill = (TextView) findViewById(R.id.sSkill);
         profileImg = (ImageView) findViewById(R.id.sPro);
-        sImg = (FloatingActionButton)findViewById(R.id.fab);
+        sImg = (ImageView)findViewById(R.id.fab);
         pBtn = (TextView)findViewById(R.id.pButton);
 
         Title.setText("신청자 프로필");
